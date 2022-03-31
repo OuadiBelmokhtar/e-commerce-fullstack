@@ -1,0 +1,33 @@
+<div class="container">
+
+    <div class="panel panel-primary">
+        <div class="panel-heading"> Liste des produits: </div>
+        <div class="panel-body">
+            <button class="btn btn-primary" (click)="onGetProducts()">Produits</button>
+        </div>
+        <div class="panel-body">
+            <table *ngIf="this.jsonProducts!=undefined" class="table table-striped">
+                <tr>
+                    <th>id</th>
+                    <th>Designation</th>
+                    <th>Prix</th>
+                    <th>Quantité</th>
+                </tr>
+                <tr *ngFor='let p of this.jsonProducts._embedded.products'>
+                    <td>{{p.id}}</td>
+                    <td>{{p.designation}}</td>
+                    <td>{{p.price|number:"0.2"}}</td>
+                    <td>{{p.quantity}}</td>
+                </tr>
+            </table>
+        </div>
+    <div>
+        <ul>
+            <li  *ngFor='let p of this.pagesArray; let i=index'>
+                {{i}}
+            </li>
+        </ul>
+        </div>
+
+    </div>
+</div>
