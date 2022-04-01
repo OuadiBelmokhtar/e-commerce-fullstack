@@ -2,10 +2,12 @@ package me.obelmokhtar.productcataloguebackend;
 
 import me.obelmokhtar.productcataloguebackend.dao.ProductRepository;
 import me.obelmokhtar.productcataloguebackend.entities.Product;
+import org.springframework.beans.ConfigurablePropertyAccessor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 
 import java.util.List;
 
@@ -17,7 +19,8 @@ public class ProductCatalogueBackendApplication {
     }
 
     @Bean
-    CommandLineRunner init(ProductRepository productRepository) {
+    CommandLineRunner init(ProductRepository productRepository, RepositoryRestConfiguration restConfiguration) {
+        restConfiguration.exposeIdsFor(Product.class);
         return args -> {
             productRepository.save(new Product(null, "Ordinateur Lx 45", 6700.0, 3));
             productRepository.save(new Product(null, "Imprimante HO", 1700.0, 10));

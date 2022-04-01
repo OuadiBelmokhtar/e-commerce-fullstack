@@ -7,10 +7,22 @@ import { Observable } from 'rxjs';
 })
 export class ProductService {
 
-  constructor(private httpClient: HttpClient) { }
+  private host:string="http://localhost:8087";
+
+  constructor(private httpClient: HttpClient) { 
+    
+  }
 
 
   getProducts(pageNbr: number, size: number) {
-    return this.httpClient.get("http://localhost:8087/products?page=" + pageNbr + "&size=" + size);
+    return this.httpClient.get(this.host+"/products?page=" + pageNbr + "&size=" + size);
+  }
+
+  searchProducts(keyword:string,pageNbr: number, size: number ){
+    return this.httpClient.get(this.host+"/products/search/filterByDesignationPage?key="+keyword+"&page="+pageNbr+"&size="+size);
+  }
+
+  supprimerProduct(URI:string){
+    return this.httpClient.delete(URI);
   }
 }
