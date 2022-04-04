@@ -7,12 +7,14 @@ import { ProductsGridViewComponent } from './products-grid-view/products-grid-vi
 import { NewProductComponent } from './new-product/new-product.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { EditProductComponent } from './edit-product/edit-product.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductsGridViewComponent,
-    NewProductComponent
+    NewProductComponent,
+    EditProductComponent
   ],
   imports: [
     BrowserModule,

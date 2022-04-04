@@ -1,1 +1,31 @@
-<p>new-product works!</p>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">Ajouter Produit:</div>
+        <div class="panel-body" *ngIf="this.isSaved==false">
+            <form #savingForm="ngForm" (ngSubmit)="onAddProduct(savingForm.value)">
+                <div class="form-group">
+                    <label class="control-label">Désignation: </label>
+                    <input class="form-control" type="text" name="designation" ngModel>
+                </div>
+                <div class="form-group">
+                    <label class="label-control">Prix:</label>
+                    <input class="form-control" type="text" name="price" ngModel>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Quantité:</label>
+                    <input class="form-control" type="number" required name="quantity" ngModel>
+                </div>
+                <button class="btn btn-success" type="submit">Ajouter</button>
+            </form>
+        </div>
+
+        <div class="panel-body" *ngIf="this.isSaved==true">
+           <p><button class="btn btn-success" (click)="onNavigateToNewProduct()">Nouveau Produit</button></p>
+            <div class="form-group"><label>ID:</label> {{this.savedProduct.id}}</div>
+            <div class="form-group"><label>Designation:</label> {{this.savedProduct.designation}}</div>
+            <div class="form-group"><label>Prix:</label> {{this.savedProduct.price}}</div>
+            <div class="form-group"><label>Quantité:</label> {{this.savedProduct.quantity}}</div>
+        </div>
+    </div>
+
+</div>

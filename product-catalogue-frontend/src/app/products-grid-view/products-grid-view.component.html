@@ -3,27 +3,30 @@
     <div class="panel panel-primary">
         <div class="panel-heading"> Liste des produits: </div>
         <div class="panel-body">
-            <form #f1="ngForm" (ngSubmit)="onSearchProducts(f1.value)">
-                <label>Mot clef: </label>
-                <input type="text" name="keyword" ngModel />
-                <input type="submit" class="btn btn-primary" value="Chercher" />
+            <form #searchForm="ngForm" (ngSubmit)="onSearchProducts(searchForm.value)">
+                <div class="form-group">
+                    <label>Mot clef: </label>
+                    <input type="text" name="keyword" ngModel />
+                    <input type="submit" class="btn btn-primary" value="Chercher" />
+                </div>
             </form>
         </div>
 
         <div class="panel-body">
-            <table class="table table-striped" *ngIf="this.jsonProducts!=undefined">
+            <table class="table table-bordered" *ngIf="this.jsonProducts!=undefined">
                 <tr>
                     <th>id</th>
                     <th>Designation</th>
                     <th>Prix</th>
                     <th>Quantité</th>
                 </tr>
-                <tr *ngFor='let p of this.jsonProducts._embedded.products'>
+                <tr *ngFor="let p of this.jsonProducts._embedded.products">
                     <td>{{p.id}}</td>
                     <td>{{p.designation}}</td>
                     <td>{{p.price|number:"0.2"}}</td>
                     <td>{{p.quantity}}</td>
-                    <td><button class="btn btn-danger" (click)="onSupprimerProduct(p)">Supprimer</button></td>
+                    <td><a class="btn btn-danger" (click)="onDeleteProduct(p)">Supprimer</a></td>
+                    <td><a class="btn btn-success" (click)="onEditProduct(p)">Modifier</a></td>
                 </tr>
             </table>
         </div>

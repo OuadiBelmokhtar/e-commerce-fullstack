@@ -1,28 +1,44 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { GlobalService } from './global.service';
 import { Observable } from 'rxjs';
+import { Product } from '../model/Product.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  private host:string="http://localhost:8087";
+  constructor(private httpClient: HttpClient) {
 
-  constructor(private httpClient: HttpClient) { 
-    
   }
 
 
-  getProducts(pageNbr: number, size: number) {
-    return this.httpClient.get(this.host+"/products?page=" + pageNbr + "&size=" + size);
+  getProducts(pageNbr: number, size: number): Observable<Product> {
+    return this.httpClient.get<Product>(GlobalService.HOST + "/products?page=" + pageNbr + "&size=" + size);
   }
 
-  searchProducts(keyword:string,pageNbr: number, size: number ){
-    return this.httpClient.get(this.host+"/products/search/filterByDesignationPage?key="+keyword+"&page="+pageNbr+"&size="+size);
+  searchProductsByKeyword(keyword: string, pageNbr: number, size: number): Observable<Product> {
+    return this.httpClient.get<Product>(GlobalService.HOST + "/products/search/filterByDesignationPage?key=" + keyword + "&page=" + pageNbr + "&size=" + size);
   }
 
-  supprimerProduct(URI:string){
-    return this.httpClient.delete(URI);
+  deleteProduct(URL: string) {
+    // Noter bien que la mtd DELETE ne retourne rien
+    return this.httpClient.delete(URL);
   }
+
+  updateProduct(URL: string, dataOfEditedProduct: any) {
+    return this.httpClient.put(URL, dataOfEditedProduct);
+
+  }
+
+  saveProduct(URL: string, data: any): Observable<Product> {
+    // Noter bien que la mtd POST RETROUNE l objet enregistre format JSON, avec ses propres _links
+    return this.httpClient.post<Product>(URL, data);
+  }
+
+  getProduct(URL: string): Observable<Product> {
+    return this.httpClient.get<Product>(URL);
+  }
+
 }

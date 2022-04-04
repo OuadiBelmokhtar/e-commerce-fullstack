@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ProductService } from '../services/product.service';
+import { Product } from '../model/Product.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products-grid-view',
@@ -15,28 +17,29 @@ export class ProductsGridViewComponent implements OnInit {
   public nbrEltPerPage: number = 5;
   private searchKeyword: string = "";
 
-  constructor(private productService: ProductService) {
+  constructor(private productService: ProductService, private router: Router) {
 
   }
 
   ngOnInit(): void {
   }
 
-  onSearchProducts(formContent: any) {
-    //console.log(formContent);
+  onSearchProducts(searchFormFields: any) {
+    //console.log(formFields);
+    // Noter bien que searchFormFields sera transmit au Model en format JSON comme suite {"fieldName1": value1, "fieldName2": value2}
     this.pageNbr = 0;
-    this.searchKeyword = formContent.keyword;
-    this.searchProducts();
+    this.searchKeyword = searchFormFields.keyword;
+    this.getProducts();
   }
 
   onNavigateToPage(pNbr: number) {
     //console.log(pNbr);
     this.pageNbr = pNbr;
-    this.searchProducts();
+    this.getProducts();
   }
 
-  private searchProducts() {
-    this.productService.searchProducts(this.searchKeyword, this.pageNbr, this.nbrEltPerPage)
+  private getProducts() {
+    this.productService.searchProductsByKeyword(this.searchKeyword, this.pageNbr, this.nbrEltPerPage)
       .subscribe(data => {
         this.jsonProducts = data;
         this.pagesArray = new Array<number>(this.jsonProducts.page.totalPages);
@@ -45,16 +48,25 @@ export class ProductsGridViewComponent implements OnInit {
       })
   }
 
-  onSupprimerProduct(p: any) {
-    //console.log(p);
-    let URI = p._links.self.href;
+  onDeleteProduct(product: any) {
+    //console.log(product);
+    // pr construire lURI on peut soit exploiter le lien autogenere par Spring Data Rest, ou le construire manuellement
+    // via URI="http://localhost:8087/products/"+product.id
+    let URI = product._links.self.href;
     //console.log(URI);
-    this.productService.supprimerProduct(URI)
-      .subscribe(data => {
-        this.searchProducts();
-      }, err => {
-        console.log(err);
-      })
+    let confirmDeletion = confirm("Etes-vous sure de supprimer le produit: " + product.id + " ?");
+    if (confirmDeletion) {
+      this.productService.deleteProduct(URI)
+        .subscribe(data => {
+          this.getProducts();
+        }, err => {
+          console.log(err);
+        })
+    }
+  }
+
+  onEditProduct(product: any) {
+    this.router.navigateByUrl('edit-product/' + btoa(product._links.self.href));
   }
 
 }
