@@ -34,19 +34,18 @@ public class ProductCatalogueBackendApplication {
         restConfiguration.exposeIdsFor(Category.class);
 
         return args -> {
-            Category category1=new Category(null,"PC Portable", "Différentes marques des PC porables",null);
-            Category category2=new Category(null,"Imprimante", "Différentes marques des imprimantes",null);
+            Category category1 = new Category(null, "PC Portable", "Différentes marques des PC porables", null);
+            Category category2 = new Category(null, "Imprimante", "Différentes marques des imprimantes", null);
             categoryRepository.save(category1);
             categoryRepository.save(category2);
 
-            productRepository.save(new Product(null, UUID.randomUUID().toString(),"Ordinateur Lx 45", 6700.0, 3,category1));
-            productRepository.save(new Product(null, UUID.randomUUID().toString(), "Imprimante HO", 1700.0, 10,category2));
-            productRepository.save(new Product(null, UUID.randomUUID().toString(), "Smartphone iPhone 12 pro", 9000.0, 5,null));
+            productRepository.save(new Product(null, UUID.randomUUID().toString(), "Ordinateur Lx 45", 6700.0, 3, category1));
+            productRepository.save(new Product(null, UUID.randomUUID().toString(), "Imprimante HO", 1700.0, 10, category2));
+            productRepository.save(new Product(null, UUID.randomUUID().toString(), "Smartphone iPhone 12 pro", 9000.0, 5, null));
 
-           // productService.getAllProducts().forEach(System.out::println);
+            // productService.getAllProducts().forEach(System.out::println);
             //categoryRepository.findAll().forEach(System.out::println);
         };
-
 
 
     }
