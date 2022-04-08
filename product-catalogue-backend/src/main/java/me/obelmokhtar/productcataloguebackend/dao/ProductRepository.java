@@ -7,13 +7,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
 @CrossOrigin("*") // autoriser les acces frontend provenant de n importe quel nom de domaine
 @RepositoryRestResource
 public interface ProductRepository extends JpaRepository<Product, Long> {
+
     @RestResource(path = "/filterByDesignation")
     public List<Product> findByDesignationContains(@Param("key") String keyword);
 

@@ -4,6 +4,7 @@ export class Category {
     private _id: number;
     private _name: string;
     private _description: string;
+    public _links:any;
 
     constructor(id: number, name: string, description: string) {
         this._id = id;

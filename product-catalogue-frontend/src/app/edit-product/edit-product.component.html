@@ -17,6 +17,14 @@
                     <label class="control-label">Quantité:</label>
                     <input class="form-control" type="number" required name="quantity" ngModel [(ngModel)]="this.productToUpdate.quantity">
                 </div>
+                <div class="form-group" *ngIf="this.productToUpdate.productCategory && this.allCategories">
+                    <label class="control-label">Catégorie:</label>
+                    <select class="form-control" name="productCategory" ngModel [(ngModel)]="this.productToUpdate.productCategory.id"> <!--garde le nom productCategory pr un fonctionnement correct-->
+                        <option *ngFor="let cat of this.allCategories._embedded.categories" [selected]="this.productToUpdate.productCategory.id==cat.id" [ngValue]="cat.id" >
+                            {{cat.name}}
+                        </option>
+                    </select>
+                </div>
                 <button class="btn btn-success" type="submit">Modifier</button>
             </form>
         </div>

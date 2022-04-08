@@ -69,4 +69,6 @@ export class ProductsGridViewComponent implements OnInit {
     this.router.navigateByUrl('edit-product/' + btoa(product._links.self.href));
   }
 
+ 
+
 }

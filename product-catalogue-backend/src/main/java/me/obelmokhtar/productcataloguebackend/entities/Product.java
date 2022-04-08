@@ -19,6 +19,6 @@ public class Product {
     private String designation;
     private Double price;
     private Integer quantity;
-    @ManyToOne(fetch = FetchType.EAGER)
-    Category category=new Category();
+    @ManyToOne
+    Category category;
 }

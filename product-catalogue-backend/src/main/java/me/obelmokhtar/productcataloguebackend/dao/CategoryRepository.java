@@ -4,14 +4,21 @@ import me.obelmokhtar.productcataloguebackend.entities.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-
+import org.springframework.data.rest.core.annotation.RestResource;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.Collection;
 
+@CrossOrigin("*")
 @RepositoryRestResource
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
-    public Collection<Category> findByNameContains(String keyword);
-    public Page<Category> findByNameContains(String keyword, Pageable pageable);
+    @RestResource(path = "/filterCategoryByName")
+    public Collection<Category> findByNameContains(@Param("key") String keyword);
+
+    @RestResource(path = "/filterCategoryByNamePage")
+    public Page<Category> findByNameContains(@Param("key") String keyword, Pageable pageable);
 }

@@ -16,6 +16,6 @@ public class Category {
     @Column(unique = true)
     private String name;
     private String description;
-    @OneToMany(mappedBy = "category")
-    Collection<Product> products;
+//    @OneToMany(mappedBy = "category")
+//    Collection<Product> products;
 }
