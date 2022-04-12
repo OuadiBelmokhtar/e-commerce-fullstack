@@ -13,18 +13,21 @@
         </div>
 
         <div class="panel-body">
-            <table class="table table-bordered" *ngIf="this.jsonProducts!=undefined">
+            <table class="table table-bordered" *ngIf="this.allProducts!=undefined">
                 <tr>
                     <th>id</th>
                     <th>Designation</th>
                     <th>Prix</th>
                     <th>Quantité</th>
+                    <th>Catégorie</th>
                 </tr>
-                <tr *ngFor="let p of this.jsonProducts._embedded.products">
+                <tr *ngFor="let p of this.allProducts._embedded.products; let i=index">
+                    <!-- <tr *ngFor="let p of this.productsWithCategories; let i=index"> -->
                     <td>{{p.id}}</td>
                     <td>{{p.designation}}</td>
                     <td>{{p.price|number:"0.2"}}</td>
                     <td>{{p.quantity}}</td>
+                    <!-- <td>{{p._links.category.href}}</td> -->
                     <td><a class="btn btn-danger" (click)="onDeleteProduct(p)">Supprimer</a></td>
                     <td><a class="btn btn-success" (click)="onEditProduct(p)">Modifier</a></td>
                 </tr>

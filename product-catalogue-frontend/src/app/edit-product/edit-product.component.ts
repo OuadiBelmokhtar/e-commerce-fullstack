@@ -4,6 +4,7 @@ import { Product } from '../model/Product.model';
 import { ProductService } from '../services/product.service';
 import { CategoryService } from '../services/category.service';
 import { Category } from '../model/Category.model';
+import { GlobalService } from '../services/global.service';
 
 @Component({
   selector: 'app-edit-product',
@@ -23,8 +24,8 @@ export class EditProductComponent implements OnInit {
     // recuperer et decrypter l uri passe en param par le component ProductsGridView
     this.uriProductToUpdate = atob(this.activatedRoute.snapshot.params['uriProductToEdit']);
     this.productService.getProduct(this.uriProductToUpdate).subscribe(
-      data => {
-        this._productToUpdate = data;
+      response => {
+        this._productToUpdate = response;
         // recuperer la list des categories pr l afficher ds <select>
         this.setAllCategories();
         // 
@@ -35,8 +36,12 @@ export class EditProductComponent implements OnInit {
   }
 
   onUpdateProduct(updatingFormFields: any) {
+    // modifer les infos du product
     this.productService.updateProduct(this.uriProductToUpdate, updatingFormFields)
-      .subscribe(data => {
+      .subscribe(response => {
+        
+        // modifier la category associee
+        this.updateAssociationProductCategory(updatingFormFields);
         alert("Produit " + updatingFormFields.designation + " bien modifié");
         console.log("updatingFormFields");
         console.log(updatingFormFields);
@@ -50,8 +55,8 @@ export class EditProductComponent implements OnInit {
   private setCategoryAssociatedWithProductToUpdat(productToUpdate: Product) {
     let URICategoryAssociatedWithProductToUpdat = productToUpdate._links.category.href;
     this.categoryService.getCategory(URICategoryAssociatedWithProductToUpdat)
-      .subscribe(data => {
-        this._productToUpdate.productCategory = data;
+      .subscribe(response => {
+        this._productToUpdate.productCategory = response;
         console.log("Category of productToUpdate");
         console.log(this._productToUpdate.productCategory);
       }, err => {
@@ -59,11 +64,28 @@ export class EditProductComponent implements OnInit {
       });
   }
 
+  private updateAssociationProductCategory(updatingFormFields: any) {
+    // pr le cas de modification, vu la contrainte de manipulation de l'id de la category ds <select>, on ne peut utiliser qu'une SEULE mtd pr recuperer les liens: c'est la construction manuelle
+    let URIOfProductToBindTo = this.uriProductToUpdate + "/category";
+    let URIOfCategoryToBind = GlobalService.HOST + "/categories/" + updatingFormFields.productCategoryId;
+    console.log("URIOfProductToBindTo");
+    console.log(URIOfProductToBindTo);
+    console.log("URIOfCategoryToBind");
+    console.log(URIOfCategoryToBind);
+    this.productService.updateProductAssociation(URIOfProductToBindTo, URIOfCategoryToBind)
+      .subscribe(response => {
+        // la reponse retournee par PUT est vide
+        console.log("Category updated");
+      }, err => {
+        console.log(err);
+      })
+  }
+
   setAllCategories() {
     this.categoryService.getAllCategories()
-      .subscribe((data) => {
+      .subscribe((response) => {
         //this._categories = new Array<Category>();
-        this._allCategories = data;
+        this._allCategories = response;
         console.log("_allCategories");
         console.log(this._allCategories);
       }, err => {

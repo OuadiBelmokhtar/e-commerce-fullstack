@@ -13,7 +13,14 @@
           <li><a routerLink="/new-product">Ajouter</a></li>
         </ul>
       </li>
-      <li><a href="#">Catégorie</a></li>
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Catégories
+          <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a routerLink="/categories-grid">Chercher</a></li>
+          <li><a routerLink="/new-category">Ajouter</a></li>
+        </ul>
+      </li>
       <li><a href="#">Client</a></li>
     </ul>
   </div>

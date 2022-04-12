@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ProductService } from '../services/product.service';
 import { Product } from '../model/Product.model';
 import { Router } from '@angular/router';
+import { Category } from '../model/Category.model';
 
 @Component({
   selector: 'app-products-grid-view',
@@ -11,8 +12,9 @@ import { Router } from '@angular/router';
 })
 export class ProductsGridViewComponent implements OnInit {
 
-  public jsonProducts: any = undefined;
+  public allProducts: any = undefined;
   public pagesArray: Array<number> = [];
+  //public productsWithCategories: Array<Product> = [];
   public pageNbr: number = 0;
   public nbrEltPerPage: number = 5;
   private searchKeyword: string = "";
@@ -40,15 +42,25 @@ export class ProductsGridViewComponent implements OnInit {
 
   private getProducts() {
     this.productService.searchProductsByKeyword(this.searchKeyword, this.pageNbr, this.nbrEltPerPage)
-      .subscribe(data => {
-        this.jsonProducts = data;
-        this.pagesArray = new Array<number>(this.jsonProducts.page.totalPages);
+      .subscribe(response => {
+        this.allProducts = response;
+        //this.fillProductsWithCategories(this.allProducts);
+        console.log("allProducts");
+        console.log(this.allProducts);
+        this.pagesArray = new Array<number>(this.allProducts.page.totalPages);
       }, err => {
         console.log(err);
       })
   }
+  // ca ne marche pas
+  // private fillProductsWithCategories(products:Array<Product>):void{
+  //   for (let product of products) {
+  //     product.productCategory=this.getCategoryOfProduct(product._links.category.href);
+  //     this.productsWithCategories.push(product);
+  //   }
+  // }
 
-  onDeleteProduct(product: any) {
+  onDeleteProduct(product: Product) {
     //console.log(product);
     // pr construire lURI on peut soit exploiter le lien autogenere par Spring Data Rest, ou le construire manuellement
     // via URI="http://localhost:8087/products/"+product.id
@@ -57,7 +69,7 @@ export class ProductsGridViewComponent implements OnInit {
     let confirmDeletion = confirm("Etes-vous sure de supprimer le produit: " + product.id + " ?");
     if (confirmDeletion) {
       this.productService.deleteProduct(URI)
-        .subscribe(data => {
+        .subscribe(response => {
           this.getProducts();
         }, err => {
           console.log(err);
@@ -69,6 +81,13 @@ export class ProductsGridViewComponent implements OnInit {
     this.router.navigateByUrl('edit-product/' + btoa(product._links.self.href));
   }
 
- 
+  getCategoryOfProduct(URICategory:string):any{
+     this.productService.getCategoryOfProduct(URICategory)
+     .subscribe(response=>{
+       return response;
+     }, err=>{
+       console.log(err);
+     })
+  }
 
 }

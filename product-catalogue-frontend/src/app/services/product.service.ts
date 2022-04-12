@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { GlobalService } from './global.service';
 import { Observable } from 'rxjs';
 import { Product } from '../model/Product.model';
+import { Category } from '../model/Category.model';
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +45,10 @@ export class ProductService {
 
   getProduct(URL: string): Observable<Product> {
     return this.httpClient.get<Product>(URL);
+  }
+
+  getCategoryOfProduct(URICategory:string):Observable<Category>{
+    return this.httpClient.get<Category>(URICategory);
   }
 
 }

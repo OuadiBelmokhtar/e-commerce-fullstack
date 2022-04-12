@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Ajouter Catégorie
+        </div>
+        <div class="panel-body" *ngIf="!this.isSaved">
+            <form #savingForm="ngForm" (ngSubmit)="this.onSaveCategory(savingForm.value)">
+                <div class="form-group">
+                    <label class="control-label">Nom:</label>
+                    <input class="form-control" type="text" name="name" ngModel>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Description:</label>
+                    <textarea class="form-control" name="description" cols="20" rows="5" ngModel></textarea>
+                </div>
+                <input class="btn btn-default" type="button" value="Annuler">
+                <input class="btn btn-success" type="submit" value="Enregistrer">
+            </form>
+        </div>
+        <div class="panel-body" *ngIf="this.isSaved">
+            <div class="panel-body">
+                <label>Categorie bien enregistrée:</label>
+                <p><input class="btn btn-success" type="button" value="< Ajouter nouvelle catégorie" (click)="this.onNewCategory()"></p>
+                <div>
+                    <label>Nom: </label> {{this.savedCategory.name}}
+                </div>
+                <div>
+                    <label>Description: </label> {{this.savedCategory.description}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

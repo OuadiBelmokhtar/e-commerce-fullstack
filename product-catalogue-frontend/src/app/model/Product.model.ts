@@ -8,6 +8,7 @@ export class Product {
     private _quantity: number;
     private _productCategory: Category; // tu gardes ce nom, pr faire marcher la persistance de l'association correctement
     public _links:any;
+    public _embedded:any;
 
     constructor(id: number, designation: string, price: number, quantity: number, category: Category) {
         this._id = id;

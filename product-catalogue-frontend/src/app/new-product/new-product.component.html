@@ -1,7 +1,7 @@
 <div class="container">
     <div class="panel panel-default">
         <div class="panel-heading">Ajouter Produit:</div>
-        <div class="panel-body" *ngIf="this.isSaved==false">
+        <div class="panel-body" *ngIf="!this.isSaved">
             <form #savingForm="ngForm" (ngSubmit)="onAddProduct(savingForm.value)">
                 <div class="form-group">
                     <label class="control-label">Désignation: </label>
@@ -23,6 +23,7 @@
                             {{cat.name}}
                         </option>
                     </select>
+                    <button class="btn btn-success" type="button" routerLink="/new-category">+</button>
                 </div>
                 <button class="btn btn-success" type="submit">Ajouter</button>
             </form>

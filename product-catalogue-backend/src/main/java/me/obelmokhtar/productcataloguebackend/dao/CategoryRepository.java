@@ -11,13 +11,14 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.Collection;
+import java.util.List;
 
 @CrossOrigin("*")
 @RepositoryRestResource
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
-    @RestResource(path = "/filterCategoryByName")
-    public Collection<Category> findByNameContains(@Param("key") String keyword);
+    @RestResource( path = "/filterCategoryByName")
+    public List<Category> findByNameContains(@Param("key")String keyword);
 
     @RestResource(path = "/filterCategoryByNamePage")
     public Page<Category> findByNameContains(@Param("key") String keyword, Pageable pageable);

@@ -19,13 +19,15 @@
                 </div>
                 <div class="form-group" *ngIf="this.productToUpdate.productCategory && this.allCategories">
                     <label class="control-label">Catégorie:</label>
-                    <select class="form-control" name="productCategory" ngModel [(ngModel)]="this.productToUpdate.productCategory.id"> <!--garde le nom productCategory pr un fonctionnement correct-->
+                    <select class="form-control" name="productCategoryId" ngModel [(ngModel)]="this.productToUpdate.productCategory.id"> <!--garde le nom productCategory pr un fonctionnement correct-->
                         <option *ngFor="let cat of this.allCategories._embedded.categories" [selected]="this.productToUpdate.productCategory.id==cat.id" [ngValue]="cat.id" >
                             {{cat.name}}
                         </option>
                     </select>
+                    <button class="btn btn-success" type="button" routerLink="/new-category">+</button>
                 </div>
                 <button class="btn btn-success" type="submit">Modifier</button>
+                <button class="btn btn-default"  type="button" routerLink="/products-grid">Annuler</button>
             </form>
         </div>
     </div>

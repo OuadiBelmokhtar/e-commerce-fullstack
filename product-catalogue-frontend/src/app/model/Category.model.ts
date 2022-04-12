@@ -5,6 +5,8 @@ export class Category {
     private _name: string;
     private _description: string;
     public _links:any;
+    public _embedded:any;
+    public page:any;
 
     constructor(id: number, name: string, description: string) {
         this._id = id;

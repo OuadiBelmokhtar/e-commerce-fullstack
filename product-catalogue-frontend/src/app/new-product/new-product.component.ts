@@ -85,9 +85,9 @@ export class NewProductComponent implements OnInit {
 
   setAllCategories() {
     this.categoryService.getAllCategories()
-      .subscribe((data) => {
+      .subscribe((response) => {
         //this._categories = new Array<Category>();
-        this._allCategories = data;
+        this._allCategories = response;
         console.log(this._allCategories);
       }, err => {
         console.log(err);
