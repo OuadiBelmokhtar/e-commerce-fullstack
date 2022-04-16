@@ -30,8 +30,7 @@ public class ProductCatalogueBackendApplication {
                            CategoryService categoryService,
                            RepositoryRestConfiguration restConfiguration) {
 
-        restConfiguration.exposeIdsFor(Product.class);
-        restConfiguration.exposeIdsFor(Category.class);
+        restConfiguration.exposeIdsFor(Product.class, Category.class);
 
         return args -> {
 //            Category category1 = new Category(null, "PC Portable", "Différentes marques des PC porables", null);

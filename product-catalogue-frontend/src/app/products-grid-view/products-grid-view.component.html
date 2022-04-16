@@ -13,20 +13,26 @@
         </div>
 
         <div class="panel-body">
-            <table class="table table-bordered" *ngIf="this.allProducts!=undefined">
+            <table class="table table-striped table-hover" *ngIf="this.allProducts!=undefined">
                 <tr>
                     <th>id</th>
                     <th>Designation</th>
-                    <th>Prix</th>
+                    <th>Prix courant</th>
                     <th>Quantité</th>
+                    <th>En promotion</th>
+                    <th>Disponible</th>
+                    <th>Photo</th>
                     <th>Catégorie</th>
                 </tr>
                 <tr *ngFor="let p of this.allProducts._embedded.products; let i=index">
                     <!-- <tr *ngFor="let p of this.productsWithCategories; let i=index"> -->
                     <td>{{p.id}}</td>
                     <td>{{p.designation}}</td>
-                    <td>{{p.price|number:"0.2"}}</td>
+                    <td>{{p.currentPrice|number:"0.2"}}</td>
                     <td>{{p.quantity}}</td>
+                    <td>{{p.promotion}}</td>
+                    <td>{{p.available}}</td>
+                    <td>{{p.photoName}}</td>
                     <!-- <td>{{p._links.category.href}}</td> -->
                     <td><a class="btn btn-danger" (click)="onDeleteProduct(p)">Supprimer</a></td>
                     <td><a class="btn btn-success" (click)="onEditProduct(p)">Modifier</a></td>

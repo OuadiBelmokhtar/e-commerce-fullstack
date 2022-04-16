@@ -4,9 +4,9 @@ export class Category {
     private _id: number;
     private _name: string;
     private _description: string;
-    public _links:any;
-    public _embedded:any;
-    public page:any;
+    public _links: any;// garder le public
+    public _embedded: any;// garder le public
+    public _page: any;// garder le public
 
     constructor(id: number, name: string, description: string) {
         this._id = id;
@@ -23,7 +23,6 @@ export class Category {
     public get description() {
         return this._description;
     }
-
     public set id(id: number) {
         this._id = id;
     }
@@ -33,5 +32,6 @@ export class Category {
     public set description(description: string) {
         this._description = description;
     }
+   
 
 }

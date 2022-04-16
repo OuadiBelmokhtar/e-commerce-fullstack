@@ -10,8 +10,30 @@
                     <input class="form-control" type="text" name="designation" ngModel [(ngModel)]="this.productToUpdate.designation"> 
                 </div>
                 <div class="form-group">
-                    <label class="label-control">Prix:</label>
-                    <input class="form-control" type="text" name="price" ngModel [(ngModel)]="this.productToUpdate.price">
+                    <label class="control-label">Description: </label>
+                    <textarea class="form-control"  name="designation" cols="20" rows="6" ngModel [(ngModel)]="this.productToUpdate.designation"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="label-control">Prix courant:</label>
+                    <input class="form-control" type="text" name="currentPrice" ngModel [(ngModel)]="this.productToUpdate.currentPrice">
+                </div>
+                <div class="form-group">
+                    <label class="control-label">En promotion {{this.productToUpdate.promotion}} ? </label><br>
+                    <input type="radio" name="promotion" value="true" checked="{{this.productToUpdate.promotion}}" ngModel [(ngModel)]="this.productToUpdate.promotion">
+                    <label class="control-label"> Oui </label><br>
+                    <input type="radio" name="promotion" value="false" checked="{{this.productToUpdate.promotion}}" ngModel [(ngModel)]="this.productToUpdate.promotion">
+                    <label class="control-label"> Non </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Disponible? </label><br>
+                    <input type="radio" name="available" value="true" value="{{this.productToUpdate.available}}" ngModel [(ngModel)]="this.productToUpdate.available">
+                    <label class="control-label"> Oui </label><br>
+                    <input type="radio" name="available" value="false" value="{{this.productToUpdate.available}}" ngModel [(ngModel)]="this.productToUpdate.available">
+                    <label class="control-label"> Non </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Photo: </label>
+                    <img src="{{this.productToUpdate.photoName}}" alt="{{this.productToUpdate.photoName}}">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Quantité:</label>

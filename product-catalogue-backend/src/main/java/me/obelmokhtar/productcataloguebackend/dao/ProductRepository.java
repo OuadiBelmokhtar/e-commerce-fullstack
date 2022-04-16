@@ -7,10 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -24,5 +21,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     // obligatoire pr gerer la pagination
     @RestResource(path = "/filterByDesignationPage")
     public Page<Product> findByDesignationContains(@Param("key") String keyword, Pageable pageable);
+
+    @RestResource(path="/selectedProducts")
+    public List<Product> findBySelectedIsTrue();
 
 }

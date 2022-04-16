@@ -14,6 +14,9 @@ export class ProductService {
 
   }
 
+  public getProductsByCategory(uri: string):Observable<Product> {
+    return this.httpClient.get<Product>(uri);
+  }
 
   getProducts(pageNbr: number, size: number): Observable<Product> {
     return this.httpClient.get<Product>(GlobalService.HOST + "/products?page=" + pageNbr + "&size=" + size);
@@ -47,7 +50,11 @@ export class ProductService {
     return this.httpClient.get<Product>(URL);
   }
 
-  getCategoryOfProduct(URICategory:string):Observable<Category>{
+  getProductPhoto(URL:string){
+    return this.httpClient.get(URL);
+  }
+
+  getCategoryOfProduct(URICategory: string): Observable<Category> {
     return this.httpClient.get<Category>(URICategory);
   }
 

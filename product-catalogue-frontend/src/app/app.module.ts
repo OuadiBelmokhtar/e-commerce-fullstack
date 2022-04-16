@@ -11,6 +11,7 @@ import { EditProductComponent } from './edit-product/edit-product.component';
 import { NewCategoryComponent } from './new-category/new-category.component';
 import { CategoriesGridViewComponent } from './categories-grid-view/categories-grid-view.component';
 import { EditCategoryComponent } from './edit-category/edit-category.component';
+import { FrontofficeProductsGridViewComponent } from './frontoffice-products-grid-view/frontoffice-products-grid-view.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { EditCategoryComponent } from './edit-category/edit-category.component';
     EditProductComponent,
     NewCategoryComponent,
     CategoriesGridViewComponent,
-    EditCategoryComponent
+    EditCategoryComponent,
+    FrontofficeProductsGridViewComponent
   ],
   imports: [
     BrowserModule,

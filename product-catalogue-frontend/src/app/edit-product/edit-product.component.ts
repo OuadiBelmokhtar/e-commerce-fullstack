@@ -45,7 +45,7 @@ export class EditProductComponent implements OnInit {
         alert("Produit " + updatingFormFields.designation + " bien modifié");
         console.log("updatingFormFields");
         console.log(updatingFormFields);
-        this.router.navigateByUrl("products-grid");
+        this.router.navigateByUrl("/products-grid");
       }, err => {
         console.log(err);
       });

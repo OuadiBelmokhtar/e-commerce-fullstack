@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../services/category.service';
 import { Category } from '../model/Category.model';
 import { Router } from '@angular/router';
+import { GlobalService } from '../services/global.service';
 
 
 @Component({
@@ -16,9 +17,9 @@ export class CategoriesGridViewComponent implements OnInit {
   private _nbrEltPerPage: number = 5;
   private _totalPages: number = 0;
   private _indicePagesArray!: Array<number>;
-  private _indicePage:number=0;
+  private _indicePage: number = 0;
 
-  constructor(private categoryService: CategoryService, private router:Router) { }
+  constructor(private categoryService: CategoryService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -27,13 +28,13 @@ export class CategoriesGridViewComponent implements OnInit {
     console.log("searchingFormFields");
     console.log(searchingFormFields);
     this._keyword = searchingFormFields.keyword;
-    this._indicePage=0;
+    this._indicePage = 0;
     this.categoryService.getAllCategoriesByKeyword(this._keyword, this._indicePage, this._nbrEltPerPage)
       .subscribe(response => {
         console.log("response");
         console.log(response);
         this.allCategories = response._embedded.categories;
-        this._totalPages = response.page.totalPages;
+        this._totalPages = response._page.totalPages;
         this._indicePagesArray = new Array(this._totalPages);
       }, err => {
         console.log(err);
@@ -53,13 +54,13 @@ export class CategoriesGridViewComponent implements OnInit {
     }
   }
 
-  onEditCategory(category:Category){
-    let uriCategoryToEdit=category._links.self.href;
-    this.router.navigateByUrl()
+  onEditCategory(category: Category) {
+    let uriCategoryToEdit = category._links.self.href;
+    this.router.navigateByUrl('edit-category/' + btoa(uriCategoryToEdit));
   }
 
-  public onPageIndice(indice:number){
-    this._indicePage=indice;
+  public onPageIndice(indice: number) {
+    this._indicePage = indice;
     this.getCategoriesByKeyword();
   }
   private getCategoriesByKeyword() {

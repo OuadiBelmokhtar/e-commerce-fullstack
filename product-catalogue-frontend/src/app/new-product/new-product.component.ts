@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Product } from '../model/Product.model';
 import { Category } from '../model/Category.model';
 import { CategoryService } from '../services/category.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-new-product',
@@ -29,10 +30,13 @@ export class NewProductComponent implements OnInit {
   }
 
   onAddProduct(savingFormFields: any) {
-    console.log("FormFields ");
+    console.log("savingFormFields ");
     console.log(savingFormFields);
     this.selectedCategory = savingFormFields.productCategory; // recuperer la category choisie ds le champ <select>
     // Noter bien que savingFormFields sera transmit au Model en format JSON comme suite {"fieldName1": value1, "fieldName2": value2}
+    //definir UUID pr la reference
+    let refUUID = uuidv4();
+    savingFormFields.reference = refUUID;
     this.productService.saveProduct(GlobalService.HOST + "/products", savingFormFields)
       .subscribe(response => {
         //  console.log("Produit bien enregistré ");

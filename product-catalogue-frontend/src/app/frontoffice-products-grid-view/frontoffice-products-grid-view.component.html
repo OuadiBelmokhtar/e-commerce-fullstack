@@ -1,0 +1,22 @@
+
+<div class="container">
+    <div class="col-md-3">
+        <ul class="list-group" *ngIf="this.categories">
+            <a class="list-group-item _curseur" *ngFor="let category of this.categories">
+               <span (click)="onGetProductsByCategory(category)">{{category.name}}</span> 
+            </a>
+        </ul>
+    </div>
+    <div class="col-md-9" *ngIf="this.products">
+            <div class="panel panel-info col-md-4" *ngFor="let product of this.products">
+                  <div class="panel-heading">
+                        <h5 class="panel-title">{{product.designation}}</h5>
+                  </div>
+                  <div class="panel-body">
+                        {{product.photoName}}
+                        <img src="http://localhost:8087/get-product-photo/"+{{product.photoName}} alt="">
+                  </div>
+            </div>
+    </div>
+</div>
+

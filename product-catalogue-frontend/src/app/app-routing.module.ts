@@ -5,13 +5,17 @@ import { NewProductComponent } from './new-product/new-product.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { NewCategoryComponent } from './new-category/new-category.component';
 import { CategoriesGridViewComponent } from './categories-grid-view/categories-grid-view.component';
+import { EditCategoryComponent } from './edit-category/edit-category.component';
+import { FrontofficeProductsGridViewComponent } from './frontoffice-products-grid-view/frontoffice-products-grid-view.component';
 
 const routes: Routes = [
   { path: "products-grid", component: ProductsGridViewComponent },
   { path: "new-product", component: NewProductComponent },
-  {path:"categories-grid", component:CategoriesGridViewComponent},
-  { path: "new-category", component: NewCategoryComponent },
   { path: "edit-product/:uriProductToEdit", component: EditProductComponent },
+  { path: "categories-grid", component: CategoriesGridViewComponent },
+  { path: "new-category", component: NewCategoryComponent },
+  { path: "edit-category/:uriOfCategoryToEdit", component: EditCategoryComponent },
+  {path: "frontoffice-products-grid", component:FrontofficeProductsGridViewComponent},
   { path: "", redirectTo: "products-grid", pathMatch: "full" }
 ];
 

@@ -8,6 +8,7 @@ import { GlobalService } from './global.service';
   providedIn: 'root'
 })
 export class CategoryService {
+  
  
   constructor(private httpClient: HttpClient) {
 
@@ -19,6 +20,10 @@ export class CategoryService {
 
   public deleteCategory(uri:string) {
    return this.httpClient.delete(uri);
+  }
+
+  public updateCategory(uriCategoryToEdit:string,editingFormFields: any) {
+    return this.httpClient.put(uriCategoryToEdit, editingFormFields);
   }
  
   public searchCategory(keyword: string) : Observable<Category>{
