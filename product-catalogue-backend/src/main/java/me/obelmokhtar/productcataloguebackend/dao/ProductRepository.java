@@ -23,6 +23,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     public Page<Product> findByDesignationContains(@Param("key") String keyword, Pageable pageable);
 
     @RestResource(path="/selectedProducts")
-    public List<Product> findBySelectedIsTrue();
+    public List<Product> findByIsSelectedIsTrue();
+
+    @RestResource(path = "/onPormotionProducts")
+    public List<Product> findByIsOnPromotionIsTrue();
 
 }

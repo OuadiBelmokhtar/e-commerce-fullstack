@@ -1,22 +1,31 @@
-
 <div class="container">
-    <div class="col-md-3">
-        <ul class="list-group" *ngIf="this.categories">
-            <a class="list-group-item _curseur" *ngFor="let category of this.categories">
-               <span (click)="onGetProductsByCategory(category)">{{category.name}}</span> 
-            </a>
-        </ul>
-    </div>
-    <div class="col-md-9" *ngIf="this.products">
-            <div class="panel panel-info col-md-4" *ngFor="let product of this.products">
-                  <div class="panel-heading">
-                        <h5 class="panel-title">{{product.designation}}</h5>
-                  </div>
-                  <div class="panel-body">
-                        {{product.photoName}}
-                        <img src="http://localhost:8087/get-product-photo/"+{{product.photoName}} alt="">
-                  </div>
+    <div class="col-md-9 col-sm-6" *ngIf="this.products">
+        <div class="panel panel-info col-md-4" *ngFor="let product of this.products">
+            <div class="panel-heading">
+                <h5 class="panel-title">{{product.designation}}</h5>
             </div>
+            <div class="panel-body">
+                <table>
+                    <tr>
+                        <td><img height="150" width="150" src="{{this.HOST+'/get-product-photo/'+product.photoName}}">
+                        </td>
+                        <td>{{product.currentPrice|number:'0.2'}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button (click)="onEditPhoto(product)">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </button>
+                            <div *ngIf="this.isEditPhoto && this.currentProduct==product">
+                                <input type="file" (change)="onSelectPhotos($event)">
+                                <input class="btn btn-primary" type="button" value="Upload" (click)="onUploadPhotos()" [disabled]="!this.selectedPhotos">
+                            </div>
+
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
     </div>
 </div>
-

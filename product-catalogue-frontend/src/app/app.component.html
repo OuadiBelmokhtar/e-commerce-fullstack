@@ -1,10 +1,20 @@
 <nav class="navbar navbar-inverse">
-  <div class="container-fluid">
+  <div class="container">
     <div class="navbar-header">
       <a class="navbar-brand" href="#">WebSiteName</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a routerLink="/">Home</a></li>
+      <li class="active">
+        <a class="_curseur" (click)="this.onNavigateToShowSelectedProducts()">Home</a></li>
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Front Office
+          <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a class="_curseur" (click)="this.onNavigateToShowProductsByCategory(1)">Produits par catégorie</a></li>
+          <li><a class="_curseur" (click)="this.onNavigateToShowSelectedProducts()">Produits sélectionnés</a></li>
+          <li><a class="_curseur" (click)="this.onNavigateToShowOnPromotionProducts()">Produits en promo</a></li>
+        </ul>
+      </li>
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Produits
           <span class="caret"></span></a>
@@ -22,9 +32,20 @@
         </ul>
       </li>
       <li><a href="#">Client</a></li>
-      <li><a routerLink="/frontoffice-products-grid">Front Office</a></li>
     </ul>
   </div>
 </nav>
 
-<router-outlet></router-outlet>
+  <div class="col-md-3" *ngIf="this.showingMode==1">
+    <ul class="list-group" *ngIf="this.categories">
+      <a [ngClass]="this.clickedCategoryId==category.id?'active':''" class="list-group-item _curseur"  *ngFor="let category of this.categories">
+        <span  (click)="onNavigateToShowProductsByCategory(category.id)">{{category.name}}</span>
+      </a>
+    </ul>
+  </div>
+
+  <div class="col-md-9">
+    <router-outlet>
+
+    </router-outlet>
+  </div>

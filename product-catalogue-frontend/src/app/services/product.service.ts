@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GlobalService } from './global.service';
 import { Observable } from 'rxjs';
@@ -14,7 +14,11 @@ export class ProductService {
 
   }
 
-  public getProductsByCategory(uri: string):Observable<Product> {
+  public getProductsByCategory(uri: string): Observable<Product> {
+    return this.httpClient.get<Product>(uri);
+  }
+
+  getAllProducts(uri: string): Observable<Product> {
     return this.httpClient.get<Product>(uri);
   }
 
@@ -50,12 +54,36 @@ export class ProductService {
     return this.httpClient.get<Product>(URL);
   }
 
-  getProductPhoto(URL:string){
+  getProductPhoto(URL: string) {
     return this.httpClient.get(URL);
+    //pas besoin ,{ headers: new HttpHeaders({ 'Content-Type': 'image/png' }) }
   }
 
   getCategoryOfProduct(URICategory: string): Observable<Category> {
     return this.httpClient.get<Category>(URICategory);
+  }
+
+  /* 
+  Envoyer la photo au backend
+  photoFile: la photo a uploader
+  idProductToUpdate: l'id du product on veut maj la photo
+  */
+  //
+  uploadProductPhoto(photo: File, idProductToUpdate: number): Observable<HttpEvent<{}>> {
+    // on peut utiliser ce meme programme pr uploader differents types de fichiers (excel, ...)
+    // Encapsuler la photo selectionne par l'utilisateur ds un objet FormaData. 
+    // C'est cet objet qui sera serialisé au backend ds une requete POST
+    let formData: FormData = new FormData();
+    formData.append('photoFile', photo);
+    // construire une requete POST
+    const req = new HttpRequest('POST', GlobalService.HOST + '/upload-product-photo/'+idProductToUpdate, 
+    formData, {
+      // pr recevoir la progression d'ulpoad
+      reportProgress: true,
+      // on veut recevoir une reponse Text, non pas JSON.
+      responseType: 'text'
+    });
+    return this.httpClient.request(req);
   }
 
 }

@@ -20,9 +20,9 @@ public class Product implements Serializable {
     private String designation;
     private String description;
     private Double currentPrice;
-    private Boolean promotion;
-    private Boolean selected;
-    private Boolean available;
+    private Boolean isOnPromotion;
+    private Boolean isSelected;
+    private Boolean isAvailable;
     private String photoName;
     private Integer quantity;
     @ManyToOne

@@ -7,16 +7,18 @@ import { NewCategoryComponent } from './new-category/new-category.component';
 import { CategoriesGridViewComponent } from './categories-grid-view/categories-grid-view.component';
 import { EditCategoryComponent } from './edit-category/edit-category.component';
 import { FrontofficeProductsGridViewComponent } from './frontoffice-products-grid-view/frontoffice-products-grid-view.component';
+import { AppComponent } from './app.component';
 
 const routes: Routes = [
+  {path:"home", component:AppComponent},
   { path: "products-grid", component: ProductsGridViewComponent },
   { path: "new-product", component: NewProductComponent },
   { path: "edit-product/:uriProductToEdit", component: EditProductComponent },
   { path: "categories-grid", component: CategoriesGridViewComponent },
   { path: "new-category", component: NewCategoryComponent },
   { path: "edit-category/:uriOfCategoryToEdit", component: EditCategoryComponent },
-  {path: "frontoffice-products-grid", component:FrontofficeProductsGridViewComponent},
-  { path: "", redirectTo: "products-grid", pathMatch: "full" }
+  {path: "frontoffice-products-grid/:showProductsMode/:categoryId", component:FrontofficeProductsGridViewComponent},
+  { path: "", redirectTo: "", pathMatch: "full" }
 ];
 
 @NgModule({
