@@ -65,19 +65,21 @@ export class ProductService {
 
   /* 
   Envoyer la photo au backend
-  photoFile: la photo a uploader
-  idProductToUpdate: l'id du product on veut maj la photo
+  photo: la photo a uploader
+  idProductToUpdate: l'id du product dont on veut maj la photo
   */
   //
   uploadProductPhoto(photo: File, idProductToUpdate: number): Observable<HttpEvent<{}>> {
     // on peut utiliser ce meme programme pr uploader differents types de fichiers (excel, ...)
-    // Encapsuler la photo selectionne par l'utilisateur ds un objet FormaData. 
+    // Encapsuler la photo selectionnee par l'utilisateur ds un objet FormaData. 
     // C'est cet objet qui sera serialisé au backend ds une requete POST
     let formData: FormData = new FormData();
     formData.append('photoFile', photo);
     // construire une requete POST
-    const req = new HttpRequest('POST', GlobalService.HOST + '/upload-product-photo/'+idProductToUpdate, 
-    formData, {
+    // Comme constaté, uploader un fichier vers le backend, 
+    // consiste à envoyer une requete POST contenant le fichier à envoyer ds son body.
+    const req = new HttpRequest('POST', GlobalService.HOST + '/upload-product-photo/' + idProductToUpdate,
+      formData, {
       // pr recevoir la progression d'ulpoad
       reportProgress: true,
       // on veut recevoir une reponse Text, non pas JSON.

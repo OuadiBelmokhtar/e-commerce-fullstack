@@ -1,5 +1,6 @@
 <div class="container">
     <div class="col-md-9 col-sm-6" *ngIf="this.products">
+        <h3>{{this.title}}</h3>
         <div class="panel panel-info col-md-4" *ngFor="let product of this.products">
             <div class="panel-heading">
                 <h5 class="panel-title">{{product.designation}}</h5>
@@ -7,7 +8,7 @@
             <div class="panel-body">
                 <table>
                     <tr>
-                        <td><img height="150" width="150" src="{{this.HOST+'/get-product-photo/'+product.photoName}}">
+                        <td><img height="150" width="150" src="{{this.HOST+'/get-product-photo/'+product.photoName+'?ts='+this.getCurrentTimeStamp()}}">
                         </td>
                         <td>{{product.currentPrice|number:'0.2'}}</td>
                     </tr>
@@ -19,6 +20,7 @@
                             <div *ngIf="this.isEditPhoto && this.currentProduct==product">
                                 <input type="file" (change)="onSelectPhotos($event)">
                                 <input class="btn btn-primary" type="button" value="Upload" (click)="onUploadPhotos()" [disabled]="!this.selectedPhotos">
+                                {{this.progress}}%
                             </div>
 
                         </td>

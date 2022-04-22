@@ -20,18 +20,19 @@ public class ProductRestController {
     }
 
     @GetMapping(path = "/get-product-photo/{productPhoto}", produces = {MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE})
-   public byte[] getProductPhoto(@PathVariable("productPhoto") String productPhoto) throws IOException {
-        //Product product = productRepository.findById(productId).get();
+    public byte[] getProductPhoto(@PathVariable("productPhoto") String productPhoto) throws IOException {
         return Files.readAllBytes(Paths.get(System.getProperty("user.home") + "/ecom-products-photos/" + productPhoto));
     }
 
     @PostMapping(path = "/upload-product-photo/{idProduct}")
-    // photoFile : le meme nom utilise ds formData.append('photoFile', photo); ds le frontend
+    // photoFile : il faut utiliser le meme nom utilise ds formData.append('photoFile', photo); ds le frontend
     public void uploadProductPhoto(@RequestParam("photoFile") MultipartFile productPhoto, @PathVariable("idProduct") Long idProductToUpdate) throws IOException {
-    Product product=productRepository.findById(idProductToUpdate).get();
-    // utiliser productPhoto.** pr recuperer les infos sur la photo originale
-    product.setPhotoName(idProductToUpdate+".jpg");
-    Files.write(Paths.get(Paths.get(System.getProperty("user.home")) + "/ecom-products-photos/"+product.getPhotoName()), productPhoto.getBytes());
-    productRepository.save(product);
+        Product product = productRepository.findById(idProductToUpdate).get();
+        // c possible d'utiliser productPhoto.attributs pr recuperer les infos sur la photo originale
+        product.setPhotoName(idProductToUpdate + ".jpg");
+        // ecrire la photo ds le disque dure
+        Files.write(Paths.get(Paths.get(System.getProperty("user.home")) + "/ecom-products-photos/" + product.getPhotoName()), productPhoto.getBytes());
+        // maj le nom de la photo ds la BD
+        productRepository.save(product);
     }
 }

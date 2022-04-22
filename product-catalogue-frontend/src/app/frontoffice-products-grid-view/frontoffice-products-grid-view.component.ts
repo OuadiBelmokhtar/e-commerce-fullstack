@@ -6,6 +6,7 @@ import { Product } from '../model/Product.model';
 import { GlobalService } from '../services/global.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { ShowingProductsModeEnum } from '../model/ShowingProductsModeEnum';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-frontoffice-products-grid-view',
@@ -21,8 +22,8 @@ export class FrontofficeProductsGridViewComponent implements OnInit {
   private _selectedPhotos: any;
   private _progress: number = 0;
   private _currentUploadedPhotos: any;
-
-
+  private _title: string = "";
+  private _currentTimeStamp: number = 0;
 
 
   constructor(private categoryService: CategoryService,
@@ -42,12 +43,15 @@ export class FrontofficeProductsGridViewComponent implements OnInit {
         let paramShowProductMode = this.activatedRoute.snapshot.params['showProductsMode'];
         let paramIdCategory = this.activatedRoute.snapshot.params['categoryId'];
         if (paramIdCategory != 0 && paramShowProductMode == ShowingProductsModeEnum.BY_CATEGORY) {
+          this.title = "Produits de la catégorie " + paramIdCategory;
           this.getProductsByCategory(paramIdCategory);
 
         } else if (paramIdCategory == 0 && paramShowProductMode == ShowingProductsModeEnum.BY_SELECTED_PRODUCTS) {
+          this.title = "Produits sélectionnées ";
           this.getSelectedProducts();
 
         } else if (paramShowProductMode == ShowingProductsModeEnum.BY_PRODUCTS_ON_PROMOTION) {
+          this.title = "Produits en promotion ";
           this.getOnPromotionProducts();
         }
       }
@@ -100,19 +104,42 @@ export class FrontofficeProductsGridViewComponent implements OnInit {
   onEditPhoto(product: Product) {
     // capturer le product cliqué
     this.currentProduct = product;
+    // pr masquer/afficher le button ‘Open File’
     this.isEditPhoto = true;
   }
 
   onSelectPhotos(event: any) {
-    // récupérer les phtotos sélectonnées par l'utilisateur ds l'explorateur
+    // récupérer ds Angular les phtotos sélectonnées par l'utilisateur ds l'explorateur
     this.selectedPhotos = event.target.files;
+    console.log("this.selectedPhotos");
+    console.log(this.selectedPhotos);
   }
 
   onUploadPhotos() {
     this.progress = 0;
     // recuprer juste la premiere photo selectionnée
-    this.currentUploadedPhotos = this.selectedPhotos.items(0);
-...
+    this.currentUploadedPhotos = this.selectedPhotos.item(0);
+    // deleguer la tache au service
+    this.productService.uploadProductPhoto(this.currentUploadedPhotos, this.currentProduct.id)
+      .subscribe(event => {
+        if (event.type === HttpEventType.UploadProgress) {
+          // definir le pourcentage de progression d'upload
+          this.progress = Math.round(100 * event.loaded / event.total!);
+        } else if (event instanceof HttpResponse) {
+          // lors du retour de la response HTTP
+          // pr resoudre le probleme de rafraichissement de la photo causé par le cache
+          this.currentTimeStamp = Date.now();
+          alert("Photo bien chargée");
+          console.log("Photo bien chargée");
+        }
+      }, err => {
+        console.log("Problème de chargement de la photo: " + JSON.parse(err.error).message);
+        ;
+      });
+  }
+
+  getCurrentTimeStamp() {
+    return this.currentTimeStamp;
   }
 
   public get products(): any {
@@ -158,5 +185,17 @@ export class FrontofficeProductsGridViewComponent implements OnInit {
   }
   public set currentUploadedPhotos(value: any) {
     this._currentUploadedPhotos = value;
+  }
+  public get title(): string {
+    return this._title;
+  }
+  public set title(value: string) {
+    this._title = value;
+  }
+  public get currentTimeStamp(): number {
+    return this._currentTimeStamp;
+  }
+  public set currentTimeStamp(value: number) {
+    this._currentTimeStamp = value;
   }
 }

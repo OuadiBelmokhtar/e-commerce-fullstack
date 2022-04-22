@@ -12,6 +12,7 @@ import { NewCategoryComponent } from './new-category/new-category.component';
 import { CategoriesGridViewComponent } from './categories-grid-view/categories-grid-view.component';
 import { EditCategoryComponent } from './edit-category/edit-category.component';
 import { FrontofficeProductsGridViewComponent } from './frontoffice-products-grid-view/frontoffice-products-grid-view.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { FrontofficeProductsGridViewComponent } from './frontoffice-products-gri
     NewCategoryComponent,
     CategoriesGridViewComponent,
     EditCategoryComponent,
-    FrontofficeProductsGridViewComponent
+    FrontofficeProductsGridViewComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
