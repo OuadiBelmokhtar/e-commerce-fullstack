@@ -8,21 +8,24 @@
             <div class="panel-body">
                 <table>
                     <tr>
-                        <td><img height="150" width="150" src="{{this.HOST+'/get-product-photo/'+product.photoName+'?ts='+this.getCurrentTimeStamp()}}">
+                        <td><img height="150" width="150"
+                                src="{{this.HOST+'/get-product-photo/'+product.photoName+'?ts='+this.getCurrentTimeStamp()}}">
                         </td>
                         <td>{{product.currentPrice|number:'0.2'}}</td>
                     </tr>
                     <tr>
                         <td>
-                            <button (click)="onEditPhoto(product)">
-                                <span class="glyphicon glyphicon-edit"></span>
-                            </button>
-                            <div *ngIf="this.isEditPhoto && this.currentProduct==product">
-                                <input type="file" (change)="onSelectPhotos($event)">
-                                <input class="btn btn-primary" type="button" value="Upload" (click)="onUploadPhotos()" [disabled]="!this.selectedPhotos">
-                                {{this.progress}}%
+                            <div *ngIf="this.authenticationService.isAdmin()">
+                                <button (click)="onEditPhoto(product)">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </button>
+                                <div *ngIf="this.isEditPhoto && this.currentProduct==product">
+                                    <input type="file" (change)="onSelectPhotos($event)">
+                                    <input class="btn btn-primary" type="button" value="Upload"
+                                        (click)="onUploadPhotos()" [disabled]="!this.selectedPhotos">
+                                    {{this.progress}}%
+                                </div>
                             </div>
-
                         </td>
                     </tr>
                 </table>

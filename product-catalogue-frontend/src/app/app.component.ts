@@ -51,6 +51,10 @@ export class AppComponent implements OnInit {
     this.router.navigateByUrl("frontoffice-products-grid/" + ShowingProductsModeEnum.BY_CATEGORY + "/" + categoryId);
   }
 
+  onLgout(){
+    this.router.navigateByUrl('/login');
+  }
+
 
   public get categories(): any {
     return this._categories;

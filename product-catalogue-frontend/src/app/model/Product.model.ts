@@ -7,9 +7,9 @@ export class Product {
     private _designation: string;
     private _description: string;
     private _currentPrice: number;
-    private _promotion: boolean;
-    private _selected: boolean;
-    private _available: boolean;
+    private _isOnPromotion: boolean;
+    private _isSelected: boolean;
+    private _isAvailable: boolean;
     private _photoName: string;
     private _quantity: number;
     private _productCategory: Category; // tu gardes ce nom, pr faire marcher la persistance de l'association correctement
@@ -21,9 +21,9 @@ export class Product {
         this._designation = designation;
         this._description = description;
         this._currentPrice = price;
-        this._promotion = promotion;
-        this._selected = selected;
-        this._available = available;
+        this._isOnPromotion = promotion;
+        this._isSelected = selected;
+        this._isAvailable = available;
         this._photoName = photoName;
         this._quantity = quantity;
         this._productCategory = category;
@@ -59,23 +59,24 @@ export class Product {
     public set currentPrice(price: number) {
         this._currentPrice = price;
     }
-    public get promotion(): boolean {
-        return this._promotion;
+
+    public get isOnPromotion(): boolean {
+        return this._isOnPromotion;
     }
-    public set promotion(value: boolean) {
-        this._promotion = value;
+    public set isOnPromotion(value: boolean) {
+        this._isOnPromotion = value;
     }
-    public get selected(): boolean {
-        return this._selected;
+    public get isSelected(): boolean {
+        return this._isSelected;
     }
-    public set selected(value: boolean) {
-        this._selected = value;
+    public set isSelected(value: boolean) {
+        this._isSelected = value;
     }
-    public get available(): boolean {
-        return this._available;
+    public get isAvailable(): boolean {
+        return this._isAvailable;
     }
-    public set available(value: boolean) {
-        this._available = value;
+    public set isAvailable(value: boolean) {
+        this._isAvailable = value;
     }
     public get quantity() {
         return this._quantity;

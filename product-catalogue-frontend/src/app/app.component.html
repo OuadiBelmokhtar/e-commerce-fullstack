@@ -5,7 +5,8 @@
     </div>
     <ul class="nav navbar-nav">
       <li class="active">
-        <a class="_curseur" (click)="this.onNavigateToShowSelectedProducts()">Home</a></li>
+        <a class="_curseur" (click)="this.onNavigateToShowSelectedProducts()">Home</a>
+      </li>
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Front Office
           <span class="caret"></span></a>
@@ -33,19 +34,28 @@
       </li>
       <li><a href="#">Client</a></li>
     </ul>
+    <ul class="nav navbar-nav pull-right">
+      <li>
+        <a class="btn" (click)="onLgout()">
+          <span class="glyphicon glyphicon-log-out"></span>
+        </a>
+      </li>
+    </ul>
   </div>
 </nav>
 
-  <div class="col-md-3" *ngIf="this.showingMode==1">
-    <ul class="list-group" *ngIf="this.categories">
-      <a [ngClass]="this.clickedCategoryId==category.id?'active':''" class="list-group-item _curseur"  *ngFor="let category of this.categories">
-        <span  (click)="onNavigateToShowProductsByCategory(category.id)">{{category.name}}</span>
-      </a>
-    </ul>
-  </div>
+<div class="col-md-3" *ngIf="this.showingMode==1">
+  <ul class="list-group" *ngIf="this.categories">
 
-  <div class="col-md-9">
-    <router-outlet>
+    <a [ngClass]="this.clickedCategoryId==category.id?'active':''" class="list-group-item _curseur"
+      *ngFor="let category of this.categories">
+      <span (click)="onNavigateToShowProductsByCategory(category.id)">{{category.name}}</span>
+    </a>
+  </ul>
+</div>
 
-    </router-outlet>
-  </div>
+<div class="col-md-9">
+  <router-outlet>
+
+  </router-outlet>
+</div>

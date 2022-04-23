@@ -8,6 +8,7 @@ import { CategoriesGridViewComponent } from './categories-grid-view/categories-g
 import { EditCategoryComponent } from './edit-category/edit-category.component';
 import { FrontofficeProductsGridViewComponent } from './frontoffice-products-grid-view/frontoffice-products-grid-view.component';
 import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {path:"home", component:AppComponent},
@@ -18,7 +19,8 @@ const routes: Routes = [
   { path: "new-category", component: NewCategoryComponent },
   { path: "edit-category/:uriOfCategoryToEdit", component: EditCategoryComponent },
   {path: "frontoffice-products-grid/:showProductsMode/:categoryId", component:FrontofficeProductsGridViewComponent},
-  { path: "", redirectTo: "", pathMatch: "full" }
+  {path:"login", component: LoginComponent},
+  { path: "", redirectTo: "frontoffice-products-grid/2/0", pathMatch: "full" }
 ];
 
 @NgModule({

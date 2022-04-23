@@ -7,6 +7,7 @@ import { GlobalService } from '../services/global.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { ShowingProductsModeEnum } from '../model/ShowingProductsModeEnum';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-frontoffice-products-grid-view',
@@ -28,6 +29,7 @@ export class FrontofficeProductsGridViewComponent implements OnInit {
 
   constructor(private categoryService: CategoryService,
     private productService: ProductService,
+    public authenticationService:AuthenticationService,
     private activatedRoute: ActivatedRoute,
     private router: Router) {
 
