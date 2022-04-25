@@ -12,11 +12,13 @@ export class Product {
     private _isAvailable: boolean;
     private _photoName: string;
     private _quantity: number;
+    // Sert a afficher la quantite par defaut a commander ds le champ 'input type=number' ds la page web
+    private _orderedQuantity: number;
     private _productCategory: Category; // tu gardes ce nom, pr faire marcher la persistance de l'association correctement
     public _links: any; // garder le public
     public _embedded: any;// garder le public
 
-    constructor(id: number, designation: string, description: string, price: number, promotion: boolean, selected: boolean, available: boolean, photoName: string, quantity: number, category: Category) {
+    constructor(id: number, designation: string, description: string, price: number, promotion: boolean, selected: boolean, available: boolean, photoName: string, quantity: number,orderedQuantity:number, category: Category) {
         this._id = id;
         this._designation = designation;
         this._description = description;
@@ -26,6 +28,7 @@ export class Product {
         this._isAvailable = available;
         this._photoName = photoName;
         this._quantity = quantity;
+        this._orderedQuantity=orderedQuantity;
         this._productCategory = category;
     }
 
@@ -96,6 +99,12 @@ export class Product {
     }
     public set photoName(value: string) {
         this._photoName = value;
+    }
+    public get orderedQuantity(): number {
+        return this._orderedQuantity;
+    }
+    public set orderedQuantity(value: number) {
+        this._orderedQuantity = value;
     }
   
 }

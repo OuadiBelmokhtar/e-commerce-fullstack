@@ -4,6 +4,7 @@ import { ProductService } from './services/product.service';
 import { Category } from './model/Category.model';
 import { Router } from '@angular/router';
 import { ShowingProductsModeEnum } from './model/ShowingProductsModeEnum';
+import { AuthenticationService } from './services/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -16,13 +17,19 @@ export class AppComponent implements OnInit {
   private _clickedCategoryId: number = 1;
   private _showingMode: ShowingProductsModeEnum=ShowingProductsModeEnum.FRONT_OFFICE;
   
+  
   constructor(private categoryService: CategoryService,
     private productService: ProductService,
+    private authenticationService:AuthenticationService,
     private router: Router) {
 
   }
 
   ngOnInit(): void {
+    // charger authenticatedUser du localStorage
+   this.getAuthenticatedUser();
+   console.log("this.getAuthenticatedUser()");
+   console.log(this.getAuthenticatedUser());
     // charger les categories
     this.categoryService.getAllCategories()
       .subscribe(response => {
@@ -31,6 +38,10 @@ export class AppComponent implements OnInit {
       }, err => {
         console.log(err);
       });
+  }
+
+public getAuthenticatedUser(): any {
+    return this.authenticationService.loadAndGetAuthenticatedUserTokenFromLocalStorage();
   }
 
   onNavigateToShowSelectedProducts() {
@@ -52,7 +63,9 @@ export class AppComponent implements OnInit {
   }
 
   onLgout(){
+    this.authenticationService.removeAuthenticatedUserTokenFromLocalStorage();
     this.router.navigateByUrl('/login');
+    console.log("onLogout()");
   }
 
 

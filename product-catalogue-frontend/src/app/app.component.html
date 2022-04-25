@@ -37,7 +37,11 @@
     <ul class="nav navbar-nav pull-right">
       <li>
         <a class="btn" (click)="onLgout()">
-          <span class="glyphicon glyphicon-log-out"></span>
+          <span *ngIf="this.getAuthenticatedUser()">
+            Bienvenu {{this.getAuthenticatedUser().username}}&nbsp;
+          </span>
+          <span [title]="this.getAuthenticatedUser()?'Logout':'Login'" [ngClass]="this.getAuthenticatedUser()? 'glyphicon glyphicon-log-out':'glyphicon glyphicon-log-in'">
+          </span>
         </a>
       </li>
     </ul>

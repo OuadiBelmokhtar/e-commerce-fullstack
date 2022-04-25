@@ -8,20 +8,21 @@ export class AuthenticationService {
 
   private _authenticatedUser: any;
   private _isAuthenticated: boolean = false;
-  private _token:any;
+  private _token: any;
 
   private users = [
     { username: 'admin', password: '1234', roles: ['ADMIN', 'USER'] },
     { username: 'user1', password: '1234', roles: ['USER'] },
     { username: 'user2', password: '1234', roles: ['USER'] }
   ];
-  
+
   constructor() { }
 
+  // AuthenticationService.login()
   login(username: string, password: string) {
     let foundUser;
     this.users.forEach(user => {
-      if (user.username == username && user.password == user.password) {
+      if (user.username == username && user.password == password) {
         foundUser = user;
       }
     });
@@ -30,22 +31,48 @@ export class AuthenticationService {
       this.authenticatedUser = foundUser;
       this.isAuthenticated = true;
       // créer un token pr le sauvegarder ds localStorage
-      this.token={'username':this.authenticatedUser.username, 'roles':this.authenticatedUser.roles};
-      
-    }else{
-      this.authenticatedUser=undefined;
-      this.isAuthenticated=false;
+      this.token = btoa(JSON.stringify({ 'username': this.authenticatedUser.username, 'roles': this.authenticatedUser.roles }));
+    } else {
+      this.authenticatedUser = undefined;
+      this.isAuthenticated = false;
+      this.token = undefined;
       console.log("Username ou password incorrects!");
     }
   }
 
-  public isAdmin():boolean{
-    if(this.authenticatedUser){
-      if(this.authenticatedUser.roles.indexOf('ADMIN')>-1){
+  public isAdmin(): boolean {
+    if (this.authenticatedUser) {
+      if (this.authenticatedUser.roles.indexOf('ADMIN') > -1) {
         return true;
       }
     }
     return false;
+  }
+
+  public saveAuthenticatedUserTokenToLocalStorage() {
+    if (this.authenticatedUser)
+      localStorage.setItem('authenticationToken', this.token);
+  }
+  // invoquer ds AppComponent.ngOnInit() lors d'actualisation de la page
+  public loadAndGetAuthenticatedUserTokenFromLocalStorage() {
+    let encodedToken = localStorage.getItem('authenticationToken');
+    //console.log("lToken");
+    // console.log(lToken);
+    if (encodedToken) {
+      let decodedToken = JSON.parse(atob(encodedToken));
+      // extraire username+roles seulement, vu que generalement un token contient autres infos (date expiration, ...)
+      this.authenticatedUser = { username: decodedToken.username, roles: decodedToken.roles };
+      this.isAuthenticated = true;
+      this.token = encodedToken;
+      return this.authenticatedUser;
+    }
+  }
+  // invoquer ds AppComponent.onLgout()
+  removeAuthenticatedUserTokenFromLocalStorage() {
+    // Supprimer le token du localStorage si existe. Sinon, on fait rien
+    localStorage.removeItem('authenticationToken');
+    this.authenticatedUser = undefined;
+    this.isAuthenticated = false;
   }
 
   public get authenticatedUser(): any {

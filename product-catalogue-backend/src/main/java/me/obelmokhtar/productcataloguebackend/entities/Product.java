@@ -8,7 +8,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Data @AllArgsConstructor @NoArgsConstructor
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Product implements Serializable {
 
     @Id
@@ -25,6 +27,9 @@ public class Product implements Serializable {
     private Boolean isAvailable;
     private String photoName;
     private Integer quantity;
+    @Transient // pas besoin d etre persistant.
+    // Sert a afficher la quantite par defaut a commander ds le champ 'input type=number' ds la page web
+    private Integer orderedQuantity = 1;
     @ManyToOne
     Category category;
 }

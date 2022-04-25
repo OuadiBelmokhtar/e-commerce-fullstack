@@ -9,14 +9,16 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor( private authenticationService:AuthenticationService,private router:Router) { }
+  constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
   ngOnInit(): void {
   }
+  // click sur button login
   onLogin(authenticationFormFields: any) {
     console.log(authenticationFormFields);
     this.authenticationService.login(authenticationFormFields.username, authenticationFormFields.password);
-    if(this.authenticationService.isAuthenticated){
+    if (this.authenticationService.isAuthenticated) {
+      this.authenticationService.saveAuthenticatedUserTokenToLocalStorage();
       this.router.navigateByUrl(''); // naviguer vers les products selectionnes
     }
   }
