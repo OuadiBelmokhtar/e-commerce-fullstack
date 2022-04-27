@@ -1,14 +1,13 @@
-<div class="container">
 <div class="panel panel-primary">
     <div class="panel-heading">
         Chercher Catégories
     </div>
     <div class="panel-body">
         <form #searchingForm="ngForm" (ngSubmit)="this.onSearchCategory(searchingForm.value)">
-        <label>Mot clé: </label>
-        <input type="text" name="keyword" ngModel>
-        <input class="btn btn-primary" type="submit" value="Chercher">
-    </form>
+            <label>Mot clé: </label>
+            <input type="text" name="keyword" ngModel>
+            <input class="btn btn-primary" type="submit" value="Chercher">
+        </form>
     </div>
 
     <div class="panel-body" *ngIf="this.allCategories">
@@ -20,16 +19,16 @@
                 <td>{{category.id}}</td>
                 <td>{{category.name}}</td>
                 <td>{{category.description}}</td>
-                <td><input class="btn btn-danger" type="button" value="Supprimer" (click)="this.onDeleteCategory(category)" ></td>
-                <td><input class="btn btn-success" type="button" value="Editer" (click)="this.onEditCategory(category)" ></td>
+                <td><input class="btn btn-danger" type="button" value="Supprimer"
+                        (click)="this.onDeleteCategory(category)"></td>
+                <td><input class="btn btn-success" type="button" value="Editer" (click)="this.onEditCategory(category)">
+                </td>
             </tr>
         </table>
-        <ul class="nav nav-pills"> 
+        <ul class="nav nav-pills">
             <li [ngClass]="i==this.indicePage?'active':''" *ngFor="let elt of this.indicePages; let i=index ">
                 <a class="_curseur" (click)="onPageIndice(i)">{{i}}</a>
             </li>
         </ul>
     </div>
-</div>
-
 </div>

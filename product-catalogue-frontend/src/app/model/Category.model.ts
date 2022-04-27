@@ -4,9 +4,19 @@ export class Category {
     private _id: number;
     private _name: string;
     private _description: string;
-    public _links: any;// garder le public
     public _embedded: any;// garder le public
     public _page: any;// garder le public
+    public _links!: {// garder le public
+        self: {
+            href: string
+        },
+        category: {
+            href: string
+        },
+        products: {
+            href: string
+        }
+    }
 
     constructor(id: number, name: string, description: string) {
         this._id = id;
@@ -32,6 +42,6 @@ export class Category {
     public set description(description: string) {
         this._description = description;
     }
-   
+
 
 }

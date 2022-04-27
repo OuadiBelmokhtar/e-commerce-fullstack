@@ -1,22 +1,21 @@
-<div class="container">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            Edition catégorie:
-        </div>
-        <div class="panel-body" *ngIf="this.categoryToEdit">
-            <form #editingForm="ngForm" (ngSubmit)="this.updateCategory(editingForm.value)">
-                <div class="form-group">
-                    <label class="control-label">Nom:</label>
-                    <input class="form-control" type="text" name="name" ngModel [(ngModel)]="this.categoryToEdit.name">
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Description:</label>
-                    <textarea class="form-control" name="description"  cols="20" rows="6" ngModel [(ngModel)]="this.categoryToEdit.description"></textarea>
-                </div>
-                <input class="btn btn-default" type="button" value="Annuler" routerLink="/categories-grid">
-                <input class="btn btn-success" type="submit" value="Modifier">
-                
-            </form>
-        </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Edition catégorie:
+    </div>
+    <div class="panel-body" *ngIf="this.categoryToEdit">
+        <form #editingForm="ngForm" (ngSubmit)="this.updateCategory(editingForm.value)">
+            <div class="form-group">
+                <label class="control-label">Nom:</label>
+                <input class="form-control" type="text" name="name" ngModel [(ngModel)]="this.categoryToEdit.name">
+            </div>
+            <div class="form-group">
+                <label class="control-label">Description:</label>
+                <textarea class="form-control" name="description" cols="20" rows="6" ngModel
+                    [(ngModel)]="this.categoryToEdit.description"></textarea>
+            </div>
+            <input class="btn btn-default" type="button" value="Annuler" routerLink="/categories-grid">
+            <input class="btn btn-success" type="submit" value="Modifier">
+
+        </form>
     </div>
 </div>

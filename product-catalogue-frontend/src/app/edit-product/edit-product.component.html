@@ -1,56 +1,65 @@
-<div class="container">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            Edition Produit:
-        </div>
-        <div class="panel-body" *ngIf='this.productToUpdate'>
-            <form #updatingForm="ngForm" (ngSubmit)="onUpdateProduct(updatingForm.value)">
-                <div class="form-group">
-                    <label class="control-label">Désignation: </label>
-                    <input class="form-control" type="text" name="designation" ngModel [(ngModel)]="this.productToUpdate.designation"> 
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Description: </label>
-                    <textarea class="form-control"  name="designation" cols="20" rows="6" ngModel [(ngModel)]="this.productToUpdate.designation"></textarea>
-                </div>
-                <div class="form-group">
-                    <label class="label-control">Prix courant:</label>
-                    <input class="form-control" type="text" name="currentPrice" ngModel [(ngModel)]="this.productToUpdate.currentPrice">
-                </div>
-                <div class="form-group">
-                    <label class="control-label">En promotion {{this.productToUpdate.isOnPromotion}} ? </label><br>
-                    <input type="radio" name="promotion" value="true" checked="{{this.productToUpdate.isOnPromotion}}" ngModel [(ngModel)]="this.productToUpdate.isOnPromotion">
-                    <label class="control-label"> Oui </label><br>
-                    <input type="radio" name="promotion" value="false" checked="{{this.productToUpdate.isOnPromotion}}" ngModel [(ngModel)]="this.productToUpdate.isOnPromotion">
-                    <label class="control-label"> Non </label>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Disponible? </label><br>
-                    <input type="radio" name="available" value="true" value="{{this.productToUpdate.isAvailable}}" ngModel [(ngModel)]="this.productToUpdate.isAvailable">
-                    <label class="control-label"> Oui </label><br>
-                    <input type="radio" name="available" value="false" value="{{this.productToUpdate.isAvailable}}" ngModel [(ngModel)]="this.productToUpdate.isAvailable">
-                    <label class="control-label"> Non </label>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Photo: </label>
-                    <img src="{{this.productToUpdate.photoName}}" alt="{{this.productToUpdate.photoName}}">
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Quantité:</label>
-                    <input class="form-control" type="number" required name="quantity" ngModel [(ngModel)]="this.productToUpdate.quantity">
-                </div>
-                <div class="form-group" *ngIf="this.productToUpdate.productCategory && this.allCategories">
-                    <label class="control-label">Catégorie:</label>
-                    <select class="form-control" name="productCategoryId" ngModel [(ngModel)]="this.productToUpdate.productCategory.id"> <!--garde le nom productCategory pr un fonctionnement correct-->
-                        <option *ngFor="let cat of this.allCategories._embedded.categories" [selected]="this.productToUpdate.productCategory.id==cat.id" [ngValue]="cat.id" >
-                            {{cat.name}}
-                        </option>
-                    </select>
-                    <button class="btn btn-success" type="button" routerLink="/new-category">+</button>
-                </div>
-                <button class="btn btn-success" type="submit">Modifier</button>
-                <button class="btn btn-default"  type="button" routerLink="/products-grid">Annuler</button>
-            </form>
-        </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Edition Produit:
+    </div>
+    <div class="panel-body" *ngIf='this.productToUpdate'>
+        <form #updatingForm="ngForm" (ngSubmit)="onUpdateProduct(updatingForm.value)">
+            <div class="form-group">
+                <label class="control-label">Désignation: </label>
+                <input class="form-control" type="text" name="designation" ngModel
+                    [(ngModel)]="this.productToUpdate.designation">
+            </div>
+            <div class="form-group">
+                <label class="control-label">Description: </label>
+                <textarea class="form-control" name="designation" cols="20" rows="6" ngModel
+                    [(ngModel)]="this.productToUpdate.designation"></textarea>
+            </div>
+            <div class="form-group">
+                <label class="label-control">Prix courant:</label>
+                <input class="form-control" type="text" name="currentPrice" ngModel
+                    [(ngModel)]="this.productToUpdate.currentPrice">
+            </div>
+            <div class="form-group">
+                <label class="control-label">En promotion {{this.productToUpdate.isOnPromotion}} ? </label><br>
+                <input type="radio" name="promotion" value="true" checked="{{this.productToUpdate.isOnPromotion}}"
+                    ngModel [(ngModel)]="this.productToUpdate.isOnPromotion">
+                <label class="control-label"> Oui </label><br>
+                <input type="radio" name="promotion" value="false" checked="{{this.productToUpdate.isOnPromotion}}"
+                    ngModel [(ngModel)]="this.productToUpdate.isOnPromotion">
+                <label class="control-label"> Non </label>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Disponible? </label><br>
+                <input type="radio" name="available" value="true" value="{{this.productToUpdate.isAvailable}}" ngModel
+                    [(ngModel)]="this.productToUpdate.isAvailable">
+                <label class="control-label"> Oui </label><br>
+                <input type="radio" name="available" value="false" value="{{this.productToUpdate.isAvailable}}" ngModel
+                    [(ngModel)]="this.productToUpdate.isAvailable">
+                <label class="control-label"> Non </label>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Photo: </label>
+                <img src="{{this.productToUpdate.photoName}}" alt="{{this.productToUpdate.photoName}}">
+            </div>
+            <div class="form-group">
+                <label class="control-label">Quantité:</label>
+                <input class="form-control" type="number" required name="quantity" ngModel
+                    [(ngModel)]="this.productToUpdate.quantity">
+            </div>
+            <div class="form-group" *ngIf="this.productToUpdate.productCategory && this.allCategories">
+                <label class="control-label">Catégorie:</label>
+                <select class="form-control" name="productCategoryId" ngModel
+                    [(ngModel)]="this.productToUpdate.productCategory.id">
+                    <!--garde le nom productCategory pr un fonctionnement correct-->
+                    <option *ngFor="let cat of this.allCategories._embedded.categories"
+                        [selected]="this.productToUpdate.productCategory.id==cat.id" [ngValue]="cat.id">
+                        {{cat.name}}
+                    </option>
+                </select>
+                <button class="btn btn-success" type="button" routerLink="/new-category">+</button>
+            </div>
+            <button class="btn btn-success" type="submit">Modifier</button>
+            <button class="btn btn-default" type="button" routerLink="/products-grid">Annuler</button>
+        </form>
     </div>
 </div>

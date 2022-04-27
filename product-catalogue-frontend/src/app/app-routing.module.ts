@@ -9,6 +9,7 @@ import { EditCategoryComponent } from './edit-category/edit-category.component';
 import { FrontofficeProductsGridViewComponent } from './frontoffice-products-grid-view/frontoffice-products-grid-view.component';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
 
 const routes: Routes = [
   {path:"home", component:AppComponent},
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: "edit-category/:uriOfCategoryToEdit", component: EditCategoryComponent },
   {path: "frontoffice-products-grid/:showProductsMode/:categoryId", component:FrontofficeProductsGridViewComponent},
   {path:"login", component: LoginComponent},
+  {path:"product-detail/:uriOfProductToShowDetail", component:ProductDetailComponent},
   { path: "", redirectTo: "frontoffice-products-grid/2/0", pathMatch: "full" }
 ];
 

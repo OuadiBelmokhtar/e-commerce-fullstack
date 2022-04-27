@@ -29,7 +29,7 @@ export class FrontofficeProductsGridViewComponent implements OnInit {
 
   constructor(private categoryService: CategoryService,
     private productService: ProductService,
-    public authenticationService:AuthenticationService,
+    public authenticationService: AuthenticationService,
     private activatedRoute: ActivatedRoute,
     private router: Router) {
 
@@ -65,7 +65,8 @@ export class FrontofficeProductsGridViewComponent implements OnInit {
   private getOnPromotionProducts() {
     this.productService.getAllProducts(this.HOST + '/products/search/onPormotionProducts')
       .subscribe(response => {
-        this._products = response._embedded.products;
+        // garde la comme ça, non pas response._embedded.products. Voir principe ds Angular-summary.docx
+        this._products = response;
       }, err => {
         console.log(err);
       })
@@ -74,7 +75,8 @@ export class FrontofficeProductsGridViewComponent implements OnInit {
   private getSelectedProducts() {
     this.productService.getAllProducts(this.HOST + '/products/search/selectedProducts')
       .subscribe(response => {
-        this._products = response._embedded.products;
+        // garde la comme ça, non pas response._embedded.products. Voir principe ds Angular-summary.docx
+        this._products = response;
       }, err => {
         console.log(err);
       })
@@ -92,7 +94,8 @@ export class FrontofficeProductsGridViewComponent implements OnInit {
         this.productService.getProductsByCategory(clickedCategory._links.self.href + '/products')
           .subscribe(response => {
             console.log(response);
-            this._products = response._embedded.products;
+            // garde la comme ça, non pas response._embedded.products. Voir principe ds Angular-summary.docx
+            this._products = response;
             console.log("this._products");
             console.log(this._products);
             //this.getProductPhoto(2);
@@ -138,6 +141,11 @@ export class FrontofficeProductsGridViewComponent implements OnInit {
         console.log("Problème de chargement de la photo: " + JSON.parse(err.error).message);
         ;
       });
+  }
+
+  onProductDetail(product: Product) {
+    let uriOfProduct = product._links.self.href;
+    this.router.navigateByUrl('product-detail/'+btoa(uriOfProduct));
   }
 
   getCurrentTimeStamp() {

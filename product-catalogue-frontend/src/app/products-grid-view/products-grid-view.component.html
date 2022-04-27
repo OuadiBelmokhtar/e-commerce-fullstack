@@ -1,5 +1,3 @@
-<div class="container">
-
     <div class="panel panel-primary">
         <div class="panel-heading"> Liste des produits: </div>
         <div class="panel-body">
@@ -31,7 +29,7 @@
                     <td>{{p.currentPrice|number:"0.2"}}</td>
                     <td>{{p.quantity}}</td>
                     <td>{{p.isOnPromotion}}</td>
-                    <td>{{p.isAvailable}</td>
+                    <td>{{p.isAvailable}}</td>
                     <td>{{p.photoName}}</td>
                     <!-- <td>{{p._links.category.href}}</td> -->
                     <td><a class="btn btn-danger" (click)="onDeleteProduct(p)">Supprimer</a></td>
@@ -50,4 +48,3 @@
         </div>
 
     </div>
-</div>

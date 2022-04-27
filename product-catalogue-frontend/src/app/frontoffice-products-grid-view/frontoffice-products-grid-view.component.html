@@ -1,49 +1,51 @@
-<div class="container">
-    <div class="col-md-9 col-sm-6" *ngIf="this.products">
-        <h3>{{this.title}}</h3>
-        <div class="panel panel-info col-md-4" *ngFor="let product of this.products">
-            <div class="panel-heading">
-                <h5 class="panel-title">{{product.designation}}</h5>
-            </div>
-            <div class="panel-body">
-                <img class="img-thumbnail img-rounded btn" height="150" width="140"
-                    [src]="this.HOST+'/get-product-photo/'+product.photoName+'?ts='+this.getCurrentTimeStamp()">
-                <div *ngIf="this.authenticationService.isAdmin()">
-                    <button (click)="onEditPhoto(product)">
-                        <span class="glyphicon glyphicon-edit"></span>
-                    </button>
-                    <div *ngIf="this.isEditPhoto && this.currentProduct==product">
-                        <input type="file" (change)="onSelectPhotos($event)">
-                        <input class="btn btn-primary" type="button" value="Upload" (click)="onUploadPhotos()"
-                            [disabled]="!this.selectedPhotos">
-                        {{this.progress}}%
-                    </div>
+<div *ngIf="this.products">
+    <h3>{{this.title}}</h3>
+    <div *ngFor="let product of this.products._embedded.products">
+        <div class="col-md-6">
+            <div class="panel panel-info _hauteur">
+                <div class="panel-heading">
+                    <h5 class="panel-title">{{product.designation}}</h5>
                 </div>
-                <div>{{product.description}}</div>
-                <div><label>Prix: {{product.currentPrice|number:'0.2'}}</label></div>
-                <span *ngIf="product.isOnPromotion">
-                    <img class="img-thumbnail img-circle" height="30" src="assets/images/promotion.png"
-                        title="Produit en promotion">
-                </span>
-                <span *ngIf="product.isSelected">
-                    <img class="img-thumbnail img-circle" height="30" src="assets/images/selected.png"
-                        title="Produit sélectionné">
-                </span>
-                <span *ngIf="product.isAvailable">
-                    <img class="img-thumbnail img-circle" height="30" src="assets/images/available.png"
-                        title="Produit disponible">
-                </span>
-                <div>
-                    <form #formAddToCaddy="ngForm">
-                        <label class="control-label">Quantité: </label>
-                        <input type="number" name="orderedQuantity" [(ngModel)]="product.orderedQuantity" ngModel
-                            style="width:200">
-                        <button>
-                            <img src="assets/images/caddy.png" title="Ajouter au panier">
+                <div class="panel-body">
+                    <img class="img-thumbnail img-rounded btn" height="200" width="200"
+                        [src]="this.HOST+'/get-product-photo/'+product.photoName+'?ts='+this.getCurrentTimeStamp()" 
+                        (click)="onProductDetail(product)" >
+                    <div *ngIf="this.authenticationService.isAdmin()">
+                        <button (click)="onEditPhoto(product)">
+                            <span class="glyphicon glyphicon-edit"></span>
                         </button>
-                    </form>
+                        <div *ngIf="this.isEditPhoto && this.currentProduct==product">
+                            <input type="file" (change)="onSelectPhotos($event)">
+                            <input class="btn btn-primary" type="button" value="Upload" (click)="onUploadPhotos()"
+                                [disabled]="!this.selectedPhotos">
+                            {{this.progress}}%
+                        </div>
+                    </div>
+                    <div>{{product.description}}</div>
+                    <div><label>Prix: {{product.currentPrice|number:'0.2'}}</label></div>
+                    <span *ngIf="product.isOnPromotion">
+                        <img class="img-thumbnail img-circle" height="30" width="30" src="assets/images/promotion.png"
+                            title="Produit en promotion">
+                    </span>
+                    <span *ngIf="product.isSelected">
+                        <img class="img-thumbnail img-circle" height="30" width="30" src="assets/images/selected.png"
+                            title="Produit sélectionné">
+                    </span>
+                    <span *ngIf="product.isAvailable">
+                        <img class="img-thumbnail img-circle" height="30" width="30" src="assets/images/available.png"
+                            title="Produit disponible">
+                    </span>
+                    <div>
+                        <form #formAddToCaddy="ngForm">
+                            <label class="control-label">Quantité: </label>
+                            <input type="number" name="orderedQuantity" [(ngModel)]="product.orderedQuantity" ngModel
+                                style="width:40px">&nbsp;
+                            <a class="btn">
+                                <img height="25" width="40" src="assets/images/caddy.png" title="Ajouter au panier">
+                            </a>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>

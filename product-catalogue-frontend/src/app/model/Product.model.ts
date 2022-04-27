@@ -15,8 +15,18 @@ export class Product {
     // Sert a afficher la quantite par defaut a commander ds le champ 'input type=number' ds la page web
     private _orderedQuantity: number;
     private _productCategory: Category; // tu gardes ce nom, pr faire marcher la persistance de l'association correctement
-    public _links: any; // garder le public
     public _embedded: any;// garder le public
+    public _links!: {// garder le public
+        self: {
+            href: string
+        },
+        product: {
+            href: string
+        },
+        category: {
+            href: string
+        }
+    }
 
     constructor(id: number, designation: string, description: string, price: number, promotion: boolean, selected: boolean, available: boolean, photoName: string, quantity: number,orderedQuantity:number, category: Category) {
         this._id = id;
