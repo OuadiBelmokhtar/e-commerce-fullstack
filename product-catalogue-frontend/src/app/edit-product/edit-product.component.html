@@ -21,21 +21,25 @@
             </div>
             <div class="form-group">
                 <label class="control-label">En promotion {{this.productToUpdate.isOnPromotion}} ? </label><br>
-                <input type="radio" name="promotion" value="true" checked="{{this.productToUpdate.isOnPromotion}}"
+                <input type="radio" name="isOnPromotion" value="true" checked="{{this.productToUpdate.isOnPromotion}}"
                     ngModel [(ngModel)]="this.productToUpdate.isOnPromotion">
                 <label class="control-label"> Oui </label><br>
-                <input type="radio" name="promotion" value="false" checked="{{this.productToUpdate.isOnPromotion}}"
+                <input type="radio" name="isOnPromotion" value="false" checked="{{this.productToUpdate.isOnPromotion}}"
                     ngModel [(ngModel)]="this.productToUpdate.isOnPromotion">
                 <label class="control-label"> Non </label>
             </div>
             <div class="form-group">
                 <label class="control-label">Disponible? </label><br>
-                <input type="radio" name="available" value="true" value="{{this.productToUpdate.isAvailable}}" ngModel
+                <input type="radio" name="isAvailable" value="true" value="{{this.productToUpdate.isAvailable}}" ngModel
                     [(ngModel)]="this.productToUpdate.isAvailable">
                 <label class="control-label"> Oui </label><br>
-                <input type="radio" name="available" value="false" value="{{this.productToUpdate.isAvailable}}" ngModel
+                <input type="radio" name="isAvailable" value="false" value="{{this.productToUpdate.isAvailable}}" ngModel
                     [(ngModel)]="this.productToUpdate.isAvailable">
                 <label class="control-label"> Non </label>
+            </div>
+            <div class="form-group">
+                <label class="label-control">Sélection:</label>
+                <input type="checkbox" name="isSelected" value="{{this.productToUpdate.isAvailable}}" ngModel [(ngModel)]="this.productToUpdate.isSelected">
             </div>
             <div class="form-group">
                 <label class="control-label">Photo: </label>

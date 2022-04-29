@@ -1,1 +1,97 @@
-<p>product-detail works!</p>
+<div *ngIf="this.currentProduct">
+    <div class="panel panel-default" *ngIf="this.showMode==0">
+        <div class="panel-heading"><label>Fiche Produit:</label> {{this.currentProduct.designation}}</div>
+        <span class="glyphicon glyphicon-edit pull-right btn" (click)="onEditProduct()"></span>
+
+        <div class="panel-body">
+            <div class="col-md-5">
+                <img class="img-thumbnail"
+                    [src]="this.HOST+'/get-product-photo/'+this.currentProduct.photoName+'?ts='+this.getCurrentTimeStamp()">
+                <div *ngIf="this.authenticationService.isAdmin()">
+                    <button (click)="onEditPhoto(this.currentProduct)">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </button>
+                    <div *ngIf="this.isEditPhoto">
+                        <input type="file" (change)="onSelectPhotos($event)">
+                        <button class="btn btn-primary btn-sm" value="Upload" (click)="onUploadPhotos()"
+                            [disabled]="!this.selectedPhotos">
+                            Upload&nbsp;<span class="glyphicon glyphicon-upload"></span>
+                        </button>
+                        {{this.progress}}%
+                    </div>
+                </div>
+                <br>
+                <span *ngIf="this.currentProduct.isOnPromotion">
+                    <img class="img-thumbnail img-circle" height="30" width="30" src="assets/images/promotion.png"
+                        title="Produit en promotion">
+                </span>
+                <span *ngIf="this.currentProduct.isSelected">
+                    <img class="img-thumbnail img-circle" height="30" width="30" src="assets/images/selected.png"
+                        title="Produit sélectionné">
+                </span>
+                <span *ngIf="this.currentProduct.isAvailable">
+                    <img class="img-thumbnail img-circle" height="30" width="30" src="assets/images/available.png"
+                        title="Produit disponible">
+                </span>
+                <div>
+                    <form #formAddToCaddy="ngForm" (ngSubmit)="onAddProductToCaddy()">
+                        <label class="control-label">Quantité: </label>
+                        <input type="number" name="orderedQuantity" [(ngModel)]="this.currentProduct.orderedQuantity"
+                            ngModel style="width:40px">&nbsp;
+                        <button class="btn btn-sm">
+                            <img height="25" width="25" src="assets/images/caddy.png" title="Ajouter au panier">
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <label>Prix: {{this.currentProduct.currentPrice|number:'0.2'}}</label>
+                    </div>
+                    <div class="panel-body">
+                        Description: {{this.currentProduct.description}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Affichage bloc modification product -->
+<div class="panel panel-default" *ngIf="this.showMode==1">
+    <div class="panel-heading">
+        <h4> Mise à jour Produit</h4>
+    </div>
+    <div class="panel-body">
+        <form #formUpdateProduct="ngForm" (ngSubmit)="this.onUpdateProduct(formUpdateProduct.value)">
+            <div class="form-group">
+                <label class="control-label">Désignation: </label>
+                <input class="form-control" type="text" name="designation" ngModel
+                    [(ngModel)]="this.currentProduct.designation">
+            </div>
+            <div class="form-group">
+                <label class="control-label">Description: </label>
+                <textarea class="form-control" name="description" cols="20" rows="6" ngModel
+                    [(ngModel)]="this.currentProduct.description"></textarea>
+            </div>
+            <div class="form-group">
+                <label class="label-control">Prix courant:</label>
+                <input class="form-control" type="text" name="currentPrice" ngModel
+                    [(ngModel)]="this.currentProduct.currentPrice">
+            </div>
+            <div class="form-group">
+                <label class="label-control">Promotion:</label>&nbsp;
+                <input type="checkbox" name="isOnPromotion" ngModel [(ngModel)]="this.currentProduct.isOnPromotion">
+            </div>
+            <div class="form-group">
+                <label class="label-control">Sélection:</label>&nbsp;
+                <input type="checkbox" name="isSelected" ngModel [(ngModel)]="this.currentProduct.isSelected">
+            </div>
+            <div class="form-group">
+                <label class="label-control">Disponible:</label>&nbsp;
+                <input type="checkbox" name="isAvailable" ngModel [(ngModel)]="this.currentProduct.isAvailable">
+            </div>
+            <input class="btn btn-success" type="submit" value="Mettre à jour">
+        </form>
+    </div>
+</div>

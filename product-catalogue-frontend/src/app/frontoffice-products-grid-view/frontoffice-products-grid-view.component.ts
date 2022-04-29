@@ -149,6 +149,7 @@ export class FrontofficeProductsGridViewComponent implements OnInit {
   }
 
   getCurrentTimeStamp() {
+    this._currentTimeStamp=Date.now();
     return this.currentTimeStamp;
   }
 

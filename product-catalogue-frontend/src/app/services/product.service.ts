@@ -45,6 +45,11 @@ export class ProductService {
 
   }
 
+  patchProduct(URL: string, dataOfEditedProduct: any) {
+    return this.httpClient.patch<Product>(URL, dataOfEditedProduct);
+
+  }
+
   saveProduct(URL: string, data: Product): Observable<Product> {
     // Noter bien que la mtd POST RETROUNE l objet enregistre format JSON, avec ses propres _links
     return this.httpClient.post<Product>(URL, data);

@@ -8,16 +8,18 @@
                 </div>
                 <div class="panel-body">
                     <img class="img-thumbnail img-rounded btn" height="200" width="200"
-                        [src]="this.HOST+'/get-product-photo/'+product.photoName+'?ts='+this.getCurrentTimeStamp()" 
-                        (click)="onProductDetail(product)" >
+                        [src]="this.HOST+'/get-product-photo/'+product.photoName+'?ts='+this.getCurrentTimeStamp()"
+                        (click)="onProductDetail(product)">
                     <div *ngIf="this.authenticationService.isAdmin()">
                         <button (click)="onEditPhoto(product)">
                             <span class="glyphicon glyphicon-edit"></span>
                         </button>
                         <div *ngIf="this.isEditPhoto && this.currentProduct==product">
                             <input type="file" (change)="onSelectPhotos($event)">
-                            <input class="btn btn-primary" type="button" value="Upload" (click)="onUploadPhotos()"
+                            <button class="btn btn-primary btn-sm" value="Upload" (click)="onUploadPhotos()"
                                 [disabled]="!this.selectedPhotos">
+                                Upload&nbsp;<span class="glyphicon glyphicon-upload"></span>
+                            </button>
                             {{this.progress}}%
                         </div>
                     </div>
@@ -37,12 +39,12 @@
                     </span>
                     <div>
                         <form #formAddToCaddy="ngForm">
-                            <label class="control-label">Quantité: </label>
+                            <label class="control-label">Quantité:&nbsp;</label>
                             <input type="number" name="orderedQuantity" [(ngModel)]="product.orderedQuantity" ngModel
                                 style="width:40px">&nbsp;
-                            <a class="btn">
-                                <img height="25" width="40" src="assets/images/caddy.png" title="Ajouter au panier">
-                            </a>
+                            <button class="btn btn-sm">
+                                <img height="25" width="25" src="assets/images/caddy.png" title="Ajouter au panier">
+                            </button>
                         </form>
                     </div>
                 </div>

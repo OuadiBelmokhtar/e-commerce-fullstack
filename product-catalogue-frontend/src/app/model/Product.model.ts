@@ -20,15 +20,12 @@ export class Product {
         self: {
             href: string
         },
-        product: {
-            href: string
-        },
         category: {
             href: string
         }
     }
 
-    constructor(id: number, designation: string, description: string, price: number, promotion: boolean, selected: boolean, available: boolean, photoName: string, quantity: number,orderedQuantity:number, category: Category) {
+    constructor(id: number, designation: string, description: string, price: number, promotion: boolean, selected: boolean, available: boolean, photoName: string, quantity: number, orderedQuantity: number, category: Category) {
         this._id = id;
         this._designation = designation;
         this._description = description;
@@ -38,7 +35,7 @@ export class Product {
         this._isAvailable = available;
         this._photoName = photoName;
         this._quantity = quantity;
-        this._orderedQuantity=orderedQuantity;
+        this._orderedQuantity = orderedQuantity;
         this._productCategory = category;
     }
 
@@ -116,5 +113,5 @@ export class Product {
     public set orderedQuantity(value: number) {
         this._orderedQuantity = value;
     }
-  
+
 }
