@@ -31,6 +31,7 @@ export class AuthenticationService {
       this.authenticatedUser = foundUser;
       this.isAuthenticated = true;
       // créer un token pr le sauvegarder ds localStorage
+      // convertir authenticatedUser de JSON à string
       this.token = btoa(JSON.stringify({ 'username': this.authenticatedUser.username, 'roles': this.authenticatedUser.roles }));
     } else {
       this.authenticatedUser = undefined;
@@ -59,6 +60,7 @@ export class AuthenticationService {
     //console.log("lToken");
     // console.log(lToken);
     if (encodedToken) {
+      // convertir de string à JSON
       let decodedToken = JSON.parse(atob(encodedToken));
       // extraire username+roles seulement, vu que generalement un token contient autres infos (date expiration, ...)
       this.authenticatedUser = { username: decodedToken.username, roles: decodedToken.roles };

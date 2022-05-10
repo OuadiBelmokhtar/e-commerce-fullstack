@@ -1,5 +1,5 @@
 export enum ShowingProductsModeEnum{
-    // garder le meme ordre
+    // gardez le meme ordre
     BACK_OFFICE=0,
     FRONT_OFFICE,
     BY_SELECTED_PRODUCTS,

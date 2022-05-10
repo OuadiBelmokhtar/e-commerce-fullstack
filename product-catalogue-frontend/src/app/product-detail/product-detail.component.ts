@@ -68,7 +68,6 @@ export class ProductDetailComponent implements OnInit {
     // pr masquer/afficher le button ‘Open File’
     this.isEditPhoto = true;
   }
-  
 
   onSelectPhotos(event: any) {
     // récupérer ds Angular les phtotos sélectonnées par l'utilisateur ds l'explorateur

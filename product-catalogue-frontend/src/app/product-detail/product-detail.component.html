@@ -1,7 +1,8 @@
 <div *ngIf="this.currentProduct">
     <div class="panel panel-default" *ngIf="this.showMode==0">
-        <div class="panel-heading"><label>Fiche Produit:</label> {{this.currentProduct.designation}}</div>
-        <span class="glyphicon glyphicon-edit pull-right btn" (click)="onEditProduct()"></span>
+        <div class="panel-heading"><label>Fiche Produit:</label> {{this.currentProduct.designation}}
+            <span *ngIf="this.authenticationService.isAdmin()" class="glyphicon glyphicon-edit pull-right btn" (click)="onEditProduct()"></span>
+        </div>
 
         <div class="panel-body">
             <div class="col-md-5">

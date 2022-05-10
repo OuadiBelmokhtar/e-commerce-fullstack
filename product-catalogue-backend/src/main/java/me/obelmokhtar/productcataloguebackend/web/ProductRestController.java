@@ -14,7 +14,7 @@ import java.nio.file.Paths;
 @RestController
 public class ProductRestController {
     private ProductRepository productRepository;
-
+    // pr l'injection de dependance par constructeur
     public ProductRestController(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }

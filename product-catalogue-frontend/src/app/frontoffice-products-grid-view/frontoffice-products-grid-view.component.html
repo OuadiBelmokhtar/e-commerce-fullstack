@@ -38,7 +38,7 @@
                             title="Produit disponible">
                     </span>
                     <div>
-                        <form #formAddToCaddy="ngForm">
+                        <form #formAddToCaddy="ngForm" (ngSubmit)="onAddProductToCaddy(product)">
                             <label class="control-label">Quantité:&nbsp;</label>
                             <input type="number" name="orderedQuantity" [(ngModel)]="product.orderedQuantity" ngModel
                                 style="width:40px">&nbsp;

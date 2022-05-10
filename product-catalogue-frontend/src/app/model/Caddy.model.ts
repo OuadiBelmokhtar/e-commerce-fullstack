@@ -3,8 +3,8 @@ import { CaddyItem } from './CaddyItem.model';
 
 export class Caddy{
     private _name: string;
-    // stocke le nom du caddy et les elts qu'elle contient
-    public caddyItems:Map<string, CaddyItem>=new Map();
+    // stocke l'ID du product et le caddyItem y associé
+    public caddyItems:Map<number, CaddyItem> = new Map();
     private _customer!: Customer; // util pr envoyer le caddy au backend avec les infos du client
     
     constructor(name:string){

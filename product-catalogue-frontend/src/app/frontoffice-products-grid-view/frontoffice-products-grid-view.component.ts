@@ -8,6 +8,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { ShowingProductsModeEnum } from '../model/ShowingProductsModeEnum';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { AuthenticationService } from '../services/authentication.service';
+import { CaddyService } from '../services/caddy.service';
 
 @Component({
   selector: 'app-frontoffice-products-grid-view',
@@ -30,6 +31,7 @@ export class FrontofficeProductsGridViewComponent implements OnInit {
   constructor(private categoryService: CategoryService,
     private productService: ProductService,
     public authenticationService: AuthenticationService,
+    private caddyService: CaddyService,
     private activatedRoute: ActivatedRoute,
     private router: Router) {
 
@@ -37,7 +39,7 @@ export class FrontofficeProductsGridViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.router.events.subscribe(event => { // subscribe aux events qui se produisent ds le sys de routage
-      if (event instanceof NavigationEnd) { // une fois la navigation d'une route à une autre termine
+      if (event instanceof NavigationEnd) { // une fois la navigation d'une route à une autre termine, on exec le traitement ci-dessous
         let actualRoute = event.url; // recup l'url courante
         console.log("actualRoute");
         console.log(actualRoute);
@@ -58,8 +60,6 @@ export class FrontofficeProductsGridViewComponent implements OnInit {
         }
       }
     })
-
-
   }
 
   private getOnPromotionProducts() {
@@ -90,7 +90,7 @@ export class FrontofficeProductsGridViewComponent implements OnInit {
         console.log("clickedCategory");
         console.log(clickedCategory);
 
-        // Recup list product by cateogry
+        // Recup list products by cateogry
         this.productService.getProductsByCategory(clickedCategory._links.self.href + '/products')
           .subscribe(response => {
             console.log(response);
@@ -145,11 +145,15 @@ export class FrontofficeProductsGridViewComponent implements OnInit {
 
   onProductDetail(product: Product) {
     let uriOfProduct = product._links.self.href;
-    this.router.navigateByUrl('product-detail/'+btoa(uriOfProduct));
+    this.router.navigateByUrl('product-detail/' + btoa(uriOfProduct));
+  }
+
+  onAddProductToCaddy(addedProduct: Product) {
+    this.caddyService.addProductToCaddy(addedProduct);
   }
 
   getCurrentTimeStamp() {
-    this._currentTimeStamp=Date.now();
+    this._currentTimeStamp = Date.now();
     return this.currentTimeStamp;
   }
 

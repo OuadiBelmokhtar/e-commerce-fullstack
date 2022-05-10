@@ -4,7 +4,7 @@ export class CaddyItem {
     private _associatedProduct: Product;
     private _buyingPrice: number;
     private _purchasedQuantity: number;
-    // private _dscount:number; if needed
+    // private _discount:number; if needed
 
     constructor(associatedProduct: Product, buyingPrice: number, purchasedQuantity: number) {
         this._associatedProduct = associatedProduct;

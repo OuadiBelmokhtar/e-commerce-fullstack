@@ -11,8 +11,9 @@ export class Product {
     private _isSelected: boolean;
     private _isAvailable: boolean;
     private _photoName: string;
+    // quantite en stock
     private _quantity: number;
-    // Sert a afficher la quantite par defaut a commander ds le champ 'input type=number' ds la page web
+    // Sert pr: afficher la quantite par defaut a commander ds le champ 'input type=number' ds la page web. Ainsi que pour stocker la quantite ajoutée au panier
     private _orderedQuantity: number;
     private _productCategory: Category; // tu gardes ce nom, pr faire marcher la persistance de l'association correctement
     public _embedded: any;// garder le public
