@@ -5,6 +5,7 @@ import { Category } from './model/Category.model';
 import { Router } from '@angular/router';
 import { ShowingProductsModeEnum } from './model/ShowingProductsModeEnum';
 import { AuthenticationService } from './services/authentication.service';
+import { CaddyService } from './services/caddy.service';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +22,7 @@ export class AppComponent implements OnInit {
   constructor(private categoryService: CategoryService,
     private productService: ProductService,
     private authenticationService:AuthenticationService,
+    public caddyService:CaddyService,
     private router: Router) {
 
   }

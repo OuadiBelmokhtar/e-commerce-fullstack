@@ -2,25 +2,16 @@ import { Customer } from './Customer.model';
 import { CaddyItem } from './CaddyItem.model';
 
 export class Caddy{
-    private _name: string;
+    // garder ces attributs public. Obligatoire pr faire fonctionner JSON.parse de la Map
+
+    public name: string;
     // stocke l'ID du product et le caddyItem y associé
     public caddyItems:Map<number, CaddyItem> = new Map();
-    private _customer!: Customer; // util pr envoyer le caddy au backend avec les infos du client
+    private customer!: Customer; // util pr envoyer le caddy au backend avec les infos du client
     
     constructor(name:string){
-        this._name=name;
+        this.name=name;
     }
-
-    public get name(): string {
-        return this._name;
-    }
-    public set name(value: string) {
-        this._name = value;
-    }
-    public get customer(): Customer {
-        return this._customer;
-    }
-    public set customer(value: Customer) {
-        this._customer = value;
-    }
+// les getters/setters posent des problèmes(lors de la serialization/deserialization JSON) pr ce cas d'usage
+  
 }

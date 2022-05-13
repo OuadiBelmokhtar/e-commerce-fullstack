@@ -14,11 +14,17 @@ export class CaddyService {
   private _caddies: Map<string, Caddy> = new Map();
 
   constructor() {
-    // recuperer les caddies stockées en localSotrage. Si aucun caddy existe, créer un avec currentCaddyName
-    //...
-    // creer un caddy par defaut lors du demarrage du service et l'ajouter au Map
-    let defaultCaddy = new Caddy(this.currentCaddyName);
-    this.caddies.set(this.currentCaddyName, defaultCaddy);
+    // recuperer les caddies stockées en localSotrage. Si aucun caddy existe, créer un par défaut avec currentCaddyName
+    if (this.loadAndGetCaddiesFromLocalStorage()) {
+      this.caddies = this.loadAndGetCaddiesFromLocalStorage();// convertir de string a JSON
+
+    } else {
+      // creer un caddy par defaut lors du demarrage du service et l'ajouter au Map
+      let defaultCaddy = new Caddy(this.currentCaddyName);
+      this.caddies.set(this.currentCaddyName, defaultCaddy);
+    }
+    // console.log("constructor().caddies");
+    // console.log(this.caddies);
   }
 
   addProductToCaddy(addedProduct: Product) {
@@ -33,17 +39,64 @@ export class CaddyService {
      - step3:  
     */
 
-   let currentCaddy=this.caddies.get(this.currentCaddyName);
-   if(currentCaddy){
-     let currentCaddyItem=currentCaddy.caddyItems.get(addedProduct.id);
-     if(currentCaddyItem){
-       currentCaddyItem.purchasedQuantity+=addedProduct.orderedQuantity;
+    let currentCaddy = this.caddies.get(this.currentCaddyName);
+    if (currentCaddy) {
+      let currentCaddyItem = currentCaddy.caddyItems.get(addedProduct.id);
+      if (currentCaddyItem) {
+        currentCaddyItem.purchasedQuantity += addedProduct.orderedQuantity;
 
-     }else{
-      currentCaddyItem=new CaddyItem(addedProduct, addedProduct.currentPrice,addedProduct.orderedQuantity);
-      currentCaddy.caddyItems.set(addedProduct.id, currentCaddyItem);
-     }
-   }   
+      } else {
+        currentCaddyItem = new CaddyItem(addedProduct, addedProduct.currentPrice, addedProduct.orderedQuantity);
+        currentCaddy.caddyItems.set(addedProduct.id, currentCaddyItem);
+
+      }
+      this.saveCaddiesToLocalStorage();
+    }
+
+  }
+
+  getCurrentCaddy() {
+    return this.caddies.get(this.currentCaddyName);
+  }
+
+  getTotalAmountOfCurrentCaddy(): number {
+    let totalAmount: number = 0;
+    this.getCurrentCaddy()?.caddyItems.forEach(caddyItem => {
+      totalAmount += caddyItem.buyingPrice * caddyItem.purchasedQuantity;
+    });
+    return totalAmount;
+  }
+
+  // enregistrer les caddies ds le localSotrage à chaque fois que j'ajoute un product au caddy
+  saveCaddiesToLocalStorage() {
+    // localStorage permet d'enregistrer les string seulement, alors on doit serialiser la map caddies 
+    localStorage.setItem('myCaddies', JSON.stringify(this.caddies, this.replacer));
+  }
+
+  loadAndGetCaddiesFromLocalStorage() {
+    return JSON.parse(localStorage.getItem('myCaddies')!, this.reviver);
+  }
+
+  // fonction requise pr serialiser la map caddies via JSON.stringify()
+  private replacer(key: any, value: any) {
+    if (value instanceof Map) {
+      return {
+        dataType: 'Map',
+        value: Array.from(value.entries()), // or with spread: value: [...value]
+      };
+    } else {
+      return value;
+    }
+  }
+
+  // fonction requise pr deserialiser la map caddies via JSON.parse()
+  private reviver(key: any, value: any) {
+    if (typeof value === 'object' && value !== null) {
+      if (value.dataType === 'Map') {
+        return new Map(value.value);
+      }
+    }
+    return value;
   }
 
   public get currentCaddyName(): string {

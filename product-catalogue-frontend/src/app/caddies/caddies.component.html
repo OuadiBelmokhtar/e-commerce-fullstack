@@ -1,0 +1,28 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        {{this.caddyService.getCurrentCaddy()?.name}}
+    </div>
+    <div class="panel-body">
+
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Référence</th><th>Designation</th><th>Quantité</th><th>Prix</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="this.caddyService.getCurrentCaddy()">
+                <tr *ngFor="let caddyItem of this.caddyService.getCurrentCaddy()?.caddyItems?.values()">
+                    <td>{{caddyItem.associatedProduct.id}}</td>
+                    <td>{{caddyItem.associatedProduct.designation}}</td>
+                    <td>{{caddyItem.purchasedQuantity}}</td>
+                    <td>{{caddyItem.buyingPrice}}</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><b>Total</b></td>
+                    <td><b>{{this.caddyService.getTotalAmountOfCurrentCaddy()}}</b></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>

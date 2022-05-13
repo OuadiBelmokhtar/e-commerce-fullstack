@@ -14,6 +14,7 @@ import { EditCategoryComponent } from './edit-category/edit-category.component';
 import { FrontofficeProductsGridViewComponent } from './frontoffice-products-grid-view/frontoffice-products-grid-view.component';
 import { LoginComponent } from './login/login.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { CaddiesComponent } from './caddies/caddies.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
     EditCategoryComponent,
     FrontofficeProductsGridViewComponent,
     LoginComponent,
-    ProductDetailComponent
+    ProductDetailComponent,
+    CaddiesComponent
   ],
   imports: [
     BrowserModule,

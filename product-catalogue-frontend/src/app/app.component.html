@@ -33,14 +33,21 @@
         </ul>
       </li>
       <li><a href="#">Client</a></li>
+      <li><a routerLink="/caddies">Paniers</a></li>
     </ul>
     <ul class="nav navbar-nav pull-right">
+      <li *ngIf="this.caddyService.getCurrentCaddy()">
+        <a>
+          {{this.caddyService.getCurrentCaddy()?.name}}&nbsp;:&nbsp;{{this.caddyService.getCurrentCaddy()?.caddyItems?.size}}
+        </a>
+      </li>
       <li>
         <a class="btn" (click)="onLgout()">
           <span *ngIf="this.getAuthenticatedUser()">
             Bienvenu {{this.getAuthenticatedUser().username}}&nbsp;
           </span>
-          <span [title]="this.getAuthenticatedUser()?'Logout':'Login'" [ngClass]="this.getAuthenticatedUser()? 'glyphicon glyphicon-log-out':'glyphicon glyphicon-log-in'">
+          <span [title]="this.getAuthenticatedUser()?'Logout':'Login'"
+            [ngClass]="this.getAuthenticatedUser()? 'glyphicon glyphicon-log-out':'glyphicon glyphicon-log-in'">
           </span>
         </a>
       </li>
