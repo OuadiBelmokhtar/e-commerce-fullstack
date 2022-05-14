@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { CaddiesComponent } from './caddies/caddies.component';
+import { CustomerComponent } from './customer/customer.component';
 
 const routes: Routes = [
   {path:"home", component:AppComponent},
@@ -24,6 +25,7 @@ const routes: Routes = [
   {path:"login", component: LoginComponent},
   {path:"product-detail/:uriOfProductToShowDetail", component:ProductDetailComponent},
   {path:"caddies", component:CaddiesComponent},
+  {path:"customer", component:CustomerComponent},
   { path: "", redirectTo: "frontoffice-products-grid/2/0", pathMatch: "full" }
 ];
 

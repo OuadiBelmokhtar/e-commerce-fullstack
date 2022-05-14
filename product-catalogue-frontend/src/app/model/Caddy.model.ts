@@ -7,7 +7,7 @@ export class Caddy{
     public name: string;
     // stocke l'ID du product et le caddyItem y associé
     public caddyItems:Map<number, CaddyItem> = new Map();
-    private customer!: Customer; // util pr envoyer le caddy au backend avec les infos du client
+    public customer: Customer= { name: "", address: "", phoneNumber: "", email: "", username: "" }; // util pr envoyer le caddy au backend avec les infos du client
     
     constructor(name:string){
         this.name=name;

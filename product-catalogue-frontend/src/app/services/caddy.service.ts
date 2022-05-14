@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Product } from '../model/Product.model';
 import { CaddyItem } from '../model/CaddyItem.model';
 import { Caddy } from '../model/Caddy.model';
+import { Customer } from '../model/Customer.model';
 
 @Injectable({
   providedIn: 'root'
@@ -57,6 +58,10 @@ export class CaddyService {
 
   getCurrentCaddy() {
     return this.caddies.get(this.currentCaddyName);
+  }
+
+  setCustomer(caddyCustomer: Customer) {
+    this.getCurrentCaddy()!.customer = caddyCustomer;
   }
 
   getTotalAmountOfCurrentCaddy(): number {

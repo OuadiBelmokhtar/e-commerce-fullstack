@@ -15,6 +15,7 @@ import { FrontofficeProductsGridViewComponent } from './frontoffice-products-gri
 import { LoginComponent } from './login/login.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { CaddiesComponent } from './caddies/caddies.component';
+import { CustomerComponent } from './customer/customer.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { CaddiesComponent } from './caddies/caddies.component';
     FrontofficeProductsGridViewComponent,
     LoginComponent,
     ProductDetailComponent,
-    CaddiesComponent
+    CaddiesComponent,
+    CustomerComponent
   ],
   imports: [
     BrowserModule,

@@ -3,7 +3,6 @@
         {{this.caddyService.getCurrentCaddy()?.name}}
     </div>
     <div class="panel-body">
-
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
@@ -14,15 +13,20 @@
                 <tr *ngFor="let caddyItem of this.caddyService.getCurrentCaddy()?.caddyItems?.values()">
                     <td>{{caddyItem.associatedProduct.id}}</td>
                     <td>{{caddyItem.associatedProduct.designation}}</td>
-                    <td>{{caddyItem.purchasedQuantity}}</td>
-                    <td>{{caddyItem.buyingPrice}}</td>
+                    <td>{{caddyItem.purchasedQuantity|number:'0.2'}}</td>
+                    <td>{{caddyItem.buyingPrice|number:'0.2'}}</td>
+                    <td>
+                        <button class="btn btn-sm btn-danger" (click)="onRemoveCaddyItemFromCaddy(caddyItem)">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="3"><b>Total</b></td>
-                    <td><b>{{this.caddyService.getTotalAmountOfCurrentCaddy()}}</b></td>
+                    <td><b>{{this.caddyService.getTotalAmountOfCurrentCaddy()|number:'0.2'}}</b></td>
                 </tr>
             </tbody>
         </table>
-
+        <button class="btn btn-success" (click)="onCreateNewOrder()" >Commander</button>
     </div>
 </div>
