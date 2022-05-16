@@ -13,8 +13,8 @@ export class CustomerComponent implements OnInit {
 
   private _viewMode: number = 0;
   // pr afficher un message de confirmation en vert lors de la confirmation de la commande
-  private _panelStyle: string="panel-default";
-  
+  private _panelStyle: string = "panel-default";
+
   constructor(public caddyService: CaddyService, public orderService: OrderService, private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
@@ -27,17 +27,23 @@ export class CustomerComponent implements OnInit {
     savingCustomerFormFields.username = this.authenticationService.authenticatedUser.username;
     // initialiser customer de caddyService.caddy, car on en aura besoin par la suite
     this.caddyService.setCustomer(savingCustomerFormFields);
-    // initialiser customer de caddyService.order, car on en aura besoin par la suite pr afficher le bon de commande
+    // initialiser customer de caddyService.order, car on en aura besoin par la suite pr afficher les infos customer le bon de commande
     this.orderService.setCustomer(savingCustomerFormFields);
     this.orderService.loadProductsFromCurrentCaddyToOrder();
-    this.viewMode=1;
+    this.viewMode = 1;
   }
 
-  onConfirmOrder(){
-  
+  onConfirmOrder() {
+    this.orderService.submitOrder().subscribe(response => {
+      this.orderService.order.id = response.id;
+      this.orderService.order.date = response.date;
+      this.panelStyle = "panel-success";
+    }, err=>{
+      console.log(err);
+    })
   }
 
-  onPayOrder(){
+  onPayOrder() {
 
   }
 

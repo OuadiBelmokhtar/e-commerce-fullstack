@@ -1,4 +1,4 @@
-<!-- viewMode=0, affichage du formulaire infos customer -->
+<!-- viewMode=0, affichage du formulaire saisi infos customer -->
 <div class="col-md-6" *ngIf="viewMode==0">
     <form #customerForm="ngForm" (ngSubmit)="onSaveCustomerInfos(customerForm.value)">
         <div class="form-group">
@@ -80,8 +80,10 @@
             </tbody>
         </table>
         <!--afficher ce button seulement si la commande n'est pas encore enregistrée: orderService.order.id==undefined -->
-        <button class="btn btn-success" (click)="onConfirmOrder()" *ngIf="!this.orderService.order.id">Confirmer la commande</button>
-       <!--afficher ce button seulement lorsque la commande est déjà enregistrée: orderService.order.id!=undefined -->
-        <button class="btn btn-success" (click)="onPayOrder()" *ngIf="this.orderService.order.id">Payer la commande</button>
+        <button class="btn btn-success" (click)="onConfirmOrder()" *ngIf="!this.orderService.order.id">Confirmer la
+            commande</button>
+        <!--afficher ce button seulement lorsque la commande est déjà enregistrée: orderService.order.id!=undefined -->
+        <button class="btn btn-success" (click)="onPayOrder()" *ngIf="this.orderService.order.id">Payer la
+            commande</button>
     </div>
 </div>
