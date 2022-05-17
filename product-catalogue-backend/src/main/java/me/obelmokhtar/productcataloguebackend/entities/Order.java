@@ -10,6 +10,8 @@ import java.util.Collection;
 import java.util.Date;
 
 @Entity
+// obligatoire, car MySQL n'accepte pas 'order' comme nom de table vu que c un mot cle SQL.
+@Table(name = "Orders")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

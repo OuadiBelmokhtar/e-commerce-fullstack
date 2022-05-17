@@ -27,18 +27,22 @@ export class CustomerComponent implements OnInit {
     savingCustomerFormFields.username = this.authenticationService.authenticatedUser.username;
     // initialiser customer de caddyService.caddy, car on en aura besoin par la suite
     this.caddyService.setCustomer(savingCustomerFormFields);
-    // initialiser customer de caddyService.order, car on en aura besoin par la suite pr afficher les infos customer le bon de commande
+    // initialiser customer de caddyService.order, car on en aura besoin par la suite 
+    // pr afficher les infos customer ds le bon de commande, et pr le tranmettre au backend
     this.orderService.setCustomer(savingCustomerFormFields);
+    // charger les caddyItem de getCurrentCaddy() ds order.orderedProducts pr les afficher ds le bon de cmd
     this.orderService.loadProductsFromCurrentCaddyToOrder();
     this.viewMode = 1;
   }
 
   onConfirmOrder() {
     this.orderService.submitOrder().subscribe(response => {
+      // response represente l'objet Order retourne du backend
       this.orderService.order.id = response.id;
       this.orderService.order.date = response.date;
       this.panelStyle = "panel-success";
     }, err=>{
+      this.panelStyle = "panel-danger";
       console.log(err);
     })
   }
