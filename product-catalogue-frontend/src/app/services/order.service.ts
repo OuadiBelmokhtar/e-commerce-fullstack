@@ -38,4 +38,8 @@ export class OrderService {
     */
     return this.httpClient.post<Order>(GlobalService.HOST+"/orders", this.order);
   }
+
+  getOrder(id:number){
+    return this.httpClient.get<Order>(GlobalService.HOST+"/orders/"+id);
+  }
 }

@@ -33,11 +33,13 @@ public class OrderRestController {
       passée par le client et envoyees de la partie frontend.
     - Les données reçues du frontend seront encapsulées ds un objet OrderFormData.
     - Les données de la commande à récupérer et sauvegarder sont:
-      Customer, Order(customer, date)//!!!! totalAmount, Order.orderItems.
+      Customer, Order(customer, date), totalAmount, Order.orderItems.
 
      */
     @PostMapping("/orders")
     public Order saveOrder(@RequestBody OrderFormData orderFormData) {
+        System.out.println("**** OrderRestController.saveOrder() *****");
+        System.out.println("orderFormData recu du frontend: "+orderFormData);
 
         try {
             // recuperer, initialiser et sauvegarder le Customer correspondant à l'Order
@@ -49,7 +51,6 @@ public class OrderRestController {
             customer.setEmail(orderFormData.getCustomer().getEmail());
             customer.setPhoneNumber(orderFormData.getCustomer().getPhoneNumber());
             customer = customerRepository.save(customer);
-            System.out.println("**** OrderRestController.saveOrder() *****");
             System.out.println("Customer bien sauvegardé, id: " + customer.getId());
 
             // recuperer, initialiser et sauvegarder l'Order
@@ -80,7 +81,7 @@ public class OrderRestController {
                 // calculer le mt total de order
                 orderTotalAmount += orderItem.getPrice() * orderItem.getPurchasedQuantity();
             }
-            // deinfir le mt total de l'order
+            // definir le mt total de l'order
             order.setTotalAmount(orderTotalAmount);
             // maj l'order par le mt total
             return orderRepository.save(order);

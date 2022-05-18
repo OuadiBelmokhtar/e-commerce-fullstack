@@ -1,0 +1,35 @@
+<div class="panel {{panelStyle}}">
+    <div class="panel-heading">
+        Informations Paiement
+    </div>
+    <div class="panel-body" *ngIf="this.viewMode==0">
+        <form #formPayment="ngForm" (ngSubmit)="onConfirmPayOrder(formPayment.value)">
+            <div class="form-group">
+                <label class="control-label">Type Carte:</label>
+                <select class="form-control" name="cardType" ngModel>
+                    <option value="visa">VISA</option>
+                    <option value="masterCard">Master Card</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Numéro Carte:</label>
+                <input class="form-control" type="text" name="cardNumber" ngModel>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Code vérification:</label>
+                <input class="form-control" type="text" name="verifCode" ngModel>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Montant total:</label>
+                <input class="form-control" type="text" disabled name="totalAmount" ngModel
+                    [(ngModel)]="this.associatedOrder.totalAmount">
+            </div>
+            <input type="text" name="orderId" ngModel [(ngModel)]="this.orderId">
+            <input class="btn btn-success" type="submit" value="Confirmer Paiement">
+        </form>
+    </div>
+    <!-- affichage msg confirmation -->
+    <div class="panel-body" *ngIf="this.viewMode==1">
+        {{this.confirmationMsg}}
+    </div>
+</div>

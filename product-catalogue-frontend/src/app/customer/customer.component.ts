@@ -3,6 +3,7 @@ import { CaddyService } from '../services/caddy.service';
 import { Customer } from '../model/Customer.model';
 import { AuthenticationService } from '../services/authentication.service';
 import { OrderService } from '../services/order.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-customer',
@@ -15,7 +16,8 @@ export class CustomerComponent implements OnInit {
   // pr afficher un message de confirmation en vert lors de la confirmation de la commande
   private _panelStyle: string = "panel-default";
 
-  constructor(public caddyService: CaddyService, public orderService: OrderService, private authenticationService: AuthenticationService) { }
+  constructor(public caddyService: CaddyService, public orderService: OrderService, 
+    private authenticationService: AuthenticationService, private router:Router) { }
 
   ngOnInit(): void {
   }
@@ -48,7 +50,7 @@ export class CustomerComponent implements OnInit {
   }
 
   onPayOrder() {
-
+    this.router.navigateByUrl("/payment/"+this.orderService.order.id);
   }
 
   public get viewMode(): number {

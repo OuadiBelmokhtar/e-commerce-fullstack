@@ -19,4 +19,13 @@ public class Category implements Serializable {
     private String description;
     @OneToMany(mappedBy = "category")
     Collection<Product> products;
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

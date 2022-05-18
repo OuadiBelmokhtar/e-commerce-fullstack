@@ -20,6 +20,8 @@ public class Payment  implements Serializable {
     private Date datePayment;
     private String cardNumber;
     private String cardType;
+    // ref unique autogénérée lors de la sauvegarde de chaque payment. Elle sert comme preuve d'auprès le customer.
+    private String referencePayment;
     @OneToOne(mappedBy = "payment")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Order order;
