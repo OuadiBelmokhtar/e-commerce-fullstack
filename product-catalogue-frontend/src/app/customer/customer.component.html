@@ -23,7 +23,7 @@
 </div>
 <!-- viewMode=1, affichage du bon de commande -->
 <div class="panel {{this.panelStyle}}" *ngIf="this.viewMode==1">
-    <div class="panel-heading">Récap de votre commande</div>
+    <div class="panel-heading">{{this.confirmationMsg}}</div>
     <div class="panel-body">
         <div class="col-md-5">
             <div class="form-group">
@@ -56,7 +56,7 @@
     </div>
 
     <!-- affichage des products enregistrés ds la commande à partir de this.orderService.order.orderedProducts -->
-    <div class="panel-body">
+    <div class="panel-body" *ngIf="this.orderService.order.orderedProducts">
         <table class="table table-striped table-hover">
             <thead>
                 <tr>

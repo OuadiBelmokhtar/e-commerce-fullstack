@@ -1,4 +1,4 @@
-<div class="panel {{panelStyle}}">
+<div class="panel {{panelStyle}}" *ngIf="this.associatedOrder">
     <div class="panel-heading">
         Informations Paiement
     </div>
@@ -24,7 +24,7 @@
                 <input class="form-control" type="text" disabled name="totalAmount" ngModel
                     [(ngModel)]="this.associatedOrder.totalAmount">
             </div>
-            <input type="text" name="orderId" ngModel [(ngModel)]="this.orderId">
+            <input type="hidden" name="orderId" ngModel [(ngModel)]="this.orderId">
             <input class="btn btn-success" type="submit" value="Confirmer Paiement">
         </form>
     </div>

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CaddyService } from '../services/caddy.service';
-import { CaddyItem } from '../model/CaddyItem.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,8 +14,11 @@ export class CaddiesComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onRemoveCaddyItemFromCaddy(clickedCaddyItem: CaddyItem) {
-
+  onRemoveCaddyItemFromCaddy(clickedCaddyItemKey: number) {
+    // supprimer le caddyItem de la Map
+    this.caddyService.getCurrentCaddy()?.caddyItems.delete(clickedCaddyItemKey);
+    // maj localStorage pr tenir compte la suppression
+    this.caddyService.saveCaddiesToLocalStorage();
   }
 
   onCreateNewOrder() {

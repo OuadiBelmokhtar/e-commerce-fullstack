@@ -31,7 +31,7 @@ export class OrderService {
     // }
   }
 
-  submitOrder(){
+  submitAndSaveOrder(){
     /* noter bien que l'objet this.order envoyé ds la requete contient :
      - this.order.customer les infos sur le customer, initialisées ds customer.component.ts.onSaveCustomerInfos()
      - this.order.orderedProducts: les products existent ds le panier et chargés ds this.loadProductsFromCurrentCaddyToOrder()

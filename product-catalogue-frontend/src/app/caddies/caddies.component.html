@@ -10,13 +10,13 @@
                 </tr>
             </thead>
             <tbody *ngIf="this.caddyService.getCurrentCaddy()">
-                <tr *ngFor="let caddyItem of this.caddyService.getCurrentCaddy()?.caddyItems?.values()">
-                    <td>{{caddyItem.associatedProduct.id}}</td>
-                    <td>{{caddyItem.associatedProduct.designation}}</td>
-                    <td>{{caddyItem.purchasedQuantity|number:'0.2'}}</td>
-                    <td>{{caddyItem.buyingPrice|number:'0.2'}}</td>
+                <tr *ngFor="let caddyItemKey of this.caddyService.getCurrentCaddy()?.caddyItems?.keys()">
+                    <td>{{this.caddyService.getCurrentCaddy()?.caddyItems?.get(caddyItemKey)?.associatedProduct?.id}}</td>
+                    <td>{{this.caddyService.getCurrentCaddy()?.caddyItems?.get(caddyItemKey)?.associatedProduct?.designation}}</td>
+                    <td>{{this.caddyService.getCurrentCaddy()?.caddyItems?.get(caddyItemKey)?.purchasedQuantity|number:'0.2'}}</td>
+                    <td>{{this.caddyService.getCurrentCaddy()?.caddyItems?.get(caddyItemKey)?.buyingPrice|number:'0.2'}}</td>
                     <td>
-                        <button class="btn btn-sm btn-danger" (click)="onRemoveCaddyItemFromCaddy(caddyItem)">
+                        <button class="btn btn-sm btn-danger" (click)="onRemoveCaddyItemFromCaddy(caddyItemKey)">
                             <span class="glyphicon glyphicon-remove"></span>
                         </button>
                     </td>

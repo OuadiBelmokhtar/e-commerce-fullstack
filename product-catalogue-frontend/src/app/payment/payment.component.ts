@@ -22,7 +22,9 @@ export class PaymentComponent implements OnInit {
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    // recup orderId passe ds url
     this._orderId = this.activatedRoute.snapshot.params['orderId'];
+    // recup l'Ordre correspond a orderId
     this.orderService.getOrder(this._orderId).subscribe(response => {
       this._associatedOrder = response;
       console.log("this._associatedOrder");
@@ -33,22 +35,26 @@ export class PaymentComponent implements OnInit {
   }
 
   onConfirmPayOrder(paymentFormFields: any) {
-    console.log("paymentFormFields");
-    console.log(paymentFormFields);
+    // console.log("paymentFormFields");
+    // console.log(paymentFormFields);
     this.paymentService.payment=new Payment();
     this.paymentService.payment.datePayment = new Date();
     this.paymentService.payment.cardType = paymentFormFields.cardType;
     this.paymentService.payment.cardNumber = paymentFormFields.cardNumber;
     this.paymentService.payment.order = new Order();
     this.paymentService.payment.order.id = paymentFormFields.orderId;
+    // envoyer le payment pr le sauvegarder ds la BD 
     this.paymentService.savePayment(this.paymentService.payment)
       .subscribe(response => {
-        this._confirmationMsg="Paiement effectué avec succès suos la référence: <b>"+response.referencePayment+"</b>";
+        // afficher un msg de confirmation avec la reference du paiement renvoyee par le backend
+        this._confirmationMsg="Paiement effectué avec succès suos la référence: "+response.referencePayment+"";
         this._panelStyle="panel-success";
+        // pr l affichage du message de confirmation
         this._viewMode=1;
       }, err => {
         this._confirmationMsg="Erreur de Paiement, veuillez ressayer ultérieurement."
         this._panelStyle="panel-danger";
+        // pr l affichage du message d erreur
         this._viewMode=1;
         console.log(err);
       })

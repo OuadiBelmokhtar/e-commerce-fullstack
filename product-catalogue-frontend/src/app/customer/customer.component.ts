@@ -15,6 +15,7 @@ export class CustomerComponent implements OnInit {
   private _viewMode: number = 0;
   // pr afficher un message de confirmation en vert lors de la confirmation de la commande
   private _panelStyle: string = "panel-default";
+  public confirmationMsg:string="Récap de votre commande";
 
   constructor(public caddyService: CaddyService, public orderService: OrderService, 
     private authenticationService: AuthenticationService, private router:Router) { }
@@ -38,12 +39,14 @@ export class CustomerComponent implements OnInit {
   }
 
   onConfirmOrder() {
-    this.orderService.submitOrder().subscribe(response => {
+    this.orderService.submitAndSaveOrder().subscribe(response => {
       // response represente l'objet Order retourne du backend
       this.orderService.order.id = response.id;
       this.orderService.order.date = response.date;
       this.panelStyle = "panel-success";
+      this.confirmationMsg="Commande bien enregistrée";
     }, err=>{
+      this.confirmationMsg="Erreur d'enregistrement de la commande, veuillez ressayer ultérieurement."
       this.panelStyle = "panel-danger";
       console.log(err);
     })

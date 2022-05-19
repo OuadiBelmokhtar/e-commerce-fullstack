@@ -82,6 +82,7 @@ export class CaddyService {
     return JSON.parse(localStorage.getItem('myCaddies')!, this.reviver);
   }
 
+
   // fonction requise pr serialiser la map caddies via JSON.stringify()
   private replacer(key: any, value: any) {
     if (value instanceof Map) {

@@ -1,7 +1,7 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            Ajouter Catégorie
+            Créer nouvelle catégorie
         </div>
         <div class="panel-body" *ngIf="!this.isSaved">
             <form #savingForm="ngForm" (ngSubmit)="this.onSaveCategory(savingForm.value)">
@@ -13,7 +13,7 @@
                     <label class="control-label">Description:</label>
                     <textarea class="form-control" name="description" cols="20" rows="5" ngModel></textarea>
                 </div>
-                <input class="btn btn-default" type="button" value="Annuler">
+                <input class="btn btn-default" type="button" value="Annuler">&nbsp;
                 <input class="btn btn-success" type="submit" value="Enregistrer">
             </form>
         </div>

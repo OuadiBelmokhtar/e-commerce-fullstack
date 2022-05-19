@@ -29,4 +29,14 @@ public class Order  implements Serializable {
     @OneToOne
     private Payment payment;
 
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", date=" + date +
+                ", totalAmount=" + totalAmount +
+                ", customer=" + customer +
+                ", payment=" + payment +
+                '}';
+    }
 }
