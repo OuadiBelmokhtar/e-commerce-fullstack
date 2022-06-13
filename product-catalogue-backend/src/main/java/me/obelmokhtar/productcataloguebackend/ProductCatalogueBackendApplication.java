@@ -12,6 +12,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.UUID;
@@ -45,8 +47,13 @@ public class ProductCatalogueBackendApplication {
             // productService.getAllProducts().forEach(System.out::println);
             //categoryRepository.findAll().forEach(System.out::println);
         };
+    }
 
-
+    /* Placer l'objet retourné ds le contexte Spring, ce qui permet d’avoir UNE SEULE instance
+       qu’on peut injecter et utiliser ds toutes les classes de l’application.*/
+    @Bean
+    PasswordEncoder getPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }
