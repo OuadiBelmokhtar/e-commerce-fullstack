@@ -32,13 +32,11 @@ public class JwtUserDetailsService implements UserDetailsService {
         // recuperer les details sur le user authentifié
         Users authenticatedUser = usersAccountService.loadUserByUsername(username);
         Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        // charger les roles du user stockés ds la BD ds une collection de type GrantedAuthority
+        // charger les roles du user stocké ds la BD ds une collection de type GrantedAuthority
         authenticatedUser.getRoles().forEach(role -> grantedAuthorities.add(new SimpleGrantedAuthority(role.getName())));
         // retourner a Spring les details sur le user authentifié(username+password+roles)
         // à ce point, Spring Security va s'occuper du rest:
-        // - comparer les mots de passe(en utilisant BCrypt)
-        // - comparer les rôles que possède le user avec les droits d'accès que possède la ressource demandée
-        // - autoriser ou bien interdire le user d y accéder
+        // - comparer les mots de passe(celui recu ds la requete et celui existe ds la BD, en utilisant BCrypt)
         return new User(authenticatedUser.getUsername(), authenticatedUser.getPassword(), grantedAuthorities);
     }
 }

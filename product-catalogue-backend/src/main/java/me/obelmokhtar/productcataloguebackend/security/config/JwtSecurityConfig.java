@@ -1,5 +1,6 @@
 package me.obelmokhtar.productcataloguebackend.security.config;
 
+import me.obelmokhtar.productcataloguebackend.security.services.UsersAccountService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,6 +11,12 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 @Configuration
 @EnableWebSecurity
 public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private UsersAccountService usersAccountService;
+
+    public JwtSecurityConfig(UsersAccountService usersAccountService) {
+        this.usersAccountService = usersAccountService;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -30,6 +37,6 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
    */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
+        auth.userDetailsService(new JwtUserDetailsService(this.usersAccountService));
     }
 }
