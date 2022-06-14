@@ -1,12 +1,17 @@
 package me.obelmokhtar.productcataloguebackend.security.config;
 
+import me.obelmokhtar.productcataloguebackend.security.filters.JwtAuthenticationFilter;
+import me.obelmokhtar.productcataloguebackend.security.filters.JwtAuthorizationFilter;
 import me.obelmokhtar.productcataloguebackend.security.services.UsersAccountService;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -30,6 +35,13 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         // exiger une authentification pr acceder à chaque resource
         http.authorizeRequests().anyRequest().authenticated();
+        //authenticationManagerBean() est un bean injecté sous dessous
+        http.addFilter(new JwtAuthenticationFilter(authenticationManagerBean()));
+        // Enregistrer le filtre JwtAuthorizationFilter, sinon il ne va pas intercepter les requêtes
+        // lorsqu'on a plsr filtres qui traitent les requetes reçues, addFilterBefore() permet de bien definir
+        // l'ordre d'exec des filtres. Ds notre cas, on veut intercepter chaque requete reçue D'ABORD via
+        // JwtAuthorizationFilter.doFilterInternal(), alors on va le definir comme le premier a s'executer.
+        http.addFilterBefore(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     /* Cette mtd sera invoquee par Spring suite a JwtAuthenticationFilter.attemptAuthentication().
@@ -38,5 +50,11 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(new JwtUserDetailsService(this.usersAccountService));
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 }

@@ -1,6 +1,7 @@
 package me.obelmokhtar.productcataloguebackend.security.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +12,8 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 @Entity
-@Data @NoArgsConstructor @AllArgsConstructor
+@Data @Builder
+@NoArgsConstructor @AllArgsConstructor
 // le nom de la classe Role est reserve par Spring
 public class Roles implements Serializable {
     @Id

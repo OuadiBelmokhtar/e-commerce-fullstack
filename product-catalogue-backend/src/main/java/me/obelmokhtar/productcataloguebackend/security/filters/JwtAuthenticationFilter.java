@@ -47,7 +47,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        System.out.println("JwtAuthenticationFilter.attemptAuthentication");
+        System.out.println("JwtAuthenticationFilter.attemptAuthentication()");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         System.out.println("username: " + username);
@@ -65,7 +65,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
       */
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        System.out.println("JwtAuthenticationFilter.successfulAuthentication");
+        System.out.println("JwtAuthenticationFilter.successfulAuthentication()");
         // getPrincipal() permet de retourner le user authentifié (reçu de la part de attemptAuthentication()),
         // contenant le username+password+roles necessaires pr générer le JWT
         User authenticatedUser = (User) authResult.getPrincipal();

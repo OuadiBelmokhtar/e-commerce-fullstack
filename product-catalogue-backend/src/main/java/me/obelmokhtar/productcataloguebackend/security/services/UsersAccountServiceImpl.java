@@ -6,10 +6,12 @@ import me.obelmokhtar.productcataloguebackend.security.repositories.RolesReposit
 import me.obelmokhtar.productcataloguebackend.security.repositories.UsersRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class UsersAccountServiceImpl implements UsersAccountService {
     private UsersRepository usersRepository;
     private RolesRepository rolesRepository;
@@ -35,6 +37,8 @@ public class UsersAccountServiceImpl implements UsersAccountService {
 
     @Override
     public void addRoleToUser(String roleName, String username) {
+        // FAIS ATTENTION, si @Transactionnal n’est pas utilisée ds cette classe,
+        // l’ajout ds la List ne sera pas (COMMITÉ) exécuté ds le BD (oui c’est testé).
         Users user = usersRepository.findByUsername(username);
         Roles role = rolesRepository.findByName(roleName);
         user.getRoles().add(role);
