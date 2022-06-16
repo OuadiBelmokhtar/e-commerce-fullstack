@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/* Filtre requis par Spring Security. Il a pour but de
+/* Filtre requis par Spring Security. Il sera exécuté pour chaque requête envoyée à l'application. Il a pour but de
    - recupérer le token JWT envoyé ds les requetes, le verifier, le valider, recuperer les claims(username+roles)
      afin d'authentifier le user ds le context de Spring Security. Ce qui va permettre à Spring Security
      d'autoriser/interdire l'accès à la ressource.

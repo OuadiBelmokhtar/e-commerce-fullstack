@@ -5,6 +5,7 @@ import me.obelmokhtar.productcataloguebackend.dao.PaymentRepository;
 import me.obelmokhtar.productcataloguebackend.entities.Order;
 import me.obelmokhtar.productcataloguebackend.entities.Payment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +24,7 @@ public class PaymentRestController {
     @Autowired
     private OrderRepository orderRepository;
 
+    @PreAuthorize("hasAuthority('USER')")
     @PostMapping("/payments")
     public Payment savePayment(@RequestBody Payment paymentFormData) {
         System.out.println("****  PaymentRestController.savePayment()  *****");

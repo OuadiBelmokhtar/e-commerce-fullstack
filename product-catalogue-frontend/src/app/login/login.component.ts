@@ -15,8 +15,9 @@ export class LoginComponent implements OnInit {
   }
   // click sur button login
   onLogin(authenticationFormFields: any) {
+    console.log("authenticationFormFields");
     console.log(authenticationFormFields);
-    this.authenticationService.login(authenticationFormFields.username, authenticationFormFields.password);
+    this.authenticationService.login(authenticationFormFields);
     if (this.authenticationService.isAuthenticated) {
       this.authenticationService.saveAuthenticatedUserTokenToLocalStorage();
       this.router.navigateByUrl(''); // naviguer vers les products selectionnes

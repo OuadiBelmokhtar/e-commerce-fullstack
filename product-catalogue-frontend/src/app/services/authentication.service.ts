@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { GlobalService } from './global.service';
+import { User } from '../model/User.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +12,7 @@ export class AuthenticationService {
   private _authenticatedUser: any;
   private _isAuthenticated: boolean = false;
   private _token: any;
+  private _jwtAccessToken: string = "";
 
   private users = [
     { username: 'admin', password: '1234', roles: ['ADMIN', 'USER'] },
@@ -16,10 +20,24 @@ export class AuthenticationService {
     { username: 'user2', password: '1234', roles: ['USER'] }
   ];
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
   // AuthenticationService.login()
-  login(username: string, password: string) {
+  login(user:User) {
+    //login(username: string, password: string) {
+    // TODO: chercher comment envoyer un objet JSON au lieu d'un string
+    //this.httpClient.post<string>(GlobalService.HOST + "/login", "username=" + username + "&password=" + password,{ headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }) })
+    this.httpClient.post<string>(GlobalService.HOST + "/login", "username=" + user.username + "&password=" + user.password,{ headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }) })
+      .subscribe(response => {
+        this._jwtAccessToken = response;
+        console.log(this._jwtAccessToken);
+      }, err => {
+        console.log(err);
+      })
+  }
+
+
+  loginWithStaticArray(username: string, password: string) {
     let foundUser;
     this.users.forEach(user => {
       if (user.username == username && user.password == password) {

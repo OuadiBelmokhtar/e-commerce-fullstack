@@ -9,6 +9,7 @@ import me.obelmokhtar.productcataloguebackend.entities.Order;
 import me.obelmokhtar.productcataloguebackend.entities.OrderItem;
 import me.obelmokhtar.productcataloguebackend.entities.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,13 +30,14 @@ public class OrderRestController {
     private OrderItemRepository orderItemRepository;
 
     /*
-    - Cette methode permet de recuperer et suvegarder ds la BD les données de la commande(ordre)
+    - Cette methode permet de recuperer et sauvegarder ds la BD les données de la commande(ordre)
       passée par le client et envoyees de la partie frontend.
     - Les données reçues du frontend seront encapsulées ds un objet OrderFormData.
     - Les données de la commande à récupérer et sauvegarder sont:
       Customer, Order(customer, date), totalAmount, Order.orderItems.
 
      */
+    @PreAuthorize("hasAuthority('USER')")
     @PostMapping("/orders")
     public Order saveOrder(@RequestBody OrderFormData orderFormData) {
         System.out.println("**** OrderRestController.saveOrder() *****");

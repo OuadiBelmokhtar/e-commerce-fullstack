@@ -38,7 +38,7 @@ public class UsersAccountServiceImpl implements UsersAccountService {
     @Override
     public void addRoleToUser(String roleName, String username) {
         // FAIS ATTENTION, si @Transactionnal n’est pas utilisée ds cette classe,
-        // l’ajout ds la List ne sera pas (COMMITÉ) exécuté ds le BD (oui c’est testé).
+        // l’ajout ds la List ne sera pas exécuté (COMMITÉ) ds la BD (oui c’est testé).
         Users user = usersRepository.findByUsername(username);
         Roles role = rolesRepository.findByName(roleName);
         user.getRoles().add(role);

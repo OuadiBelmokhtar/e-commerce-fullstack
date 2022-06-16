@@ -14,6 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+// Activer Spring Security ds le projet
 @EnableWebSecurity
 public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -25,7 +26,7 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        System.out.println("MySecurityConfig.configure(HttpSecurity http)");
+        System.out.println("JwtSecurityConfig.configure(HttpSecurity http)");
         // desactiver la protection contre les attaques CSRF, car CSRF est basé sur les sessions,
         // alors que l'auth stateless ne les utilise pas.
         http.csrf().disable();
@@ -33,7 +34,7 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().disable();
         // demander a Spring de ne pas utiliser les sessions stockées coté serveur
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        // exiger une authentification pr acceder à chaque resource
+        // exiger une authentification pr acceder à ttes les resources
         http.authorizeRequests().anyRequest().authenticated();
         //authenticationManagerBean() est un bean injecté sous dessous
         http.addFilter(new JwtAuthenticationFilter(authenticationManagerBean()));
@@ -49,6 +50,7 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
    */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        System.out.println("JwtSecurityConfig.configure(AuthenticationManagerBuilder)");
         auth.userDetailsService(new JwtUserDetailsService(this.usersAccountService));
     }
 

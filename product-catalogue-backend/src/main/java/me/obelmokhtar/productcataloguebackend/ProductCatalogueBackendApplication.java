@@ -23,12 +23,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.List;
 import java.util.UUID;
 
-@SpringBootApplication
+
 /* - Activer la definition des autorisations d acces aux ressources sous forme des @nnotations.
    - Cela permet d'utiliser les @nnotations pour definir les autorisations d acces aux méthodes qlq
      soit leurs emplacements(ds la couche service ou web/rest).
    - prePostEnabled = true: enables Spring Security @PreAuthorize and @PostAuthorize Annotations.
-     e.g.: @PreAuthorize("hasRole('USER')"), @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
+     e.g.: @PreAuthorize("hasRole('USER')"), @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')").
+     It is the MOST SOPHISTICATED security model(selon un tuto Spring officiel)
    - securedEnabled = true: determines if the @Secured annotation should be enabled.
      e.g.: @Secured("USER"), @Secured({"USER", "ADMIN" })
    - jsr250Enabled = true: allows us to use the @RoleAllowed annotation.
@@ -36,6 +37,7 @@ import java.util.UUID;
    - plus d'info sur: https://www.baeldung.com/spring-security-method-security
 */
 // autoriser seulement @PrePostEnabled
+@SpringBootApplication
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ProductCatalogueBackendApplication {
 
@@ -44,14 +46,16 @@ public class ProductCatalogueBackendApplication {
     }
 
     @Bean
-    CommandLineRunner init(ProductRepository productRepository,
+    CommandLineRunner initDataBase(ProductRepository productRepository,
                            CategoryRepository categoryRepository,
                            ProductService productService,
                            CategoryService categoryService,
                            UsersAccountService usersAccountService,
-                           RepositoryRestConfiguration restConfiguration) {
+                           RepositoryRestConfiguration repositoryRestConfiguration) {
 
-        restConfiguration.exposeIdsFor(Product.class, Category.class);
+        // par défaut SpringDataRest n'expose (renvoyer ds la reponse) pas les Id des entités
+        // Demander a SpringDataRest d'exposer les ID ds les résultats JSON
+        repositoryRestConfiguration.exposeIdsFor(Product.class, Category.class);
 
         return args -> {
             // voir @Builder ds entities Users et Roles

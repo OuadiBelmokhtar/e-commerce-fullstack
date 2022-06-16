@@ -6,6 +6,7 @@ import me.obelmokhtar.productcataloguebackend.security.entities.Roles;
 import me.obelmokhtar.productcataloguebackend.security.entities.Users;
 import me.obelmokhtar.productcataloguebackend.security.services.UsersAccountService;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,7 +35,7 @@ public class UsersAccountRestController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @PostMapping(path = "addRoleToUser")
+    @PostMapping(path = "add-role-to-user")
     public void addRoleToUser(@RequestBody UserRoleForm userRoleForm) {
         usersAccountService.addRoleToUser(userRoleForm.getRoleName(), userRoleForm.getUsername());
     }

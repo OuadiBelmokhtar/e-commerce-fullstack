@@ -24,11 +24,14 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     /* - Cette mtd sera exécutée par Spring Security just après la reception du username+password de
              la mtd JwtAuthenticationFilter.attemptAuthentication().
+           - Elle a pr but de fournir a Spring Security les données du user authentifié à partir de la BD
+             correspondant au username passé en argument.
            - Elle accepte comme argument le username reçu ds la requete(POST /login) ou saisi ds le
              formLogin et retourne un objet User de Spring représentant le user authentifié
          */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        System.out.println("JwtUserDetailsService.loadUserByUsername()");
         // recuperer les details sur le user authentifié
         Users authenticatedUser = usersAccountService.loadUserByUsername(username);
         Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();

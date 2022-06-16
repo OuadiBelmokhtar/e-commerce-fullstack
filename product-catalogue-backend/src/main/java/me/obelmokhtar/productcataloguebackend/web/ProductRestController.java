@@ -3,6 +3,7 @@ package me.obelmokhtar.productcataloguebackend.web;
 import me.obelmokhtar.productcataloguebackend.dao.ProductRepository;
 import me.obelmokhtar.productcataloguebackend.entities.Product;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,11 +20,13 @@ public class ProductRestController {
         this.productRepository = productRepository;
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @GetMapping(path = "/get-product-photo/{productPhoto}", produces = {MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE})
     public byte[] getProductPhoto(@PathVariable("productPhoto") String productPhoto) throws IOException {
         return Files.readAllBytes(Paths.get(System.getProperty("user.home") + "/ecom-products-photos/" + productPhoto));
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(path = "/upload-product-photo/{idProduct}")
     // photoFile : il faut utiliser le meme nom utilise ds formData.append('photoFile', photo); ds le frontend
     public void uploadProductPhoto(@RequestParam("photoFile") MultipartFile productPhoto, @PathVariable("idProduct") Long idProductToUpdate) throws IOException {
