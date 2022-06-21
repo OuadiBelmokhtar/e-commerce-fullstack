@@ -34,6 +34,8 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().disable();
         // demander a Spring de ne pas utiliser les sessions stockées coté serveur
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        // autoriser l'inscription des users sans authentification
+        http.authorizeRequests().antMatchers("/register/**").permitAll();
         // exiger une authentification pr acceder à ttes les resources
         http.authorizeRequests().anyRequest().authenticated();
         //authenticationManagerBean() est un bean injecté sous dessous

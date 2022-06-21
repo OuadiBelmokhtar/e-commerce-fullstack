@@ -34,6 +34,7 @@ public class JwtUserDetailsService implements UserDetailsService {
         System.out.println("JwtUserDetailsService.loadUserByUsername()");
         // recuperer les details sur le user authentifié
         Users authenticatedUser = usersAccountService.loadUserByUsername(username);
+        System.out.println("authenticationUser from DB: "+authenticatedUser);
         Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         // charger les roles du user stocké ds la BD ds une collection de type GrantedAuthority
         authenticatedUser.getRoles().forEach(role -> grantedAuthorities.add(new SimpleGrantedAuthority(role.getName())));

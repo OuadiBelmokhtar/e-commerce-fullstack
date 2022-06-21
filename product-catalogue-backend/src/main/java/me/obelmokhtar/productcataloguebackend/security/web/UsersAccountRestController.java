@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+// FAIS ATTENTION, ca marche pas avec @PreAuthorize("hasAuthority(JwtUtil.ADMIN)")
+@PreAuthorize("hasAuthority('ADMIN')")// utiliser class-level-authorization
 @RestController
 public class UsersAccountRestController {
     private UsersAccountService usersAccountService;
@@ -21,26 +23,22 @@ public class UsersAccountRestController {
     public UsersAccountRestController(UsersAccountService usersAccountService) {
         this.usersAccountService = usersAccountService;
     }
-    // FAIS ATTENTION, ca marche pas avec @PreAuthorize("hasAuthority(JwtUtil.ADMIN)")
-    @PreAuthorize("hasAuthority('ADMIN')")
+
     @PostMapping(path = "/users")
     public Users addUser(@RequestBody Users users) {
         return usersAccountService.addNewUser(users);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(path = "/roles")
     public Roles addRole(@RequestBody Roles role) {
         return usersAccountService.addNewRole(role);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(path = "add-role-to-user")
     public void addRoleToUser(@RequestBody UserRoleForm userRoleForm) {
         usersAccountService.addRoleToUser(userRoleForm.getRoleName(), userRoleForm.getUsername());
     }
 
-    @PreAuthorize("hasAuthority('USER')")
     @GetMapping(path = "/users")
     public List<Users> getAllUsers() {
         return usersAccountService.getAllUsers();

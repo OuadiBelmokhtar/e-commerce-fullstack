@@ -31,16 +31,36 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         System.out.println("JwtAuthorizationFilter.doFilterInternal()");
+        /* - Obligatoire lorsque la partie frontend tourne ds un navigateur(app Angular, ...).
+           - Ces headers sont important pr informer le navigateur(au travers la req OPTIONS)
+             que la partie backend(sécurisée via Spring Security) autorise et expose ces types
+             de headers, ce qui permet de recevoir une réponse correcte ds la partie frontend. Sinon,
+             elle va recevoir une reponse erronee.
+           - Ces headers seront ajoutés à la réponse de chaque requete recue.
+        */
+        //quels sont les domaines à partir desquels la partie backend autorise recevoir des requêtes?
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        // quels sont les headers que la partie backend autorise à recevoir ds des requêtes provenant de la partie frontend?
+        response.addHeader("Access-Control-Allow-Headers", "authorization, Content-Type, Accept, Origin, X-Requested-With, " +
+                "Access-Control-Request-Method, Access-Control-Request-Headers");
+        // quels sont les headers que la partie backend autorise à renvoyer (et à lire via du JS) ds la réponse à
+        // la partie frontend? Autrement dit, quels sont les response headers à exposer à lire via du JS par
+        // la partie frontend ?
+        response.addHeader("Access-Control-Expose-Headers", "authorization, Access-Control-Allow-Origin, Access-Control-Allow-Credentials");
+
+        // Obligatoire pour ignorer la requete OPTIONS. Sinon, ca va pas marcher
+        if(request.getMethod().equals("OPTIONS")){
+            response.setStatus(HttpServletResponse.SC_OK);
         /* 1. Ignorer le path ‘/refreshToken’. Car si on le fait pas, une requête avec le refresh-token ds
               le header ‘Authorization’ sera considérée et traitée comme s’il s’agit de access-token ce
               qui va causer NPE lors de la récupération des ‘roles’ à partie de refresh-token.
            2. Ignorer le path ‘/login’ pr traiter le cas ou la requete '/login' contient le header 'Authorization'.
               Car, normalement pour ce cas(/login), il faut generer le access-token + refresh-token.
          */
-        if (request.getServletPath().equals("/refreshToken") || request.getServletPath().equals("/login")) {
+        }else if (request.getServletPath().equals("/refreshToken") || request.getServletPath().equals("/login")) {
             filterChain.doFilter(request, response);
 
-        } else {
+        } else {// lire le access-token
             // recuperer le header 'Authorization' qui contient le access-token de chaque requete reçue
             String accessTokenWithPrefix = request.getHeader(JwtUtil.JWT_HEADER_NAME);
             /* Verfier que le token existe ds le header et commence par le prefix 'Bearer '.

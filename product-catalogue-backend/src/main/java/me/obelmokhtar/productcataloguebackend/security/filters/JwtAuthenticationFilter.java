@@ -5,6 +5,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.obelmokhtar.productcataloguebackend.security.config.JwtUtil;
+import me.obelmokhtar.productcataloguebackend.security.entities.Users;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -43,18 +44,30 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
           - Ensuite Spring va vérifier est-ce que le pwd reçu ds la requête est équivalent à celui récupéré de la BD ;
             si oui, il va invoquer JwtAuthenticationFilter.successfulAuthentication() en passant le résultat d'authentification
             ds le param authResult, pr générer le JWT.
-          FAIS ATTENTION: la requete POST doit contenir les 2 headers Content-Type=application/x-www-form-urlencoded et Accept=application/json.
+          FAIS ATTENTION: pr utiliser request.getParameter(), la requete POST doit contenir les 2 headers
+          Content-Type=application/x-www-form-urlencoded et Accept=application/json.
         */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         System.out.println("JwtAuthenticationFilter.attemptAuthentication()");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        System.out.println("username: " + username);
-        System.out.println("password: " + password);
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(username, password);
-        // retourner un objet Authentication qui encapsule le username+password de l'utilsiateur authentifié
-        return authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+        /* on va pas utiliser request.getParameter(), car cette mtd permet de récupérer les données
+           envoyées en format text par un formulaire avec le type 'Content-Type': 'application/x-www-form-urlencoded’. Cependant,
+           si les données sont envoyées en format JSON(c’est le cas de Angular), il faut utiliser ObjectMapper():
+         */
+        try {
+            // recuperer les donnees envoyees ds la requete format JSON et les convertir a un objet Users. ObjectMapper est un objet de la biblio Jakson.
+            Users currentUser = new ObjectMapper().readValue(request.getInputStream(), Users.class);
+            System.out.println("username: " + currentUser.getUsername());
+            System.out.println("password: " + currentUser.getPassword());
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken
+                    (currentUser.getUsername(), currentUser.getPassword());
+            // retourner un objet Authentication qui encapsule le username+password de l'utilsiateur authentifié
+            return authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+
     }
 
     /* - Invoquée par Spring juste après attemptAuthentication(), lorsque l'authentification(username+password valides)

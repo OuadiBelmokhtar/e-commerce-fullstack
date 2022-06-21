@@ -9,34 +9,41 @@ import { User } from '../model/User.model';
 })
 export class AuthenticationService {
 
-  private _authenticatedUser: any;
+  public authenticatedUser!:User; // a supprimer après avoir pu recuperer le user authentifié via JWT
   private _isAuthenticated: boolean = false;
-  private _token: any;
-  private _jwtAccessToken: string = "";
-
+  private _authToken: any;// contient access-token et refresh-token
+ 
+/*
   private users = [
     { username: 'admin', password: '1234', roles: ['ADMIN', 'USER'] },
     { username: 'user1', password: '1234', roles: ['USER'] },
     { username: 'user2', password: '1234', roles: ['USER'] }
   ];
-
+*/
   constructor(private httpClient: HttpClient) { }
 
   // AuthenticationService.login()
   login(user:User) {
-    //login(username: string, password: string) {
-    // TODO: chercher comment envoyer un objet JSON au lieu d'un string
-    //this.httpClient.post<string>(GlobalService.HOST + "/login", "username=" + username + "&password=" + password,{ headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }) })
-    this.httpClient.post<string>(GlobalService.HOST + "/login", "username=" + user.username + "&password=" + user.password,{ headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }) })
+    console.log("loginUser: ");
+    console.log(user);
+    this.httpClient.post<string>(GlobalService.HOST + "/login",user)
       .subscribe(response => {
-        this._jwtAccessToken = response;
-        console.log(this._jwtAccessToken);
+        this._authToken = response;
+        this.isAuthenticated=true;
+        
+        this.saveAuthTokenToLocalStorage();
+        console.log("this.authToken after save");
+        console.log(this._authToken);
+        this.loadAndGetAuthTokenFromLocalStorage();
+        console.log("this._authToken after load");
+        console.log(this._authToken);
+        this.getAccessToken();
       }, err => {
         console.log(err);
-      })
+      });
   }
 
-
+/*
   loginWithStaticArray(username: string, password: string) {
     let foundUser;
     this.users.forEach(user => {
@@ -58,59 +65,66 @@ export class AuthenticationService {
       console.log("Username ou password incorrects!");
     }
   }
-
+*/
   public isAdmin(): boolean {
-    if (this.authenticatedUser) {
-      if (this.authenticatedUser.roles.indexOf('ADMIN') > -1) {
-        return true;
-      }
-    }
+   
     return false;
   }
 
-  public saveAuthenticatedUserTokenToLocalStorage() {
-    if (this.authenticatedUser)
-      localStorage.setItem('authenticationToken', this.token);
+  public saveAuthTokenToLocalStorage() {
+    if (this._authToken)
+      localStorage.setItem('authToken', btoa(JSON.stringify(this._authToken)));
   }
   // invoquer ds AppComponent.ngOnInit() lors d'actualisation de la page
-  public loadAndGetAuthenticatedUserTokenFromLocalStorage() {
-    let encodedToken = localStorage.getItem('authenticationToken');
+  public loadAndGetAuthTokenFromLocalStorage() {
+    let encodedToken = localStorage.getItem('authToken');
     //console.log("lToken");
     // console.log(lToken);
     if (encodedToken) {
       // convertir de string à JSON
       let decodedToken = JSON.parse(atob(encodedToken));
       // extraire username+roles seulement, vu que generalement un token contient autres infos (date expiration, ...)
-      this.authenticatedUser = { username: decodedToken.username, roles: decodedToken.roles };
+    
       this.isAuthenticated = true;
-      this.token = encodedToken;
-      return this.authenticatedUser;
+      this._authToken = decodedToken;
+      return this._authToken;
     }
   }
+
+  // Extract and get access-token from authToken
+  public getAccessToken(){
+    let authToken=this.loadAndGetAuthTokenFromLocalStorage();
+    let accessToken:string="Bearer "+authToken['access-token'];
+    console.log("getAccessToken().access-token");
+    console.log(accessToken);
+    return accessToken;
+  }
+
+    // Extract and get access-token from authToken
+    public getRefreshToken(){
+      let authToken=this.loadAndGetAuthTokenFromLocalStorage();
+      console.log("refresh-token");
+      console.log(authToken['refresh-token']);
+      return authToken['refresh-token'];
+    }
+
   // invoquer ds AppComponent.onLgout()
-  removeAuthenticatedUserTokenFromLocalStorage() {
+  removeAuthTokenFromLocalStorage() {
     // Supprimer le token du localStorage si existe. Sinon, on fait rien
-    localStorage.removeItem('authenticationToken');
-    this.authenticatedUser = undefined;
+    localStorage.removeItem('authToken');
     this.isAuthenticated = false;
   }
 
-  public get authenticatedUser(): any {
-    return this._authenticatedUser;
-  }
-  public set authenticatedUser(value: any) {
-    this._authenticatedUser = value;
-  }
   public get isAuthenticated(): boolean {
     return this._isAuthenticated;
   }
   public set isAuthenticated(value: boolean) {
     this._isAuthenticated = value;
   }
-  public get token() {
-    return this._token;
+  public get authToken() {
+    return this._authToken;
   }
-  public set token(value) {
-    this._token = value;
+  public set authToken(value) {
+    this._authToken = value;
   }
 }

@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
     console.log(authenticationFormFields);
     this.authenticationService.login(authenticationFormFields);
     if (this.authenticationService.isAuthenticated) {
-      this.authenticationService.saveAuthenticatedUserTokenToLocalStorage();
+      this.authenticationService.saveAuthTokenToLocalStorage();
       this.router.navigateByUrl(''); // naviguer vers les products selectionnes
     }
   }

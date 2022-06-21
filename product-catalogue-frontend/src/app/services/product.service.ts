@@ -1,16 +1,17 @@
-import { HttpClient, HttpEvent, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GlobalService } from './global.service';
 import { Observable } from 'rxjs';
 import { Product } from '../model/Product.model';
 import { Category } from '../model/Category.model';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private authService:AuthenticationService) {
 
   }
 
@@ -19,15 +20,15 @@ export class ProductService {
   }
 
   getAllProducts(uri: string): Observable<Product> {
-    return this.httpClient.get<Product>(uri);
+    return this.httpClient.get<Product>(uri,{headers:new HttpHeaders({'Authorization':this.authService.getAccessToken()})});
   }
 
   getProducts(pageNbr: number, size: number): Observable<Product> {
-    return this.httpClient.get<Product>(GlobalService.HOST + "/products?page=" + pageNbr + "&size=" + size);
+    return this.httpClient.get<Product>(GlobalService.HOST + "/products?page=" + pageNbr + "&size=" + size,{headers:new HttpHeaders({'Authorization':this.authService.getAccessToken()})});
   }
 
   searchProductsByKeyword(keyword: string, pageNbr: number, size: number): Observable<Product> {
-    return this.httpClient.get<Product>(GlobalService.HOST + "/products/search/filterByDesignationPage?key=" + keyword + "&page=" + pageNbr + "&size=" + size);
+    return this.httpClient.get<Product>(GlobalService.HOST + "/products/search/filterByDesignationPage?key=" + keyword + "&page=" + pageNbr + "&size=" + size,{headers:new HttpHeaders({'Authorization':this.authService.getAccessToken()})});
   }
 
   deleteProduct(URL: string) {
@@ -36,36 +37,36 @@ export class ProductService {
   }
 
   updateProductAssociation(URIOfProductToBindTo: string, URIOfCategoryToBind: string) {
-    return this.httpClient.put(URIOfProductToBindTo, URIOfCategoryToBind, { headers: new HttpHeaders({ 'Content-Type': 'text/uri-list' }) });
+    return this.httpClient.put(URIOfProductToBindTo, URIOfCategoryToBind, { headers: new HttpHeaders({ 'Content-Type': 'text/uri-list','Authorization':this.authService.getAccessToken() }) });
 
   }
 
   updateProduct(URL: string, dataOfEditedProduct: any) {
-    return this.httpClient.put(URL, dataOfEditedProduct);
+    return this.httpClient.put(URL, dataOfEditedProduct,{headers:new HttpHeaders({'Authorization':this.authService.getAccessToken()})});
 
   }
 
   patchProduct(URL: string, dataOfEditedProduct: any) {
-    return this.httpClient.patch<Product>(URL, dataOfEditedProduct);
+    return this.httpClient.patch<Product>(URL, dataOfEditedProduct,{headers:new HttpHeaders({'Authorization':this.authService.getAccessToken()})});
 
   }
 
   saveProduct(URL: string, data: Product): Observable<Product> {
     // Noter bien que la mtd POST RETROUNE l objet enregistre format JSON, avec ses propres _links
-    return this.httpClient.post<Product>(URL, data);
+    return this.httpClient.post<Product>(URL, data,{headers:new HttpHeaders({'Authorization':this.authService.getAccessToken()})});
   }
 
   getProduct(URL: string): Observable<Product> {
-    return this.httpClient.get<Product>(URL);
+    return this.httpClient.get<Product>(URL,{headers:new HttpHeaders({'Authorization':this.authService.getAccessToken()})});
   }
 
   getProductPhoto(URL: string) {
-    return this.httpClient.get(URL);
+    return this.httpClient.get(URL,{headers:new HttpHeaders({'Authorization':this.authService.getAccessToken()})});
     //pas besoin ,{ headers: new HttpHeaders({ 'Content-Type': 'image/png' }) }
   }
 
   getCategoryOfProduct(URICategory: string): Observable<Category> {
-    return this.httpClient.get<Category>(URICategory);
+    return this.httpClient.get<Category>(URICategory,{headers:new HttpHeaders({'Authorization':this.authService.getAccessToken()})});
   }
 
   /* 

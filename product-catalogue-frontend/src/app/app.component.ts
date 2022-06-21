@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
   }
 
 public getAuthenticatedUser(): any {
-    return this.authenticationService.loadAndGetAuthenticatedUserTokenFromLocalStorage();
+    return this.authenticationService.loadAndGetAuthTokenFromLocalStorage();
   }
 
   onNavigateToShowSelectedProducts() {
@@ -65,7 +65,7 @@ public getAuthenticatedUser(): any {
   }
 
   onLgout(){
-    this.authenticationService.removeAuthenticatedUserTokenFromLocalStorage();
+    this.authenticationService.removeAuthTokenFromLocalStorage();
     this.router.navigateByUrl('/login');
     console.log("onLogout()");
   }
