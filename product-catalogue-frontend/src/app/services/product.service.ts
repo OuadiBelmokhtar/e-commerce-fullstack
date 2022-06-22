@@ -20,15 +20,15 @@ export class ProductService {
   }
 
   getAllProducts(uri: string): Observable<Product> {
-    return this.httpClient.get<Product>(uri,{headers:new HttpHeaders({'Authorization':this.authService.getAccessToken()})});
+    return this.httpClient.get<Product>(uri,{headers:new HttpHeaders({'Authorization':"Bearer "+this.authService.getJwtAccessToken()})});
   }
 
   getProducts(pageNbr: number, size: number): Observable<Product> {
-    return this.httpClient.get<Product>(GlobalService.HOST + "/products?page=" + pageNbr + "&size=" + size,{headers:new HttpHeaders({'Authorization':this.authService.getAccessToken()})});
+    return this.httpClient.get<Product>(GlobalService.HOST + "/products?page=" + pageNbr + "&size=" + size,{headers:new HttpHeaders({'Authorization':"Bearer "+this.authService.getJwtAccessToken()})});
   }
 
   searchProductsByKeyword(keyword: string, pageNbr: number, size: number): Observable<Product> {
-    return this.httpClient.get<Product>(GlobalService.HOST + "/products/search/filterByDesignationPage?key=" + keyword + "&page=" + pageNbr + "&size=" + size,{headers:new HttpHeaders({'Authorization':this.authService.getAccessToken()})});
+    return this.httpClient.get<Product>(GlobalService.HOST + "/products/search/filterByDesignationPage?key=" + keyword + "&page=" + pageNbr + "&size=" + size,{headers:new HttpHeaders({'Authorization':"Bearer "+this.authService.getJwtAccessToken()})});
   }
 
   deleteProduct(URL: string) {
@@ -37,36 +37,36 @@ export class ProductService {
   }
 
   updateProductAssociation(URIOfProductToBindTo: string, URIOfCategoryToBind: string) {
-    return this.httpClient.put(URIOfProductToBindTo, URIOfCategoryToBind, { headers: new HttpHeaders({ 'Content-Type': 'text/uri-list','Authorization':this.authService.getAccessToken() }) });
+    return this.httpClient.put(URIOfProductToBindTo, URIOfCategoryToBind, { headers: new HttpHeaders({ 'Content-Type': 'text/uri-list','Authorization':"Bearer "+this.authService.getJwtAccessToken() }) });
 
   }
 
   updateProduct(URL: string, dataOfEditedProduct: any) {
-    return this.httpClient.put(URL, dataOfEditedProduct,{headers:new HttpHeaders({'Authorization':this.authService.getAccessToken()})});
+    return this.httpClient.put(URL, dataOfEditedProduct,{headers:new HttpHeaders({'Authorization':"Bearer "+this.authService.getJwtAccessToken()})});
 
   }
 
   patchProduct(URL: string, dataOfEditedProduct: any) {
-    return this.httpClient.patch<Product>(URL, dataOfEditedProduct,{headers:new HttpHeaders({'Authorization':this.authService.getAccessToken()})});
+    return this.httpClient.patch<Product>(URL, dataOfEditedProduct,{headers:new HttpHeaders({'Authorization':"Bearer "+this.authService.getJwtAccessToken()})});
 
   }
 
   saveProduct(URL: string, data: Product): Observable<Product> {
     // Noter bien que la mtd POST RETROUNE l objet enregistre format JSON, avec ses propres _links
-    return this.httpClient.post<Product>(URL, data,{headers:new HttpHeaders({'Authorization':this.authService.getAccessToken()})});
+    return this.httpClient.post<Product>(URL, data,{headers:new HttpHeaders({'Authorization':"Bearer "+this.authService.getJwtAccessToken()})});
   }
 
   getProduct(URL: string): Observable<Product> {
-    return this.httpClient.get<Product>(URL,{headers:new HttpHeaders({'Authorization':this.authService.getAccessToken()})});
+    return this.httpClient.get<Product>(URL,{headers:new HttpHeaders({'Authorization':"Bearer "+this.authService.getJwtAccessToken()})});
   }
 
   getProductPhoto(URL: string) {
-    return this.httpClient.get(URL,{headers:new HttpHeaders({'Authorization':this.authService.getAccessToken()})});
+    return this.httpClient.get(URL,{headers:new HttpHeaders({'Authorization':"Bearer "+this.authService.getJwtAccessToken()})});
     //pas besoin ,{ headers: new HttpHeaders({ 'Content-Type': 'image/png' }) }
   }
 
   getCategoryOfProduct(URICategory: string): Observable<Category> {
-    return this.httpClient.get<Category>(URICategory,{headers:new HttpHeaders({'Authorization':this.authService.getAccessToken()})});
+    return this.httpClient.get<Category>(URICategory,{headers:new HttpHeaders({'Authorization':"Bearer "+this.authService.getJwtAccessToken()})});
   }
 
   /* 
