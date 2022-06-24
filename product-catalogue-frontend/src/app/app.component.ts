@@ -16,59 +16,73 @@ export class AppComponent implements OnInit {
 
   private _categories: any;
   private _clickedCategoryId: number = 1;
-  private _showingMode: ShowingProductsModeEnum=ShowingProductsModeEnum.FRONT_OFFICE;
-  
-  
+  private _showingMode: ShowingProductsModeEnum = ShowingProductsModeEnum.FRONT_OFFICE;
+
+
   constructor(private categoryService: CategoryService,
     private productService: ProductService,
-    private authenticationService:AuthenticationService,
-    public caddyService:CaddyService,
+    private authenticationService: AuthenticationService,
+    public caddyService: CaddyService,
     private router: Router) {
 
   }
 
   ngOnInit(): void {
-    // charger authenticatedUser du localStorage
-   this.getAuthenticatedUser();
-   console.log("this.getAuthenticatedUser()");
-   console.log(this.getAuthenticatedUser());
+    // pr eviter de se loger a chaque accès à l'app, on va charger jwtAuthToken du localStorage, 
+    // le parser et init username+roles 
+    this.authenticationService.parseJwtAuthTokenAndInitUsernameRoles();
     // charger les categories
     this.categoryService.getAllCategories()
       .subscribe(response => {
         console.log(response);
-        this._categories = response._embedded.categories;
+        this._categories = response;
       }, err => {
         console.log(err);
       });
   }
 
-public getAuthenticatedUser(): any {
-    return this.authenticationService.loadAndGetJwtAuthTokenFromLocalStorage();
-  }
 
   onNavigateToShowSelectedProducts() {
-    this.showingMode=ShowingProductsModeEnum.FRONT_OFFICE;
-    this._clickedCategoryId=0;
+    this.showingMode = ShowingProductsModeEnum.FRONT_OFFICE;
+    this._clickedCategoryId = 0;
     this.router.navigateByUrl("frontoffice-products-grid/" + ShowingProductsModeEnum.BY_SELECTED_PRODUCTS + "/" + 0);
   }
 
   onNavigateToShowOnPromotionProducts() {
-    this.showingMode=ShowingProductsModeEnum.FRONT_OFFICE;
-    this._clickedCategoryId=0;
+    this.showingMode = ShowingProductsModeEnum.FRONT_OFFICE;
+    this._clickedCategoryId = 0;
     this.router.navigateByUrl("frontoffice-products-grid/" + ShowingProductsModeEnum.BY_PRODUCTS_ON_PROMOTION + "/" + 0);
   }
 
   onNavigateToShowProductsByCategory(categoryId: number) {
-    this.showingMode=ShowingProductsModeEnum.FRONT_OFFICE;
+    this.showingMode = ShowingProductsModeEnum.FRONT_OFFICE;
     this.clickedCategoryId = categoryId;
     this.router.navigateByUrl("frontoffice-products-grid/" + ShowingProductsModeEnum.BY_CATEGORY + "/" + categoryId);
   }
 
-  onLgout(){
-    this.authenticationService.removeJwtAuthTokenFromLocalStorage();
+  onLgout() {
+    this.authenticationService.logout();
     this.router.navigateByUrl('/login');
     console.log("onLogout()");
   }
+
+  public isAdmin() {
+    return this.authenticationService.isAdmin();
+  }
+
+  public isUser() {
+    return this.authenticationService.isUser();
+  }
+
+  public isAuthenticated() {
+    return this.authenticationService.isAuthenticated();
+  }
+
+  public getAuthenticatedUserUsername() {
+    return this.authenticationService.username;
+  }
+
+
 
 
   public get categories(): any {

@@ -4,6 +4,7 @@ import { ProductService } from '../services/product.service';
 import { Product } from '../model/Product.model';
 import { Router } from '@angular/router';
 import { Category } from '../model/Category.model';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-products-grid-view',
@@ -19,7 +20,7 @@ export class ProductsGridViewComponent implements OnInit {
   public nbrEltPerPage: number = 5;
   private searchKeyword: string = "";
 
-  constructor(private productService: ProductService, private router: Router) {
+  constructor(private productService: ProductService, private authService:AuthenticationService, private router: Router) {
 
   }
 
@@ -88,6 +89,10 @@ export class ProductsGridViewComponent implements OnInit {
      }, err=>{
        console.log(err);
      })
+  }
+
+  isAdmin(){
+    return this.authService.isAdmin();
   }
 
 }

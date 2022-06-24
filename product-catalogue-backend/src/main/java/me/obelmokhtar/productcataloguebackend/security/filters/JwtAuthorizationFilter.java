@@ -47,7 +47,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         // la partie frontend? Autrement dit, quels sont les response headers à exposer à lire via du JS par
         // la partie frontend ?
         response.addHeader("Access-Control-Expose-Headers", "authorization, Access-Control-Allow-Origin, Access-Control-Allow-Credentials");
-
+        // GET et POST sont autorises par defaut, alors qu'il faut autoriser les autres explicitement
+        response.addHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,PATCH");
         // Obligatoire pour ignorer la requete OPTIONS. Sinon, ca va pas marcher
         if(request.getMethod().equals("OPTIONS")){
             response.setStatus(HttpServletResponse.SC_OK);

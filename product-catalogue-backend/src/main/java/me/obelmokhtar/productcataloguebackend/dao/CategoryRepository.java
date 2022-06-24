@@ -8,12 +8,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.Collection;
 import java.util.List;
 
 @CrossOrigin("*")
+@PreAuthorize("hasAuthority('USER')")
 @RepositoryRestResource
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
@@ -22,4 +24,6 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     @RestResource(path = "/filterCategoryByNamePage")
     public Page<Category> findByNameContains(@Param("key") String keyword, Pageable pageable);
+
+
 }

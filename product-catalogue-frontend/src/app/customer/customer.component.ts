@@ -26,8 +26,8 @@ export class CustomerComponent implements OnInit {
   onSaveCustomerInfos(savingCustomerFormFields: any) {
     console.log("savingCustomerFormFields");
     console.log(savingCustomerFormFields);
-    // recup username et l'ajter au donnees recu du formaulaire
-    savingCustomerFormFields.username = this.authenticationService.authenticatedUser.username;
+    // recup username et l'ajter au donnees recu du formulaire
+    savingCustomerFormFields.username = this.authenticationService.username;
     // initialiser customer de caddyService.caddy, car on en aura besoin par la suite
     this.caddyService.setCustomer(savingCustomerFormFields);
     // initialiser customer de caddyService.order, car on en aura besoin par la suite 

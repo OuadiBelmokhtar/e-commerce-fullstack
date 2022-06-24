@@ -20,7 +20,7 @@ public class ProductRestController {
         this.productRepository = productRepository;
     }
 
-    @PreAuthorize("hasAuthority('USER')")
+   // @PreAuthorize("hasAuthority('USER')") je l'ai autorisé par defaut(ds JwtSecurityConfig) sans authentification
     @GetMapping(path = "/get-product-photo/{productPhoto}", produces = {MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE})
     public byte[] getProductPhoto(@PathVariable("productPhoto") String productPhoto) throws IOException {
         return Files.readAllBytes(Paths.get(System.getProperty("user.home") + "/ecom-products-photos/" + productPhoto));

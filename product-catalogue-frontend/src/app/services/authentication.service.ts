@@ -9,12 +9,11 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   providedIn: 'root'
 })
 export class AuthenticationService {
+  
 
-  public authenticatedUser!: User; // a supprimer après avoir pu recuperer le user authentifié via JWT
-  private _isAuthenticated: boolean = false;
   private _jwtAuthToken: any;// contient access-token et refresh-token
-  public username: string = "";
-  public roles: Array<string> = [];
+  public username: any = "";
+  public roles: any = [];
 
   /*
     private users = [
@@ -33,6 +32,7 @@ export class AuthenticationService {
         this.saveJwtAuthTokenToLocalStorage();
         console.log("this.authToken after save");
         console.log(this._jwtAuthToken);
+        this.parseJwtAuthTokenAndInitUsernameRoles();
       }, err => {
         console.log(err);
       });
@@ -67,7 +67,7 @@ export class AuthenticationService {
     if (this._jwtAuthToken)
       localStorage.setItem('jwtAuthToken', btoa(JSON.stringify(this._jwtAuthToken)));
   }
-  // invoquer ds AppComponent.ngOnInit() lors d'actualisation de la page
+  // invoqué ds AppComponent.ngOnInit() lors d'actualisation de la page
   public loadAndGetJwtAuthTokenFromLocalStorage() {
     let encodedToken = localStorage.getItem('jwtAuthToken');
     //console.log("lToken");
@@ -76,8 +76,6 @@ export class AuthenticationService {
       // convertir de string à JSON
       let decodedToken = JSON.parse(atob(encodedToken));
       // extraire username+roles seulement, vu que generalement un token contient autres infos (date expiration, ...)
-
-      this.isAuthenticated = true;
       this._jwtAuthToken = decodedToken;
       return this._jwtAuthToken;
     }
@@ -87,27 +85,35 @@ export class AuthenticationService {
   public getJwtAccessToken() {
     let authToken = this.loadAndGetJwtAuthTokenFromLocalStorage();
     let accessToken: string = authToken['access-token'];
-    console.log("getAccessToken().access-token");
-    console.log(accessToken);
+    console.log("getAccessToken().access-token"); console.log(accessToken);
     return accessToken;
   }
 
   // Extract and get refresh-token from authToken
   public getJwtRefreshToken() {
     let authToken = this.loadAndGetJwtAuthTokenFromLocalStorage();
-    console.log("refresh-token");
-    console.log(authToken['refresh-token']);
+    console.log("refresh-token"); console.log(authToken['refresh-token']);
     return authToken['refresh-token'];
   }
 
-  private parseJwtAuthToken() {
+  // invoqué au moment du login() pour initialiser les vars this.username et this.roles des le login()
+  // Noter bien que pour recuperer le contenu du jwtToken on a pas besoin du secret. Ce dernier est requis 
+  // seulment ds le backend pr vérifier la validité du token via la signature.
+  public parseJwtAuthTokenAndInitUsernameRoles() {
     let rawJwtAccessToken = this.getJwtAccessToken();
     let jwtHelper = new JwtHelperService();
     let decodedJwtAccessToken = jwtHelper.decodeToken(rawJwtAccessToken);
-    this.username = decodedJwtAccessToken.sub;
-    this.roles = decodedJwtAccessToken.roles;
+    this.username = decodedJwtAccessToken.sub; // recup le claim standard subject
+    this.roles = decodedJwtAccessToken.roles; // recup le claim roles
     console.log("parseJwtAuthToken().username"); console.log(this.username);
     console.log("parseJwtAuthToken().roles"); console.log(this.roles);
+
+  }
+
+  public isJwtExpired() {
+    let rawJwtAccessToken = this.getJwtAccessToken();
+    let jwtHelper = new JwtHelperService();
+    return jwtHelper.isTokenExpired(rawJwtAccessToken);
   }
 
   public isAdmin(): boolean {
@@ -124,23 +130,33 @@ export class AuthenticationService {
     }
     return isUser;
   }
+
+  public isAuthenticated() {
+    let isAuthenticated = false;
+    if (this.username && this.roles) {
+      isAuthenticated = true;
+    }
+    return isAuthenticated;
+  }
   // invoquer ds AppComponent.onLgout()
   removeJwtAuthTokenFromLocalStorage() {
     // Supprimer le token du localStorage si existe. Sinon, on fait rien
-    localStorage.removeItem('authToken');
-    this.isAuthenticated = false;
+    localStorage.removeItem('jwtAuthToken');
+   
   }
 
-  public get isAuthenticated(): boolean {
-    return this._isAuthenticated;
+  logout() {
+    this.removeJwtAuthTokenFromLocalStorage();
+    this._jwtAuthToken=undefined;
+    this.username = undefined;
+    this.roles = undefined;
   }
-  public set isAuthenticated(value: boolean) {
-    this._isAuthenticated = value;
-  }
-  public get authToken() {
+
+
+  public get jwtAuthToken() {
     return this._jwtAuthToken;
   }
-  public set authToken(value) {
+  public set jwtAuthToken(value) {
     this._jwtAuthToken = value;
   }
 }

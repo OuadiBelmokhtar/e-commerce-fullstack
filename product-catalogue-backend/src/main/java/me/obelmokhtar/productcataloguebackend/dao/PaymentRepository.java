@@ -7,7 +7,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
 
 @Repository
-
 public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
 }

@@ -10,7 +10,7 @@
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Front Office
           <span class="caret"></span></a>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu" *ngIf="this.isUser()">
           <li><a class="_curseur" (click)="this.onNavigateToShowProductsByCategory(1)">Produits par catégorie</a></li>
           <li><a class="_curseur" (click)="this.onNavigateToShowSelectedProducts()">Produits sélectionnés</a></li>
           <li><a class="_curseur" (click)="this.onNavigateToShowOnPromotionProducts()">Produits en promo</a></li>
@@ -21,10 +21,10 @@
           <span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li><a routerLink="/products-grid">Chercher</a></li>
-          <li><a routerLink="/new-product">Ajouter</a></li>
+          <li *ngIf="this.isAdmin()"><a routerLink="/new-product">Ajouter</a></li>
         </ul>
       </li>
-      <li class="dropdown">
+      <li class="dropdown" *ngIf="this.isAdmin()">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Catégories
           <span class="caret"></span></a>
         <ul class="dropdown-menu">
@@ -43,11 +43,11 @@
       </li>
       <li>
         <a class="btn" (click)="onLgout()">
-          <span *ngIf="this.getAuthenticatedUser()">
-            Bienvenu {{this.getAuthenticatedUser().username}}&nbsp;
+          <span *ngIf="this.isAuthenticated()">
+            Bienvenu {{this.getAuthenticatedUserUsername()}}&nbsp;
           </span>
-          <span [title]="this.getAuthenticatedUser()?'Logout':'Login'"
-            [ngClass]="this.getAuthenticatedUser()? 'glyphicon glyphicon-log-out':'glyphicon glyphicon-log-in'">
+          <span [title]="this.isAuthenticated()?'Logout':'Login'"
+            [ngClass]="this.isAuthenticated()? 'glyphicon glyphicon-log-out':'glyphicon glyphicon-log-in'">
           </span>
         </a>
       </li>
@@ -59,7 +59,7 @@
   <ul class="list-group" *ngIf="this.categories">
 
     <a [ngClass]="this.clickedCategoryId==category.id?'active':''" class="list-group-item _curseur"
-      *ngFor="let category of this.categories">
+      *ngFor="let category of this.categories._embedded.categories">
       <span (click)="onNavigateToShowProductsByCategory(category.id)">{{category.name}}</span>
     </a>
   </ul>

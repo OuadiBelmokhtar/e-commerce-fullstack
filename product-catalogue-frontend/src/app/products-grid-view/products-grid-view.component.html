@@ -21,8 +21,8 @@
                         <th>Quantité</th>
                         <th>En promotion</th>
                         <th>Disponible</th>
-                        <th>Photo</th>
-                        <th>Catégorie</th>
+                        <!-- <th>Photo</th> -->
+                        <!-- <th>Catégorie</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -34,10 +34,10 @@
                         <td>{{p.quantity}}</td>
                         <td>{{p.isOnPromotion}}</td>
                         <td>{{p.isAvailable}}</td>
-                        <td>{{p.photoName}}</td>
+                        <!-- <td>{{p.photoName}}</td> -->
                         <!-- <td>{{p._links.category.href}}</td> -->
-                        <td><a class="btn btn-danger btn-xs" (click)="onDeleteProduct(p)">Supprimer</a></td>
-                        <td><a class="btn btn-success btn-xs" (click)="onEditProduct(p)">Modifier</a></td>
+                        <td *ngIf="this.isAdmin()"><a class="btn btn-danger btn-xs" (click)="onDeleteProduct(p)">Supprimer</a></td>
+                        <td *ngIf="this.isAdmin()"><a class="btn btn-success btn-xs" (click)="onEditProduct(p)">Modifier</a></td>
                     </tr>
                 </tbody>
             </table>
