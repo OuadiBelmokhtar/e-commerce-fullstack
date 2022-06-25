@@ -36,6 +36,8 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         // autoriser l'inscription des users sans authentification
         http.authorizeRequests().antMatchers("/register/**").permitAll();
+        // autoriser le traitement des requetes /refreshToken sans authentification
+        http.authorizeRequests().antMatchers("/refreshToken/**").permitAll();
         // autoriser l'accès aux photos des products(pr l affichage ds la grille) sans authentification
         http.authorizeRequests().antMatchers("/get-product-photo/**").permitAll();
         // exiger une authentification pr acceder à ttes les resources

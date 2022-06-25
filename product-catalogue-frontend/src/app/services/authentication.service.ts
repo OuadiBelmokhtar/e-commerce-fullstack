@@ -110,6 +110,12 @@ export class AuthenticationService {
 
   }
 
+  public sendRefreshTokenAndGetNewAccessToken(){
+    let refreshToken=this.getJwtRefreshToken();
+    let authorizationHeader=new HttpHeaders({'Authorization':'Bearer '+refreshToken});
+    return this.httpClient.get(GlobalService.HOST+"/refreshToken", {headers:authorizationHeader});
+  }
+
   public isJwtExpired() {
     let rawJwtAccessToken = this.getJwtAccessToken();
     let jwtHelper = new JwtHelperService();

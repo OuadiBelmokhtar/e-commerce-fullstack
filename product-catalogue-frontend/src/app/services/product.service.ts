@@ -20,10 +20,26 @@ export class ProductService {
   }
 
   getAllProducts(uri: string): Observable<Product> {
+    /* la partie de traitement de lexpiration du access-token et la manip du refresh-token n'est pas fonctionnelle efficacement. Ca donne un résultat correcte,
+    // mais pas encore maturée. Cote backend c'est validé, il reste qlq optimisations cote frontend.
     if (this.authService.isJwtExpired()) {
+      console.log("getAllProducts(): jwtAccessToken is expired ! ");
       // traiter le cas de manipulation du refresh-token
-      throw new Error("JWT Access Token est expiré!");
+      this.authService.sendRefreshTokenAndGetNewAccessToken()
+        .subscribe(response => {
+          // manipuler la variable jwtAuthToken de authService afin de centraliser le stockage du JWT
+          this.authService.jwtAuthToken = response;
+          console.log("getAllProducts().sendRefreshTokenAndGetNewAccessToken().jwtAuthToken: ");
+          console.log(this.authService.jwtAuthToken);
+          this.authService.saveJwtAuthTokenToLocalStorage();
+          this.authService.parseJwtAuthTokenAndInitUsernameRoles();
+        }, err => {
+          console.log(err);
+        });
+
+     // throw new Error("JWT Access Token est expiré!");
     }
+    */
     let authorizationHeader = new HttpHeaders({ 'Authorization': "Bearer " + this.authService.getJwtAccessToken() });
     return this.httpClient.get<Product>(uri, { headers: authorizationHeader });
   }
