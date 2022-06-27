@@ -8,10 +8,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import me.obelmokhtar.productcataloguebackend.security.config.JwtUtil;
 import me.obelmokhtar.productcataloguebackend.security.entities.Users;
 import me.obelmokhtar.productcataloguebackend.security.services.UsersAccountService;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -58,7 +56,7 @@ public class JwtUtilRestController {
                 // 3. Generer un nouvel accessToken
                 String renewedJwtAccessToken = JWT.create().withSubject(username)
                         // la duree d'expiration en milliseconde (10min)
-                        .withExpiresAt(new Date(System.currentTimeMillis() + 2 * 60 * 1000))
+                        .withExpiresAt(new Date(System.currentTimeMillis() + 15 * 60 * 1000))
                         .withIssuer(request.getRequestURL().toString())
                         // pr les roles, il faut passer une List pr que ça soit serialisee correctement en JSON.
                         .withClaim("roles", user.getRoles().stream().map(role -> role.getName())

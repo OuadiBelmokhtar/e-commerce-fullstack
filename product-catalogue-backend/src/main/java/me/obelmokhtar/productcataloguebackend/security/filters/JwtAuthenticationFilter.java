@@ -92,7 +92,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 // l'identifiant du authenticatedUser
                 .withSubject(authenticatedUser.getUsername())
                 // la duree d'expiration en milliseconde
-                .withExpiresAt(new Date(System.currentTimeMillis() + 1 * 60 * 1000))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 15 * 60 * 1000))
                 // private claim qui contient les roles extraits de authenticatedUser et converties en List de String
                 // on passer une List pr que ça soit serialisee correctement en JSON.
                 .withClaim("roles", authenticatedUser.getAuthorities().stream().map(ga -> ga.getAuthority().toString())
