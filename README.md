@@ -1,2 +1,3 @@
-# side-projects
-My side projects on Java EE, Angular, RESTful, SOAP, ... and everything in between.
+# e-commerce-fullstack
+Application web full stack permet de gérer un catalogue de produit en ligne. 
+technologies: Java EE, Angular, Spring(Boot, IoC, Data JPA, Data Rest, Security), REST, JWT, ...
