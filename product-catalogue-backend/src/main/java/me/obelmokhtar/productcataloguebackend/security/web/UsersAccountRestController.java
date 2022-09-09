@@ -18,7 +18,7 @@ import java.util.List;
 @PreAuthorize("hasAuthority('ADMIN')")// utiliser class-level-authorization
 @RestController
 public class UsersAccountRestController {
-    private UsersAccountService usersAccountService;
+    private UsersAccountService usersAccountService ;
 
     public UsersAccountRestController(UsersAccountService usersAccountService) {
         this.usersAccountService = usersAccountService;

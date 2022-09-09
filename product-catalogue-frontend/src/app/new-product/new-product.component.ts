@@ -54,15 +54,16 @@ export class NewProductComponent implements OnInit {
 
   private associateProductToItsCategory() {
     // 2 mtds pr recuperer les liens: soit construction manuelle ou exploitation des _links renvoyes par Spring Data Rest
-    //let URIOfProductToBindTo = GlobalService.HOST + "/products/" + this.savedProduct.id + "/category/";
-    let URIOfProductToBindTo = this.savedProduct._links.category.href;
-    //let URIOfCategoryToBind = GlobalService.HOST + "/categories/" + this.selectedCategory.id;
-    let URIOfCategoryToBind = this.selectedCategory._links.self.href;
+    //let UriOfCategoryOfProductToEdit = GlobalService.HOST + "/products/" + this.savedProduct.id + "/category/";
+
+    let UriOfCategoryOfProductToEdit = this.savedProduct._links.category.href; //e.g: …/products/2/category
+    //let UriOfNewCategory = GlobalService.HOST + "/categories/" + this.selectedCategory.id;
+    let UriOfNewCategory = this.selectedCategory._links.self.href; //e.g:  …/categories/3
     console.log("URIOfProductToBindTo");
-    console.log(URIOfProductToBindTo);
+    console.log(UriOfCategoryOfProductToEdit);
     console.log("URIOfCategoryToBind");
-    console.log(URIOfCategoryToBind);
-    this.productService.updateProductAssociation(URIOfProductToBindTo, URIOfCategoryToBind)
+    console.log(UriOfNewCategory);
+    this.productService.updateProductAssociation(UriOfCategoryOfProductToEdit, UriOfNewCategory)
       .subscribe(response => {
         // la reponse retournee est vide
         this.isSaved = true;

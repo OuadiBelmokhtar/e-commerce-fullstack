@@ -57,8 +57,10 @@ export class ProductService {
     return this.httpClient.delete(URL, { headers: new HttpHeaders({ 'Authorization': "Bearer " + this.authService.getJwtAccessToken() }) });
   }
 
-  updateProductAssociation(URIOfProductToBindTo: string, URIOfCategoryToBind: string) {
-    return this.httpClient.put(URIOfProductToBindTo, URIOfCategoryToBind, { headers: new HttpHeaders({ 'Content-Type': 'text/uri-list', 'Authorization': "Bearer " + this.authService.getJwtAccessToken() }) });
+  updateProductAssociation(UriOfCategoryOfProductToEdit: string, UriOfNewCategory: string) {
+    // this.httpClient.put(uriOfRsrcToUpdate, bodyOfRequest(or updatedData), headers)
+    // e.g: put(…/products/2/category, …/categories/3)
+    return this.httpClient.put(UriOfCategoryOfProductToEdit, UriOfNewCategory, { headers: new HttpHeaders({ 'Content-Type': 'text/uri-list', 'Authorization': "Bearer " + this.authService.getJwtAccessToken() }) });
 
   }
 

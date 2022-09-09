@@ -9,6 +9,7 @@ import me.obelmokhtar.productcataloguebackend.entities.Order;
 import me.obelmokhtar.productcataloguebackend.entities.OrderItem;
 import me.obelmokhtar.productcataloguebackend.entities.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;

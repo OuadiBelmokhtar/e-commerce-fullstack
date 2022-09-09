@@ -36,7 +36,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         this.authenticationManager = authenticationManager;
     }
 
-    /* - Invoquée par Spring suite a l'authentification de l'utilisateur soit via une request POST /login ou via formLogin
+    /* - Invoquée par Spring suite à l'authentification de l'utilisateur soit via une request POST /login ou via formLogin
           - permet de recuperer le username+password reçus ds le CORPS de la requete, de les encapsuler ds un objet de type
             UsernamePasswordAuthenticationToken et de le retourner a Spring sous forme d'un objet Authentication.
           - Spring va ensuite invoquer MySecurityConfig.configure(AuthenticationManagerBuilder auth).loadUserByUsername() pr
