@@ -44,7 +44,6 @@ public class ProductCatalogueBackendApplication {
     public static void main(String[] args) {
         SpringApplication.run(ProductCatalogueBackendApplication.class, args);
     }
-
     @Bean
     CommandLineRunner initDataBase(ProductRepository productRepository,
                            CategoryRepository categoryRepository,
