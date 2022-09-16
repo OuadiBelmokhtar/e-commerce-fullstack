@@ -1,6 +1,6 @@
 # e-commerce-fullstack
 
-Application web full stack e-commerce qui permet de : gérer un catalogue de produits en ligne, effectuer des commandes, gestion panier, génération bon de commande, gestion CRUD produits, gestion CRUD catégories.
+Application web full stack e-commerce permettant de : gérer un catalogue de produits en ligne, effectuer des commandes, gestion panier, génération bon de commande, gestion CRUD produits, gestion CRUD catégories.
 
 Stack technologique: Java 8, Angular, HTML5, Bootstrap, Spring Boot, Spring Data JPA, Spring Data Rest, Spring Security, JWT, Maven, Git, H2, MySQL, Intelij IDEA, VS Code, Postman.
 
