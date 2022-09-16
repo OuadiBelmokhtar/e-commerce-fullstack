@@ -1,8 +1,8 @@
 # e-commerce-fullstack
 
-Application web full stack e-commerce(achat de produits en ligne, gestion panier, gestion produits, gestion catégories, ...)
+Application web full stack e-commerce qui permet de : gérer un catalogue de produits en ligne, effectuer des commandes, gestion panier, génération bon de commande, gestion CRUD produits, gestion CRUD catégories.
 
-Stack technologique: Java 8, Angular(materials), HTML5, CSS, Bootstrap, Spring Boot, Spring Data JPA, Spring Data Rest, Spring Security, JWT, H2, MySQL, Intelij IDEA, VS Code.
+Stack technologique: Java 8, Angular, HTML5, Bootstrap, Spring Boot, Spring Data JPA, Spring Data Rest, Spring Security, JWT, Maven, Git, H2, MySQL, Intelij IDEA, VS Code, Postman.
 
 #
 1. Installer Bootstrap et JQuery et les ajouter ds angular.json (prop "styles" et "scripts")
