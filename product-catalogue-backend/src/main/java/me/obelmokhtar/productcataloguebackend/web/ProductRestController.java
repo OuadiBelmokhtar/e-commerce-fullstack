@@ -35,7 +35,7 @@ public class ProductRestController {
         product.setPhotoName(idProductToUpdate + ".jpg");
         // ecrire la photo ds le disque dure
         Files.write(Paths.get(Paths.get(System.getProperty("user.home")) + "/ecom-products-photos/" + product.getPhotoName()), productPhoto.getBytes());
-        // maj le nom de la photo ds la BD
+        // MAJ le nom de la photo ds la BD
         productRepository.save(product);
     }
 }

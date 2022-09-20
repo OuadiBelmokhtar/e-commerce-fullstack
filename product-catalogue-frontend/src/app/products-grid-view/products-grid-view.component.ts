@@ -46,8 +46,8 @@ export class ProductsGridViewComponent implements OnInit {
       .subscribe(response => {
         this.allProducts = response;
         //this.fillProductsWithCategories(this.allProducts);
-        console.log("allProducts");
-        console.log(this.allProducts);
+        //console.log("allProducts");
+       // console.log(this.allProducts);
         this.pagesArray = new Array<number>(this.allProducts.page.totalPages);
       }, err => {
         console.log(err);

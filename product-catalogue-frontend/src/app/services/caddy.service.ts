@@ -10,7 +10,7 @@ import { Customer } from '../model/Customer.model';
 export class CaddyService {
 
   //le nom du caddy sélectionné par le client
-  private _currentCaddyName: string = "Caddy1";
+  private _currentCaddyName: string = "Caddy";
   //collection des caddies crées par le client
   private _caddies: Map<string, Caddy> = new Map();
 
@@ -81,7 +81,10 @@ export class CaddyService {
   loadAndGetCaddiesFromLocalStorage() {
     return JSON.parse(localStorage.getItem('myCaddies')!, this.reviver);
   }
-
+ // vider le caddy courant
+  emptyCurrentCaddy(){
+    this.getCurrentCaddy()?.caddyItems.clear();
+  }
 
   // fonction requise pr serialiser la map caddies via JSON.stringify()
   private replacer(key: any, value: any) {

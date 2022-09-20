@@ -8,19 +8,13 @@
         <a class="_curseur" (click)="this.onNavigateToShowSelectedProducts()">Home</a>
       </li>
       <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Front Office
-          <span class="caret"></span></a>
-        <ul class="dropdown-menu" *ngIf="this.isUser()">
-          <li><a class="_curseur" (click)="this.onNavigateToShowProductsByCategory(1)">Produits par catégorie</a></li>
-          <li><a class="_curseur" (click)="this.onNavigateToShowSelectedProducts()">Produits sélectionnés</a></li>
-          <li><a class="_curseur" (click)="this.onNavigateToShowOnPromotionProducts()">Produits en promo</a></li>
-        </ul>
-      </li>
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Produits
+        <a  *ngIf="this.isAuthenticated()" class="dropdown-toggle" data-toggle="dropdown" href="#">Produits
           <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a routerLink="/products-grid">Chercher</a></li>
+          <li *ngIf="this.isUser()"><a class="_curseur" (click)="this.onNavigateToShowProductsByCategory(1)">Produits par catégorie</a></li>
+          <li *ngIf="this.isUser()"><a class="_curseur" (click)="this.onNavigateToShowSelectedProducts()">Produits sélectionnés</a></li>
+          <li *ngIf="this.isUser()"><a class="_curseur" (click)="this.onNavigateToShowOnPromotionProducts()">Produits en promo</a></li>
+          <li *ngIf="this.isAdmin()"><a routerLink="/products-grid">Chercher</a></li>
           <li *ngIf="this.isAdmin()"><a routerLink="/new-product">Ajouter</a></li>
         </ul>
       </li>
@@ -32,11 +26,10 @@
           <li><a routerLink="/new-category">Ajouter</a></li>
         </ul>
       </li>
-      <li><a href="#">Client</a></li>
-      <li><a routerLink="/caddies">Paniers</a></li>
+      <li *ngIf="!this.isAdmin() && this.isAuthenticated()"><a routerLink="/caddies">Panier</a></li>
     </ul>
     <ul class="nav navbar-nav pull-right">
-      <li *ngIf="this.caddyService.getCurrentCaddy()">
+      <li  *ngIf="!this.isAdmin() && this.caddyService.getCurrentCaddy() && this.isAuthenticated()">
         <a>
           {{this.caddyService.getCurrentCaddy()?.name}}&nbsp;:&nbsp;{{this.caddyService.getCurrentCaddy()?.caddyItems?.size}}
         </a>
@@ -55,7 +48,7 @@
   </div>
 </nav>
 
-<div class="col-md-3" *ngIf="this.showingMode==1">
+<div class="col-md-3" *ngIf="this.showingMode==1 || this.showingMode==2">
   <ul class="list-group" *ngIf="this.categories">
 
     <a [ngClass]="this.clickedCategoryId==category.id?'active':''" class="list-group-item _curseur"

@@ -62,6 +62,7 @@ export class AppComponent implements OnInit {
 
   onLgout() {
     this.authenticationService.logout();
+    this.caddyService.emptyCurrentCaddy();
     this.router.navigateByUrl('/login');
     console.log("onLogout()");
   }

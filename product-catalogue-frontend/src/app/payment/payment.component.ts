@@ -4,6 +4,7 @@ import { PaymentService } from '../services/payment.service';
 import { Order } from '../model/Order.model';
 import { OrderService } from '../services/order.service';
 import { Payment } from '../model/Payment.model';
+import { CaddyService } from '../services/caddy.service';
 
 @Component({
   selector: 'app-payment',
@@ -18,7 +19,8 @@ export class PaymentComponent implements OnInit {
   private _confirmationMsg: string = "";
   private _viewMode: number = 0;
 
-  constructor(public paymentService: PaymentService, private orderService: OrderService,
+  constructor(public paymentService: PaymentService, private orderService: OrderService, 
+    private caddyService:CaddyService,
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -51,6 +53,8 @@ export class PaymentComponent implements OnInit {
         this._panelStyle="panel-success";
         // pr l affichage du message de confirmation
         this._viewMode=1;
+        // vider le caddy courant après avoir effectuer le paiement
+        this.caddyService.emptyCurrentCaddy();
       }, err => {
         this._confirmationMsg="Erreur de Paiement, veuillez ressayer ultérieurement."
         this._panelStyle="panel-danger";

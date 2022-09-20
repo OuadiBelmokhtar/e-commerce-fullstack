@@ -26,6 +26,11 @@ export class FrontofficeProductsGridViewComponent implements OnInit {
   private _currentUploadedPhotos: any;
   private _title: string = "";
   private _currentTimeStamp: number = 0;
+  public pagesArray: Array<number> = [];
+  //public productsWithCategories: Array<Product> = [];
+  public pageNbr: number = 0;
+  public nbrEltPerPage: number = 5;
+  private searchKeyword: string = "";
 
 
   constructor(private categoryService: CategoryService,
@@ -62,6 +67,33 @@ export class FrontofficeProductsGridViewComponent implements OnInit {
     })
   }
 
+  onNavigateToPage(pNbr: number) {
+    //console.log(pNbr);
+    this.pageNbr = pNbr;
+    this.getProducts();
+  }
+
+  onSearchProducts(searchFormFields: any) {
+    //console.log(formFields);
+    // Noter bien que searchFormFields sera transmit au Model en format JSON comme suite {"fieldName1": value1, "fieldName2": value2}
+    this.pageNbr = 0;
+    this.searchKeyword = searchFormFields.keyword;
+    this.getProducts();
+  }
+
+  private getProducts() {
+    this.productService.searchProductsByKeyword(this.searchKeyword, this.pageNbr, this.nbrEltPerPage)
+      .subscribe(response => {
+        this._products = response;
+        //this.fillProductsWithCategories(this.allProducts);
+       // console.log("allProducts");
+       // console.log(this._products);
+        this.pagesArray = new Array<number>(this._products.page.totalPages);
+      }, err => {
+        console.log(err);
+      })
+  }
+
   private getOnPromotionProducts() {
     this.productService.getAllProducts(this.HOST + '/products/search/onPormotionProducts')
       .subscribe(response => {
@@ -85,19 +117,19 @@ export class FrontofficeProductsGridViewComponent implements OnInit {
     // Recup cateogry cliqué
     let clickedCategory: Category;
     this.categoryService.getCategory(this.HOST + '/categories/' + clickedCategoryId)
-      .subscribe(response => {
-        clickedCategory = response;
+      .subscribe(response1 => {
+        clickedCategory = response1;
         console.log("clickedCategory");
         console.log(clickedCategory);
 
         // Recup list products by cateogry
         this.productService.getProductsByCategory(clickedCategory._links.self.href + '/products')
-          .subscribe(response => {
-            console.log(response);
+          .subscribe(response2 => {
+            //console.log(response2);
             // garde la comme ça, non pas response._embedded.products. Voir principe ds Angular-summary.docx
-            this._products = response;
-            console.log("this._products");
-            console.log(this._products);
+            this._products = response2;
+            //console.log("this._products");
+            //console.log(this._products);
             //this.getProductPhoto(2);
           });
       }, err => {
@@ -116,8 +148,6 @@ export class FrontofficeProductsGridViewComponent implements OnInit {
   onSelectPhotos(event: any) {
     // récupérer ds Angular les phtotos sélectonnées par l'utilisateur ds l'explorateur
     this.selectedPhotos = event.target.files;
-    console.log("this.selectedPhotos");
-    console.log(this.selectedPhotos);
   }
 
   onUploadPhotos() {

@@ -22,7 +22,7 @@ export class AuthenticationService {
       { username: 'user2', password: '1234', roles: ['USER'] }
     ];
   */
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private router:Router) { }
 
   // AuthenticationService.login()
   login(user: User) {
@@ -33,6 +33,14 @@ export class AuthenticationService {
         console.log("this.authToken after save");
         console.log(this._jwtAuthToken);
         this.parseJwtAuthTokenAndInitUsernameRoles();
+        if (this.isAuthenticated()) {
+          
+          
+          this.router.navigateByUrl('frontoffice-products-grid/1/0');// naviguer vers les products selectionnes
+          //let currentUrl=this.router.url;
+          //this.router.navigateByUrl('/', {skipLocationChange:true}).then(()=>{this.router.navigate(['frontoffice-products-grid/1/0'])});
+          location.reload();// recharger la page
+        }
       }, err => {
         console.log(err);
       });
@@ -83,6 +91,7 @@ export class AuthenticationService {
 
   // Extract and get access-token from authToken
   public getJwtAccessToken() {
+    console.log("**getAccessToken()")
     let authToken = this.loadAndGetJwtAuthTokenFromLocalStorage();
     let accessToken: string = authToken['access-token'];
     console.log("getAccessToken().access-token"); console.log(accessToken);
@@ -138,11 +147,11 @@ export class AuthenticationService {
   }
 
   public isAuthenticated() {
-    let isAuthenticated = false;
-    if (this.username && this.roles) {
-      isAuthenticated = true;
+    let isUserAuthenticated = false;
+    if (this.username) {
+      isUserAuthenticated = true;
     }
-    return isAuthenticated;
+    return isUserAuthenticated;
   }
   // invoquer ds AppComponent.onLgout()
   removeJwtAuthTokenFromLocalStorage() {

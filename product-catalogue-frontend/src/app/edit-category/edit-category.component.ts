@@ -38,7 +38,7 @@ export class EditCategoryComponent implements OnInit {
     // console.log(editingFormFields);
     // console.log('uriCateogryToEdit');
     // console.log(this._categoryToEdit._links.self.href);
-    this.categoryService.updateCategory(this._categoryToEdit._links.self.href,editingFormFields)
+    this.categoryService.patchCategory(this._categoryToEdit._links.self.href,editingFormFields)
     .subscribe(response=>{
       //reponse vide
       console.log("Maj avec succès");

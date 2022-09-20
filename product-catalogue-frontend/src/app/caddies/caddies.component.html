@@ -6,7 +6,7 @@
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
-                    <th>Référence</th><th>Designation</th><th>Quantité</th><th>Prix</th>
+                    <th>Référence</th><th>Designation</th><th>Quantité commandée</th><th>Prix</th>
                 </tr>
             </thead>
             <tbody *ngIf="this.caddyService.getCurrentCaddy()">
@@ -16,8 +16,8 @@
                     <td>{{this.caddyService.getCurrentCaddy()?.caddyItems?.get(caddyItemKey)?.purchasedQuantity|number:'0.2'}}</td>
                     <td>{{this.caddyService.getCurrentCaddy()?.caddyItems?.get(caddyItemKey)?.buyingPrice|number:'0.2'}}</td>
                     <td>
-                        <button class="btn btn-danger btn-xs" (click)="onRemoveCaddyItemFromCaddy(caddyItemKey)">
-                            <span class="glyphicon glyphicon-remove"></span>
+                        <button class="btn btn-danger btn-xs" (click)="onRemoveCaddyItemFromCaddy(caddyItemKey)" title="Supprimer">
+                            <span class="glyphicon glyphicon-remove" ></span>
                         </button>
                     </td>
                 </tr>

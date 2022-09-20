@@ -16,8 +16,8 @@
             </div>
             <div class="form-group">
                 <label class="control-label">En promotion? </label><br>
-                <input type="radio" name="promotion" value="true" ngModel><label> Oui</label><br>
-                <input type="radio" name="promotion" value="false" ngModel><label> Non</label>
+                <input type="radio" name="isOnPromotion" value="true" ngModel><label>&nbsp; Oui</label><br>
+                <input type="radio" name="isOnPromotion" value="false" ngModel><label>&nbsp; Non</label>
             </div>
             <div class="form-group">
                 <label class="control-label">Quantité:</label>
@@ -25,8 +25,15 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Image: </label>
-                <input class="form-control" type="file" name="photoName" ngModel>
+
+                <input class="form-control" type="file" name="photoName" ngModel (change)="onSelectPhotos($event)">
+                <!-- <button class="btn btn-primary btn-sm" value="Upload" (click)="onUploadPhotos()"
+                    [disabled]="!this.selectedPhotos">
+                    Upload&nbsp;<span class="glyphicon glyphicon-upload"></span>
+                </button> -->
+                {{this.progress}}%
             </div>
+
             <div class="form-group" *ngIf="this.allCategories">
                 <label class="control-label">Catégorie:</label>
                 <select class="form-control" name="productCategory" ngModel>

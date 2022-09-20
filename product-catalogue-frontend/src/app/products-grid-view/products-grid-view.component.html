@@ -3,9 +3,12 @@
         <div class="panel-body">
             <form #searchForm="ngForm" (ngSubmit)="onSearchProducts(searchForm.value)">
                 <div class="form-group">
-                    <label>Mot clef: </label>
+                    <label>Mot clé:&nbsp;</label>
                     <input type="text" name="keyword" ngModel /> &nbsp;
-                    <input type="submit" class="btn btn-primary btn-sm" value="Chercher" />
+                    <button class="btn btn-primary" type="submit">
+                        <i class="glyphicon glyphicon-search"></i>&nbsp;Chercher
+                    </button>
+                    
                 </div>
             </form>
         </div>

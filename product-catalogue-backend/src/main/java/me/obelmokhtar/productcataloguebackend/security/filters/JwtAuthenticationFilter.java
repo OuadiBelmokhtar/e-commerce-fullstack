@@ -59,6 +59,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             Users currentUser = new ObjectMapper().readValue(request.getInputStream(), Users.class);
             System.out.println("username: " + currentUser.getUsername());
             System.out.println("password: " + currentUser.getPassword());
+            // password correct for all users is 1234
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken
                     (currentUser.getUsername(), currentUser.getPassword());
             // retourner un objet Authentication qui encapsule le username+password de l'utilsiateur authentifié
@@ -91,8 +92,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 //avec les standards claims:
                 // l'identifiant du authenticatedUser
                 .withSubject(authenticatedUser.getUsername())
-                // la duree d'expiration en milliseconde
-                .withExpiresAt(new Date(System.currentTimeMillis() + 15 * 60 * 1000))
+                // la duree d'expiration en milliseconde: 365 jours
+                .withExpiresAt(new Date(System.currentTimeMillis() + 365 *24* 60 *60* 1000))
                 // private claim qui contient les roles extraits de authenticatedUser et converties en List de String
                 // on passer une List pr que ça soit serialisee correctement en JSON.
                 .withClaim("roles", authenticatedUser.getAuthorities().stream().map(ga -> ga.getAuthority().toString())

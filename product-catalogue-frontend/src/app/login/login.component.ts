@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private authenticationService: AuthenticationService, private router: Router) { }
+  constructor(public authenticationService: AuthenticationService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -18,9 +18,10 @@ export class LoginComponent implements OnInit {
     console.log("authenticationFormFields");
     console.log(authenticationFormFields);
     this.authenticationService.login(authenticationFormFields);
-    if (this.authenticationService.isAuthenticated()) {
-      this.router.navigateByUrl('/'); // naviguer vers les products selectionnes
-    }
+   
+    //if (this.authenticationService.isAuthenticated()) {
+//      this.router.navigateByUrl('frontoffice-products-grid/2/0'); // naviguer vers les products selectionnes
+  //  }
   }
 
 }

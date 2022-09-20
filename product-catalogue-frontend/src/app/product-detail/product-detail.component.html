@@ -1,7 +1,7 @@
 <div *ngIf="this.currentProduct">
     <div class="panel panel-default" *ngIf="this.showMode==0">
         <div class="panel-heading"><label>Fiche Produit:</label> {{this.currentProduct.designation}}
-            <span *ngIf="this.authenticationService.isAdmin()" class="glyphicon glyphicon-edit pull-right btn" (click)="onEditProduct()"></span>
+            <span *ngIf="this.authenticationService.isAdmin()" class="glyphicon glyphicon-edit pull-right btn" (click)="onEditProduct()" title="Modifier infos produit"></span>
         </div>
 
         <div class="panel-body">
@@ -9,14 +9,14 @@
                 <img class="img-thumbnail"
                     [src]="this.HOST+'/get-product-photo/'+this.currentProduct.photoName+'?ts='+this.getCurrentTimeStamp()">
                 <div *ngIf="this.authenticationService.isAdmin()">
-                    <button (click)="onEditPhoto(this.currentProduct)">
-                        <span class="glyphicon glyphicon-edit"></span>
+                    <button (click)="onEditPhoto(this.currentProduct)" title="Changer photo">
+                        <span class="glyphicon glyphicon-edit" ></span>
                     </button>
                     <div *ngIf="this.isEditPhoto">
                         <input type="file" (change)="onSelectPhotos($event)">
                         <button class="btn btn-primary btn-sm" value="Upload" (click)="onUploadPhotos()"
-                            [disabled]="!this.selectedPhotos">
-                            Upload&nbsp;<span class="glyphicon glyphicon-upload"></span>
+                            [disabled]="!this.selectedPhotos" title="Charger la photo">
+                            Upload&nbsp;<span class="glyphicon glyphicon-upload" ></span>
                         </button>
                         {{this.progress}}%
                     </div>
@@ -38,8 +38,8 @@
                     <form #formAddToCaddy="ngForm" (ngSubmit)="onAddProductToCaddy()">
                         <label class="control-label">Quantité: </label>
                         <input type="number" name="orderedQuantity" [(ngModel)]="this.currentProduct.orderedQuantity"
-                            ngModel style="width:40px">&nbsp;
-                        <button class="btn btn-sm">
+                            ngModel style="width:40px" [disabled]="this.authenticationService.isAdmin()">&nbsp;
+                        <button class="btn btn-sm" [disabled]="this.authenticationService.isAdmin()">
                             <img height="25" width="25" src="assets/images/caddy.png" title="Ajouter au panier">
                         </button>
                     </form>
@@ -64,7 +64,7 @@
         <h4> Mise à jour Produit</h4>
     </div>
     <div class="panel-body">
-        <form #formUpdateProduct="ngForm" (ngSubmit)="this.onUpdateProduct(formUpdateProduct.value)">
+        <form #formUpdateProduct="ngForm" (ngSubmit)="onUpdateProduct(formUpdateProduct.value)">
             <div class="form-group">
                 <label class="control-label">Désignation: </label>
                 <input class="form-control" type="text" name="designation" ngModel
@@ -81,15 +81,15 @@
                     [(ngModel)]="this.currentProduct.currentPrice">
             </div>
             <div class="form-group">
-                <label class="label-control">Promotion:</label>&nbsp;
+                <label class="label-control">En promotion ? </label>&nbsp;
                 <input type="checkbox" name="isOnPromotion" ngModel [(ngModel)]="this.currentProduct.isOnPromotion">
             </div>
             <div class="form-group">
-                <label class="label-control">Sélection:</label>&nbsp;
+                <label class="label-control">Sélectionné ?</label>&nbsp;
                 <input type="checkbox" name="isSelected" ngModel [(ngModel)]="this.currentProduct.isSelected">
             </div>
             <div class="form-group">
-                <label class="label-control">Disponible:</label>&nbsp;
+                <label class="label-control">Disponible ?</label>&nbsp;
                 <input type="checkbox" name="isAvailable" ngModel [(ngModel)]="this.currentProduct.isAvailable">
             </div>
             <input class="btn btn-success" type="submit" value="Mettre à jour">

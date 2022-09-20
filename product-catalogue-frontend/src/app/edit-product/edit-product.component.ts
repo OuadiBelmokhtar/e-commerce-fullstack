@@ -37,7 +37,7 @@ export class EditProductComponent implements OnInit {
 
   onUpdateProduct(updatingFormFields: any) {
     // modifer les infos du product
-    this.productService.updateProduct(this.uriProductToUpdate, updatingFormFields)
+    this.productService.patchProduct(this.uriProductToUpdate, updatingFormFields)
       .subscribe(response => {
         
         // modifier la category associee

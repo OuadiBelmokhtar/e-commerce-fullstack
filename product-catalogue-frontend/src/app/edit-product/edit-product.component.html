@@ -11,15 +11,32 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Description: </label>
-                <textarea class="form-control" name="designation" cols="20" rows="6" ngModel
-                    [(ngModel)]="this.productToUpdate.designation"></textarea>
+                <textarea class="form-control" name="description" cols="20" rows="6" ngModel
+                    [(ngModel)]="this.productToUpdate.description"></textarea>
             </div>
             <div class="form-group">
                 <label class="label-control">Prix courant:</label>
                 <input class="form-control" type="text" name="currentPrice" ngModel
                     [(ngModel)]="this.productToUpdate.currentPrice">
             </div>
+
             <div class="form-group">
+                <label class="label-control">En promotion ? </label>&nbsp;
+                <input type="checkbox" name="isOnPromotion" checked="{{this.productToUpdate.isOnPromotion}}"
+                 ngModel [(ngModel)]="this.productToUpdate.isOnPromotion">
+            </div>
+            <div class="form-group">
+                <label class="label-control">Sélectionné ?</label>&nbsp;
+                <input type="checkbox" name="isSelected" checked="{{this.productToUpdate.isSelected}}" 
+                ngModel [(ngModel)]="this.productToUpdate.isSelected">
+            </div>
+            <div class="form-group">
+                <label class="label-control">Disponible ?</label>&nbsp;
+                <input type="checkbox" name="isAvailable" checked="{{this.productToUpdate.isAvailable}}"
+                 ngModel [(ngModel)]="this.productToUpdate.isAvailable">
+            </div>
+
+            <!-- <div class="form-group">
                 <label class="control-label">En promotion ? </label><br>
                 <input type="radio" name="isOnPromotion" value="true" checked="{{this.productToUpdate.isOnPromotion}}"
                     ngModel [(ngModel)]="this.productToUpdate.isOnPromotion">
@@ -39,11 +56,12 @@
                 <label class="label-control">Sélection:</label>
                 <input type="checkbox" name="isSelected" value="{{this.productToUpdate.isAvailable}}" ngModel
                     [(ngModel)]="this.productToUpdate.isSelected">
-            </div>
-            <div class="form-group">
-                <label class="control-label">Photo: </label>
+            </div> -->
+            <!-- <div class="form-group">
                 <img src="{{this.productToUpdate.photoName}}" alt="{{this.productToUpdate.photoName}}">
-            </div>
+                <input type="hidden" name="photoName" value="{{this.productToUpdate.photoName}}" ngModel
+                [(ngModel)]="this.productToUpdate.photoName">
+            </div> -->
             <div class="form-group">
                 <label class="control-label">Quantité:</label>
                 <input class="form-control" type="number" required name="quantity" ngModel

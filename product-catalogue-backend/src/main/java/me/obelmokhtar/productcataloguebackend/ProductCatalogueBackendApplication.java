@@ -13,8 +13,10 @@ import me.obelmokhtar.productcataloguebackend.service.ProductService;
 import org.springframework.beans.ConfigurablePropertyAccessor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -37,7 +39,7 @@ import java.util.UUID;
    - plus d'info sur: https://www.baeldung.com/spring-security-method-security
 */
 // autoriser seulement @PrePostEnabled
-@SpringBootApplication
+@SpringBootApplication()
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ProductCatalogueBackendApplication {
 

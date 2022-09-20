@@ -6,6 +6,8 @@ import { Product } from '../model/Product.model';
 import { Category } from '../model/Category.model';
 import { CategoryService } from '../services/category.service';
 import { v4 as uuidv4 } from 'uuid';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { ThisReceiver } from '@angular/compiler';
 
 @Component({
   selector: 'app-new-product',
@@ -18,6 +20,11 @@ export class NewProductComponent implements OnInit {
   public selectedCategory!: Category;
   public isSaved: boolean = false;
   public _allCategories: any = undefined; // list des categories recuperee de la BD
+
+  private _selectedPhotos: any;
+  private _progress: number = 0;
+  private _currentUploadedPhotos: any;
+  private _currentTimeStamp: number = 0;
 
 
   constructor(private productService: ProductService, private categoryService: CategoryService, private router: Router) {
@@ -45,8 +52,24 @@ export class NewProductComponent implements OnInit {
         // savedProduct contient la Category sous forme de lien non pas objet JSON
         console.log("savedProduct ");
         console.log(this.savedProduct);
+        if (savingFormFields.photoName) {
+          // uploader la photo et MAJ le nom de la photo ds la BD
+          this.onUploadPhotos(this.savedProduct.id);
+          //console.log(savingFormFields.photoName);
+           }
         // associer le product vient d etre enregistre avec la category choisie ds le champ <select>
         this.associateProductToItsCategory();
+      }, err => {
+        console.log(err);
+      });
+  }
+  //GlobalService.HOST + "/products/" + this.savedProduct.id
+  private patchProductPhotoName(URI: string, pPhotoName: string) {
+    this.productService.patchProduct(URI, { photoName: pPhotoName })
+      .subscribe(response => {
+        // la reponse retournee par PATCH est vide
+        console.log("Photo name updated");
+        console.log(response);
       }, err => {
         console.log(err);
       });
@@ -76,6 +99,36 @@ export class NewProductComponent implements OnInit {
     this.isSaved = false;
   }
 
+  onSelectPhotos(event: any) {
+    // récupérer ds Angular les phtotos sélectonnées par l'utilisateur ds l'explorateur
+    this.selectedPhotos = event.target.files;
+  }
+
+  onUploadPhotos(productId:number) {
+    this.progress = 0;
+    // recuprer juste la premiere photo selectionnée
+    this.currentUploadedPhotos = this.selectedPhotos.item(0);
+    // deleguer la tache au service
+    this.productService.uploadProductPhoto(this.currentUploadedPhotos, productId)
+      .subscribe(event => {
+        if (event.type === HttpEventType.UploadProgress) {
+          // definir le pourcentage de progression d'upload
+          this.progress = Math.round(100 * event.loaded / event.total!);
+        } else if (event instanceof HttpResponse) {
+          // lors du retour de la response HTTP
+          // pr resoudre le probleme de rafraichissement de la photo causé par le cache
+          this.currentTimeStamp = Date.now();
+          alert("Photo bien chargée");
+          console.log("Photo bien chargée");
+          // Maj le nom de la photo ds la BD via this.savedProduct.id
+          this.patchProductPhotoName(GlobalService.HOST + "/products/" + this.savedProduct.id,String(this.savedProduct.id)+".jpg" );
+        }
+      }, err => {
+        console.log("Problème de chargement de la photo: " + JSON.parse(err.error).message);
+        ;
+      });
+  }
+
   public get allCategories() {
     return this._allCategories;
   }
@@ -99,4 +152,29 @@ export class NewProductComponent implements OnInit {
       })
   }
 
+  public get selectedPhotos(): any {
+    return this._selectedPhotos;
+  }
+  public set selectedPhotos(value: any) {
+    this._selectedPhotos = value;
+  }
+
+  public get progress(): number {
+    return this._progress;
+  }
+  public set progress(value: number) {
+    this._progress = value;
+  }
+  public get currentUploadedPhotos(): any {
+    return this._currentUploadedPhotos;
+  }
+  public set currentUploadedPhotos(value: any) {
+    this._currentUploadedPhotos = value;
+  }
+  public get currentTimeStamp(): number {
+    return this._currentTimeStamp;
+  }
+  public set currentTimeStamp(value: number) {
+    this._currentTimeStamp = value;
+  }
 }

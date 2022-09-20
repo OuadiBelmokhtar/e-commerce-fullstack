@@ -1,17 +1,43 @@
 <div *ngIf="this.products">
-    <h3>{{this.title}}</h3>
+    <table class="table table-hover">
+        <tr>
+            <td>
+                <h3>{{this.title}}</h3>
+            </td>
+            <td *ngIf="!this.authenticationService.isAdmin()">
+                <form #searchForm="ngForm" (ngSubmit)="onSearchProducts(searchForm.value)">
+
+                    <!-- <div class="form-group has-feedback has-search">
+                        <label>Mot clé:&nbsp;</label>
+                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                        <input type="text" name="keyword" ngModel placeholder="Search"> &nbsp;
+                        <input type="submit" class="btn btn-primary btn-sm" value="Rechercher" />
+                    </div> -->
+                    <div class="input-group pull-right">
+                        <input type="text" name="keyword" ngModel class="form-control"
+                            placeholder="Chercher produits par mot clé..">
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </td>
+        </tr>
+    </table>
     <div *ngFor="let product of this.products._embedded.products">
         <div class="col-md-6">
-            <div class="panel panel-info _hauteur">
+            <div class="panel panel-info _panel-size">
                 <div class="panel-heading">
                     <h5 class="panel-title">{{product.designation}}</h5>
                 </div>
                 <div class="panel-body">
-                    <img class="img-thumbnail img-rounded btn" height="200" width="200"
+                    <img class="img-thumbnail img-rounded btn" height="210" width="210"
                         [src]="this.HOST+'/get-product-photo/'+product.photoName+'?ts='+this.getCurrentTimeStamp()"
-                        (click)="onProductDetail(product)">
+                        (click)="onProductDetail(product)" title="Afficher fiche produit">
                     <div *ngIf="this.authenticationService.isAdmin()">
-                        <button (click)="onEditPhoto(product)">
+                        <button (click)="onEditPhoto(product)" title="Changer photo">
                             <span class="glyphicon glyphicon-edit"></span>
                         </button>
                         <div *ngIf="this.isEditPhoto && this.currentProduct==product">
@@ -41,8 +67,8 @@
                         <form #formAddToCaddy="ngForm" (ngSubmit)="onAddProductToCaddy(product)">
                             <label class="control-label">Quantité:&nbsp;</label>
                             <input type="number" name="orderedQuantity" [(ngModel)]="product.orderedQuantity" ngModel
-                                style="width:40px">&nbsp;
-                            <button class="btn btn-sm">
+                                style="width:40px" [disabled]="this.authenticationService.isAdmin()">&nbsp;
+                            <button class="btn btn-sm" [disabled]="this.authenticationService.isAdmin()">
                                 <img height="25" width="25" src="assets/images/caddy.png" title="Ajouter au panier">
                             </button>
                         </form>
@@ -51,3 +77,13 @@
             </div>
         </div>
     </div>
+
+</div>
+<div>
+    <ul *ngIf="this.pagesArray && this.pagesArray.length>1" class="nav nav-pills">
+        <!-- i==this.pageNbr verifie que i a linterieur de la boucle correspond a le i cliqué ds la page-->
+        <li [ngClass]="i==this.pageNbr?'active':''" *ngFor='let pge of this.pagesArray; let i=index'>
+            <a (click)="onNavigateToPage(i)" class="_curseur">{{i}}</a>
+        </li>
+    </ul>
+</div>

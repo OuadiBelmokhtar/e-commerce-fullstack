@@ -26,6 +26,10 @@ export class CategoryService {
   public updateCategory(uriCategoryToEdit:string,editingFormFields: any) {
     return this.httpClient.put(uriCategoryToEdit, editingFormFields,{headers:new HttpHeaders({'Authorization':"Bearer "+this.authService.getJwtAccessToken()})});
   }
+
+  public patchCategory(uriCategoryToEdit:string,editingFormFields: any) {
+    return this.httpClient.patch(uriCategoryToEdit, editingFormFields,{headers:new HttpHeaders({'Authorization':"Bearer "+this.authService.getJwtAccessToken()})});
+  }
  
   public searchCategory(keyword: string) : Observable<Category>{
     return this.httpClient.get<Category>(GlobalService.HOST + "/categories/search/filterCategoryByName?key="+keyword,{headers:new HttpHeaders({'Authorization':"Bearer "+this.authService.getJwtAccessToken()})});

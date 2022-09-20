@@ -108,7 +108,8 @@ export class ProductService {
     // Comme constaté, uploader un fichier vers le backend, 
     // consiste à envoyer une requete POST contenant le fichier à envoyer ds son body.
     const req = new HttpRequest('POST', GlobalService.HOST + '/upload-product-photo/' + idProductToUpdate,
-      formData, {
+      formData,{ 
+      headers: new HttpHeaders({ 'Authorization': "Bearer " + this.authService.getJwtAccessToken() }), 
       // pr recevoir la progression d'ulpoad
       reportProgress: true,
       // on veut recevoir une reponse Text, non pas JSON.
