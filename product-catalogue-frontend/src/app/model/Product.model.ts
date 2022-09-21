@@ -26,8 +26,9 @@ export class Product {
         }
     }
 
-    constructor(id: number, designation: string, description: string, price: number, promotion: boolean, selected: boolean, available: boolean, photoName: string, quantity: number, orderedQuantity: number, category: Category) {
+    constructor(id: number,reference:string, designation: string, description: string, price: number, promotion: boolean, selected: boolean, available: boolean, photoName: string, quantity: number, orderedQuantity: number, category: Category) {
         this.id = id;
+        this.reference=reference;
         this.designation = designation;
         this.description = description;
         this.currentPrice = price;

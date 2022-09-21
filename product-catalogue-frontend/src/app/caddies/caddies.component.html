@@ -11,9 +11,9 @@
             </thead>
             <tbody *ngIf="this.caddyService.getCurrentCaddy()">
                 <tr *ngFor="let caddyItemKey of this.caddyService.getCurrentCaddy()?.caddyItems?.keys()">
-                    <td>{{this.caddyService.getCurrentCaddy()?.caddyItems?.get(caddyItemKey)?.associatedProduct?.id}}</td>
+                    <td>{{this.caddyService.getCurrentCaddy()?.caddyItems?.get(caddyItemKey)?.associatedProduct?.reference}}</td>
                     <td>{{this.caddyService.getCurrentCaddy()?.caddyItems?.get(caddyItemKey)?.associatedProduct?.designation}}</td>
-                    <td>{{this.caddyService.getCurrentCaddy()?.caddyItems?.get(caddyItemKey)?.purchasedQuantity|number:'0.2'}}</td>
+                    <td>{{this.caddyService.getCurrentCaddy()?.caddyItems?.get(caddyItemKey)?.purchasedQuantity}}</td>
                     <td>{{this.caddyService.getCurrentCaddy()?.caddyItems?.get(caddyItemKey)?.buyingPrice|number:'0.2'}}</td>
                     <td>
                         <button class="btn btn-danger btn-xs" (click)="onRemoveCaddyItemFromCaddy(caddyItemKey)" title="Supprimer">
@@ -27,6 +27,6 @@
                 </tr>
             </tbody>
         </table>
-        <button class="btn btn-success" (click)="onCreateNewOrder()" >Commander</button>
+        <button [disabled]="this.caddyService.getCurrentCaddy()?.caddyItems?.size==0" class="btn btn-success" (click)="onCreateNewOrder()" >Commander</button>
     </div>
 </div>

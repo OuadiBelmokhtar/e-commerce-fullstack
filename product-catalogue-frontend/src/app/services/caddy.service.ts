@@ -81,7 +81,7 @@ export class CaddyService {
   loadAndGetCaddiesFromLocalStorage() {
     return JSON.parse(localStorage.getItem('myCaddies')!, this.reviver);
   }
- // vider le caddy courant
+ // vider le caddy courant. Appeler ds Payement.ts.onConfirmPayOrder()
   emptyCurrentCaddy(){
     this.getCurrentCaddy()?.caddyItems.clear();
   }
