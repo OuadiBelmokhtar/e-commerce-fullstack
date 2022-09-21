@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ProductService } from '../services/product.service';
-import { Product } from '../model/Product.model';
+import { Product } from '../models/Product.model';
 import { Router } from '@angular/router';
-import { Category } from '../model/Category.model';
+import { Category } from '../models/Category.model';
 import { AuthenticationService } from '../services/authentication.service';
 
 @Component({

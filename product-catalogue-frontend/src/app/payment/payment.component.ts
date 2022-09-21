@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PaymentService } from '../services/payment.service';
-import { Order } from '../model/Order.model';
+import { Order } from '../models/Order.model';
 import { OrderService } from '../services/order.service';
-import { Payment } from '../model/Payment.model';
+import { Payment } from '../models/Payment.model';
 import { CaddyService } from '../services/caddy.service';
 
 @Component({

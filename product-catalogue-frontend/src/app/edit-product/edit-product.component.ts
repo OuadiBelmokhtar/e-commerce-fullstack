@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Product } from '../model/Product.model';
+import { Product } from '../models/Product.model';
 import { ProductService } from '../services/product.service';
 import { CategoryService } from '../services/category.service';
-import { Category } from '../model/Category.model';
+import { Category } from '../models/Category.model';
 import { GlobalService } from '../services/global.service';
 
 @Component({

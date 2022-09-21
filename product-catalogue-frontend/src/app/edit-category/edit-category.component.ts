@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryService } from '../services/category.service';
-import { Category } from '../model/Category.model';
+import { Category } from '../models/Category.model';
 
 @Component({
   selector: 'app-edit-category',

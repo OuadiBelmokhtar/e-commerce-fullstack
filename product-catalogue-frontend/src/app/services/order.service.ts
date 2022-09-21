@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Order } from '../model/Order.model';
-import { Customer } from '../model/Customer.model';
+import { Order } from '../models/Order.model';
+import { Customer } from '../models/Customer.model';
 import { CaddyService } from './caddy.service';
-import { CaddyItem } from '../model/CaddyItem.model';
+import { CaddyItem } from '../models/CaddyItem.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { GlobalService } from './global.service';
 import { AuthenticationService } from './authentication.service';

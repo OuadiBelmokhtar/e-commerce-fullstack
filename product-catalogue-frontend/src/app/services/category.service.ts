@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Category } from '../model/Category.model';
+import { Category } from '../models/Category.model';
 import { Observable } from 'rxjs';
 import { GlobalService } from './global.service';
 import { AuthenticationService } from './authentication.service';

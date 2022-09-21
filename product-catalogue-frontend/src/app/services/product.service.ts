@@ -2,8 +2,8 @@ import { HttpClient, HttpEvent, HttpHeaders, HttpParams, HttpRequest } from '@an
 import { Injectable } from '@angular/core';
 import { GlobalService } from './global.service';
 import { Observable } from 'rxjs';
-import { Product } from '../model/Product.model';
-import { Category } from '../model/Category.model';
+import { Product } from '../models/Product.model';
+import { Category } from '../models/Category.model';
 import { AuthenticationService } from './authentication.service';
 
 @Injectable({

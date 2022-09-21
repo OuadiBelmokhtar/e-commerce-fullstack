@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { GlobalService } from './global.service';
-import { User } from '../model/User.model';
+import { User } from '../models/User.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({

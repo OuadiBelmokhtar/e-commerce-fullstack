@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../services/category.service';
 import { ProductService } from '../services/product.service';
-import { Category } from '../model/Category.model';
-import { Product } from '../model/Product.model';
+import { Category } from '../models/Category.model';
+import { Product } from '../models/Product.model';
 import { GlobalService } from '../services/global.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { ShowingProductsModeEnum } from '../model/ShowingProductsModeEnum';
+import { ShowingProductsModeEnum } from '../models/ShowingProductsModeEnum';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { AuthenticationService } from '../services/authentication.service';
 import { CaddyService } from '../services/caddy.service';

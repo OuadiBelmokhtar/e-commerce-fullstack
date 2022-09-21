@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CaddyService } from '../services/caddy.service';
-import { Customer } from '../model/Customer.model';
+import { Customer } from '../models/Customer.model';
 import { AuthenticationService } from '../services/authentication.service';
 import { OrderService } from '../services/order.service';
 import { Router } from '@angular/router';

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Payment } from '../model/Payment.model';
+import { Payment } from '../models/Payment.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { GlobalService } from './global.service';
 import { AuthenticationService } from './authentication.service';

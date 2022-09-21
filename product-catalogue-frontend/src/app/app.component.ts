@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from './services/category.service';
 import { ProductService } from './services/product.service';
-import { Category } from './model/Category.model';
+import { Category } from './models/Category.model';
 import { Router } from '@angular/router';
-import { ShowingProductsModeEnum } from './model/ShowingProductsModeEnum';
+import { ShowingProductsModeEnum } from './models/ShowingProductsModeEnum';
 import { AuthenticationService } from './services/authentication.service';
 import { CaddyService } from './services/caddy.service';
 
