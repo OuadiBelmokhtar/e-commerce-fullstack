@@ -6,7 +6,7 @@ export const environment = {
   production: false,
 
   // Your web app's Firebase configuration informations to connect with Firebase Project "e-com-prod-storage"
-   firebase :{
+   firebaseConfig :{
     apiKey: "AIzaSyBzn223lXuB83oXDVHcVDX3Z-SaZsGCw3E",
     authDomain: "e-com-prod-storage.firebaseapp.com",
     projectId: "e-com-prod-storage",

@@ -44,7 +44,7 @@ import { UploadFormComponent } from './upload-form/upload-form.component';
   ],
   imports: [
     // Firebase modules
-    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,
     BrowserModule,
     AppRoutingModule,
