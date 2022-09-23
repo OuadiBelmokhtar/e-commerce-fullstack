@@ -33,20 +33,36 @@
                     <h5 class="panel-title">{{product.designation}}</h5>
                 </div>
                 <div class="panel-body">
+                    <!-- Utilisation affichage de Firebase Storage -->
                     <img class="img-thumbnail img-rounded btn" height="210" width="210"
+                        [src]="product.photoName+'?ts='+getCurrentTimeStamp()" (click)="onProductDetail(product)"
+                        title="Afficher fiche produit">
+
+                    <!-- Utilisation upload au serveur backend -->
+                    <!-- <img class="img-thumbnail img-rounded btn" height="210" width="210"
                         [src]="this.HOST+'/get-product-photo/'+product.photoName+'?ts='+this.getCurrentTimeStamp()"
-                        (click)="onProductDetail(product)" title="Afficher fiche produit">
+                        (click)="onProductDetail(product)" title="Afficher fiche produit"> -->
                     <div *ngIf="this.authenticationService.isAdmin()">
                         <button (click)="onEditPhoto(product)" title="Changer photo">
                             <span class="glyphicon glyphicon-edit"></span>
                         </button>
-                        <div *ngIf="this.isEditPhoto && this.currentProduct==product">
-                            <input type="file" (change)="onSelectPhotos($event)">
+                        <div *ngIf="this.isEditPhoto && product==this.currentProduct">
+
+                            <!-- utilisation de l'upload a Firebase Storage -->
+                            <div class="my-3">
+                                <!-- voir le component upload-form.component.ts -->
+                                <app-upload-form [photoURL]="product.photoName" typeUpload="update">
+                                </app-upload-form>
+                                <!-- j'ai pas besoin du champ hidden comme la cas de addProduct(), car la BD ne sera pas MAJ -->
+                            </div>
+
+                            <!-- Utilisation upload au serveur backend -->
+                            <!-- <input type="file" (change)="onSelectPhotos($event)">
                             <button class="btn btn-primary btn-sm" value="Upload" (click)="onUploadPhotos()"
                                 [disabled]="!this.selectedPhotos">
                                 Upload&nbsp;<span class="glyphicon glyphicon-upload"></span>
                             </button>
-                            {{this.progress}}%
+                            {{this.progress}}% -->
                         </div>
                     </div>
                     <div>{{product.description}}</div>

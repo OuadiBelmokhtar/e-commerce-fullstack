@@ -8,6 +8,7 @@ import { CategoryService } from '../services/category.service';
 import { v4 as uuidv4 } from 'uuid';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { ThisReceiver } from '@angular/compiler';
+import { FileUploadService } from '../services/file-upload.service';
 
 @Component({
   selector: 'app-new-product',
@@ -21,13 +22,17 @@ export class NewProductComponent implements OnInit {
   public isSaved: boolean = false;
   public _allCategories: any = undefined; // list des categories recuperee de la BD
 
+  // utilisation de l'upload au serveur backend
+  /*
   private _selectedPhotos: any;
   private _progress: number = 0;
   private _currentUploadedPhotos: any;
   private _currentTimeStamp: number = 0;
+  */
 
 
-  constructor(private productService: ProductService, private categoryService: CategoryService, private router: Router) {
+  constructor(private productService: ProductService, private categoryService: CategoryService, 
+    public fileUploadService:FileUploadService,private router: Router) {
 
   }
 
@@ -39,6 +44,7 @@ export class NewProductComponent implements OnInit {
   onAddProduct(savingFormFields: any) {
     console.log("savingFormFields ");
     console.log(savingFormFields);
+   // alert(savingFormFields.photoName);
     this.selectedCategory = savingFormFields.productCategory; // recuperer la category choisie ds le champ <select>
     // Noter bien que savingFormFields sera transmit au Model en format JSON comme suite {"fieldName1": value1, "fieldName2": value2}
     //definir UUID pr la reference
@@ -52,18 +58,23 @@ export class NewProductComponent implements OnInit {
         // savedProduct contient la Category sous forme de lien non pas objet JSON
         console.log("savedProduct ");
         console.log(this.savedProduct);
+
+        /* // utilisation de l'upload au serveur backend
         if (savingFormFields.photoName) {
           // uploader la photo et MAJ le nom de la photo ds la BD
           this.onUploadPhotos(this.savedProduct.id);
           //console.log(savingFormFields.photoName);
-           }
+        }
+        */
+
         // associer le product vient d etre enregistre avec la category choisie ds le champ <select>
         this.associateProductToItsCategory();
       }, err => {
         console.log(err);
       });
   }
-  //GlobalService.HOST + "/products/" + this.savedProduct.id
+  // utilisation de l'upload au serveur backend
+  /*
   private patchProductPhotoName(URI: string, pPhotoName: string) {
     this.productService.patchProduct(URI, { photoName: pPhotoName })
       .subscribe(response => {
@@ -74,7 +85,7 @@ export class NewProductComponent implements OnInit {
         console.log(err);
       });
   }
-
+  */
   private associateProductToItsCategory() {
     // 2 mtds pr recuperer les liens: soit construction manuelle ou exploitation des _links renvoyes par Spring Data Rest
     //let UriOfCategoryOfProductToEdit = GlobalService.HOST + "/products/" + this.savedProduct.id + "/category/";
@@ -98,12 +109,16 @@ export class NewProductComponent implements OnInit {
   onNavigateToNewProduct() {
     this.isSaved = false;
   }
+  // utilisation de l'upload au serveur backend
+  /*
+    onSelectPhotos(event: any) {
+      // récupérer ds Angular les phtotos sélectonnées par l'utilisateur ds l'explorateur
+      this.selectedPhotos = event.target.files;
+    }
+    */
 
-  onSelectPhotos(event: any) {
-    // récupérer ds Angular les phtotos sélectonnées par l'utilisateur ds l'explorateur
-    this.selectedPhotos = event.target.files;
-  }
-
+  // utilisation de l'upload au serveur backend
+  /*
   onUploadPhotos(productId:number) {
     this.progress = 0;
     // recuprer juste la premiere photo selectionnée
@@ -128,7 +143,7 @@ export class NewProductComponent implements OnInit {
         ;
       });
   }
-
+*/
   public get allCategories() {
     return this._allCategories;
   }
@@ -152,6 +167,7 @@ export class NewProductComponent implements OnInit {
       })
   }
 
+  /*
   public get selectedPhotos(): any {
     return this._selectedPhotos;
   }
@@ -177,4 +193,5 @@ export class NewProductComponent implements OnInit {
   public set currentTimeStamp(value: number) {
     this._currentTimeStamp = value;
   }
+  */
 }

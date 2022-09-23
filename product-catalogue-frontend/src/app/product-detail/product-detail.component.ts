@@ -5,6 +5,7 @@ import { ProductService } from '../services/product.service';
 import { GlobalService } from '../services/global.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { FileUploadService } from '../services/file-upload.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -17,16 +18,17 @@ export class ProductDetailComponent implements OnInit {
   private _showMode: number = 0;
   private _HOST: string = "";
   private _isEditPhoto: boolean = false;
-  private _selectedPhotos: any;
+ // private _selectedPhotos: any;
 
-  private _progress: number = 0;
-  private _currentUploadedPhotos: any;
+  //private _progress: number = 0;
+  //private _currentUploadedPhotos: any;
   private _currentTimeStamp: number = 0;
 
 
   constructor(private productService: ProductService,
     public authenticationService: AuthenticationService,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute,
+    public fileUploadService: FileUploadService) { }
 
   ngOnInit(): void {
     this.showMode = 0;
@@ -68,41 +70,42 @@ export class ProductDetailComponent implements OnInit {
     // pr masquer/afficher le button ‘Open File’
     this.isEditPhoto = true;
   }
-
-  onSelectPhotos(event: any) {
-    // récupérer ds Angular les phtotos sélectonnées par l'utilisateur ds l'explorateur
-    this.selectedPhotos = event.target.files;
-    // console.log("this.selectedPhotos");
-    // console.log(this.selectedPhotos);
-  }
-
-  onUploadPhotos() {
-    this.progress = 0;
-    // recuprer juste la premiere photo selectionnée
-    this.currentUploadedPhotos = this.selectedPhotos.item(0);
-    // deleguer la tache au service
-    this.productService.uploadProductPhoto(this.currentUploadedPhotos, this.currentProduct.id)
-      .subscribe(event => {
-        if (event.type === HttpEventType.UploadProgress) {
-          // definir le pourcentage de progression d'upload
-          this.progress = Math.round(100 * event.loaded / event.total!);
-        } else if (event instanceof HttpResponse) {
-          // lors du retour de la response HTTP
-          // pr resoudre le probleme de rafraichissement de la photo causé par le cache
-          this._currentTimeStamp = Date.now();
-          alert("Photo bien chargée");
-          console.log("Photo bien chargée");
-        }
-      }, err => {
-        console.log("Problème de chargement de la photo: " + JSON.parse(err.error).message);
-        ;
-      });
-  }
-
-  getCurrentTimeStamp() {
-     this._currentTimeStamp=Date.now();
-    return this._currentTimeStamp;
-  }
+  // utilisation de l'upload au serveur backend
+  /*
+    onSelectPhotos(event: any) {
+      // récupérer ds Angular les phtotos sélectonnées par l'utilisateur ds l'explorateur
+      this.selectedPhotos = event.target.files;
+      // console.log("this.selectedPhotos");
+      // console.log(this.selectedPhotos);
+    }
+  
+    onUploadPhotos() {
+      this.progress = 0;
+      // recuprer juste la premiere photo selectionnée
+      this.currentUploadedPhotos = this.selectedPhotos.item(0);
+      // deleguer la tache au service
+      this.productService.uploadProductPhoto(this.currentUploadedPhotos, this.currentProduct.id)
+        .subscribe(event => {
+          if (event.type === HttpEventType.UploadProgress) {
+            // definir le pourcentage de progression d'upload
+            this.progress = Math.round(100 * event.loaded / event.total!);
+          } else if (event instanceof HttpResponse) {
+            // lors du retour de la response HTTP
+            // pr resoudre le probleme de rafraichissement de la photo causé par le cache
+            this._currentTimeStamp = Date.now();
+            alert("Photo bien chargée");
+            console.log("Photo bien chargée");
+          }
+        }, err => {
+          console.log("Problème de chargement de la photo: " + JSON.parse(err.error).message);
+          ;
+        });
+    }
+  */
+    getCurrentTimeStamp() {
+       this._currentTimeStamp=Date.now();
+      return this._currentTimeStamp;
+    }
 
   public get HOST(): string {
     this._HOST = GlobalService.HOST;
@@ -121,6 +124,7 @@ export class ProductDetailComponent implements OnInit {
   public set showMode(value: number) {
     this._showMode = value;
   }
+  /*
   public get selectedPhotos(): any {
     return this._selectedPhotos;
   }
@@ -139,6 +143,7 @@ export class ProductDetailComponent implements OnInit {
   public set currentUploadedPhotos(value: any) {
     this._currentUploadedPhotos = value;
   }
+  */
   public get isEditPhoto(): boolean {
     return this._isEditPhoto;
   }

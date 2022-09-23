@@ -1,6 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+// Firebase modules
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { environment } from '../environments/environment';
+
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProductsGridViewComponent } from './products-grid-view/products-grid-view.component';
@@ -17,6 +23,7 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { CaddiesComponent } from './caddies/caddies.component';
 import { CustomerComponent } from './customer/customer.component';
 import { PaymentComponent } from './payment/payment.component';
+import { UploadFormComponent } from './upload-form/upload-form.component';
 
 @NgModule({
   declarations: [
@@ -32,9 +39,13 @@ import { PaymentComponent } from './payment/payment.component';
     ProductDetailComponent,
     CaddiesComponent,
     CustomerComponent,
-    PaymentComponent
+    PaymentComponent,
+    UploadFormComponent
   ],
   imports: [
+    // Firebase modules
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireStorageModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

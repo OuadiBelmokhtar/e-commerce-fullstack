@@ -1,24 +1,38 @@
 <div *ngIf="this.currentProduct">
     <div class="panel panel-default" *ngIf="this.showMode==0">
         <div class="panel-heading"><label>Fiche Produit:</label> {{this.currentProduct.designation}}
-            <span *ngIf="this.authenticationService.isAdmin()" class="glyphicon glyphicon-edit pull-right btn" (click)="onEditProduct()" title="Modifier infos produit"></span>
+            <span *ngIf="this.authenticationService.isAdmin()" class="glyphicon glyphicon-edit pull-right btn"
+                (click)="onEditProduct()" title="Modifier infos produit"></span>
         </div>
 
         <div class="panel-body">
             <div class="col-md-5">
-                <img class="img-thumbnail"
-                    [src]="this.HOST+'/get-product-photo/'+this.currentProduct.photoName+'?ts='+this.getCurrentTimeStamp()">
+                <!-- Utilisation upload a Firebase Storage -->
+                <img class="img-thumbnail" [src]="this.currentProduct.photoName+'?ts='+this.getCurrentTimeStamp()">
+                <!-- Utilisation upoad au serveur backend -->
+                <!-- <img class="img-thumbnail"
+                    [src]="this.HOST+'/get-product-photo/'+this.currentProduct.photoName+'?ts='+this.getCurrentTimeStamp()"> -->
                 <div *ngIf="this.authenticationService.isAdmin()">
                     <button (click)="onEditPhoto(this.currentProduct)" title="Changer photo">
-                        <span class="glyphicon glyphicon-edit" ></span>
+                        <span class="glyphicon glyphicon-edit"></span>
                     </button>
                     <div *ngIf="this.isEditPhoto">
-                        <input type="file" (change)="onSelectPhotos($event)">
+
+
+                        <!-- utilisation de l'upload a Firebase Storage -->
+                        <div class="my-3">
+                            <!-- voir le component upload-form.component.ts -->
+                            <app-upload-form [photoURL]="this.currentProduct.photoName" typeUpload="update">
+                            </app-upload-form>
+                            <!-- j'ai pas besoin du champ hidden comme la cas de addProduct(), car la BD ne sera pas MAJ -->
+                        </div>
+                        <!-- utilisation de l'upload au serveur backend -->
+                        <!-- <input type="file" (change)="onSelectPhotos($event)">
                         <button class="btn btn-primary btn-sm" value="Upload" (click)="onUploadPhotos()"
                             [disabled]="!this.selectedPhotos" title="Charger la photo">
-                            Upload&nbsp;<span class="glyphicon glyphicon-upload" ></span>
+                            Upload&nbsp;<span class="glyphicon glyphicon-upload"></span>
                         </button>
-                        {{this.progress}}%
+                        {{this.progress}}% -->
                     </div>
                 </div>
                 <br>

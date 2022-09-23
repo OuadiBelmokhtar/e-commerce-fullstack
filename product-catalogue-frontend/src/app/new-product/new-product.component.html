@@ -25,13 +25,22 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Image: </label>
-
-                <input class="form-control" type="file" name="photoName" ngModel (change)="onSelectPhotos($event)">
+                <!-- utilisation de l'upload a Firebase Storage -->
+                <div class="my-3">
+                    <!-- voir le component upload-form.component.ts -->
+                    <app-upload-form typeUpload="add" ></app-upload-form>
+                    <!--  ajoute par par moi, pr recup URL photo -->
+                    <input type="hidden" name="photoName" ngModel
+                        [(ngModel)]="this.fileUploadService.photoDwonloadURLFromFireStorage"
+                        [value]="this.fileUploadService.photoDwonloadURLFromFireStorage" />
+                </div>
+                <!-- utilisation de l'upload au serveur backend -->
+                <!-- <input class="form-control" type="file" name="photoName" ngModel (change)="onSelectPhotos($event)"> -->
                 <!-- <button class="btn btn-primary btn-sm" value="Upload" (click)="onUploadPhotos()"
                     [disabled]="!this.selectedPhotos">
                     Upload&nbsp;<span class="glyphicon glyphicon-upload"></span>
                 </button> -->
-                {{this.progress}}%
+                <!-- {{this.progress}}% -->
             </div>
 
             <div class="form-group" *ngIf="this.allCategories">

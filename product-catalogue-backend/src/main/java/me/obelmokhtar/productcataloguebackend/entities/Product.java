@@ -25,6 +25,7 @@ public class Product implements Serializable {
     private Boolean isOnPromotion;
     private Boolean isSelected;
     private Boolean isAvailable;
+    // on stocke l URL ds la BD, non pas le nom
     private String photoName;
     private Integer quantity;
     @Transient // pas besoin d etre persistant.

@@ -35,6 +35,7 @@ export class Product {
         this.isOnPromotion = promotion;
         this.isSelected = selected;
         this.isAvailable = available;
+        // on stocke l URL ds la BD, non pas le nom
         this.photoName = photoName;
         this.quantity = quantity;
         this.orderedQuantity = orderedQuantity;

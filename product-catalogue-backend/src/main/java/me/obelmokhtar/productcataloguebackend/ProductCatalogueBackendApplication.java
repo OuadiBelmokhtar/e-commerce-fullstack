@@ -61,11 +61,11 @@ public class ProductCatalogueBackendApplication {
         return args -> {
             // voir @Builder ds entities Users et Roles
            /* Users userAdmin = Users.builder().username("admin").password("1234").active(true).build();
-            Users user1 = Users.builder().username("user1").password("1234").active(true).build();
+            Users ouadi = Users.builder().username("ouadi").password("1234").active(true).build();
             Users user2 = Users.builder().username("user2").password("1234").active(true).build();
             Roles admin = Roles.builder().name(JwtUtil.ROLES.ADMIN.toString()).build();
             Roles user = Roles.builder().name(JwtUtil.ROLES.USER.toString()).build();
-            user1 = usersAccountService.addNewUser(user1);
+            ouadi = usersAccountService.addNewUser(ouadi);
             user2 = usersAccountService.addNewUser(user2);
             userAdmin = usersAccountService.addNewUser(userAdmin);
             usersAccountService.addNewRole(admin);
@@ -73,19 +73,28 @@ public class ProductCatalogueBackendApplication {
 
             usersAccountService.addRoleToUser(JwtUtil.ROLES.ADMIN.toString(), userAdmin.getUsername());
             usersAccountService.addRoleToUser(JwtUtil.ROLES.USER.toString(), userAdmin.getUsername());
-            usersAccountService.addRoleToUser(JwtUtil.ROLES.USER.toString(), user1.getUsername());
+            usersAccountService.addRoleToUser(JwtUtil.ROLES.USER.toString(), ouadi.getUsername());
             usersAccountService.addRoleToUser(JwtUtil.ROLES.USER.toString(), user2.getUsername());
             */
-
-//            Category category1 = new Category(null, "PC Portable", "Différentes marques des PC porables", null);
-//            Category category2 = new Category(null, "Imprimante", "Différentes marques des imprimantes", null);
-//            categoryRepository.save(category1);
-//            categoryRepository.save(category2);
+            /* !!! ce script ne marche pas !!!, il faut les insérer manuellement
+            Category category1 = new Category(null, "PC Portable", "Différentes marques des PC portables", null);
+            Category category2 = new Category(null, "Imprimante", "Différentes marques des imprimantes", null);
+            Category category3 = new Category(null, "Tablette", "Diff types de tablettes Apple, Nexus, ..", null);
+            Category category4 = new Category(null, "Smartphone", "Différentes marques des smartphone", null);
+            Category category5 = new Category(null, "PC Bureau", "Différentes marques des PC bureau", null);
+            Category category6 = new Category(null, "TV", "Différentes marques des TV", null);
+            categoryRepository.save(category1);
+            categoryRepository.save(category2);
+            categoryRepository.save(category3);
+            categoryRepository.save(category4);
+            categoryRepository.save(category5);
+            categoryRepository.save(category6);
+            productRepository.save(new Product(null, UUID.randomUUID().toString(), "Mac book pro","desc", 20000.0,true,true,true,"", 3,2,category1));
+            productRepository.save(new Product(null, UUID.randomUUID().toString(), "Imprimante HP","desc", 20000.0,true,true,true,"", 3,2,category2));
+            productRepository.save(new Product(null, UUID.randomUUID().toString(), "iPhone 12 pro","desc", 20000.0,true,true,true,"", 3,2,category4));
+*/
 //
-//            productRepository.save(new Product(null, UUID.randomUUID().toString(), "Ordinateur Lx 45", 6700.0, 3, category1));
-//            productRepository.save(new Product(null, UUID.randomUUID().toString(), "Imprimante HO", 1700.0, 10, category2));
-//            productRepository.save(new Product(null, UUID.randomUUID().toString(), "Smartphone iPhone 12 pro", 9000.0, 5, null));
-
+//
             // productService.getAllProducts().forEach(System.out::println);
             //categoryRepository.findAll().forEach(System.out::println);
         };

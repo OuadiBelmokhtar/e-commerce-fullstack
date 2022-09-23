@@ -1,0 +1,15 @@
+<label>
+    <input type="file" class="text-nowrap text-truncate" (change)="selectFile($event)" />
+   
+</label>
+
+<button class="btn btn-primary btn-sm" [disabled]="!selectedFiles" (click)="uploadPhoto()">
+    Upload&nbsp;<span class="glyphicon glyphicon-upload"></span>
+</button>
+
+<div *ngIf="currentFileUpload" class="progress mt-2">
+    <div class="progress-bar progress-bar-info" role="progressbar" attr.aria-valuenow="{{ percentage }}"
+        aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ width: percentage + '%' }">
+        {{ percentage }}%
+    </div>
+</div>

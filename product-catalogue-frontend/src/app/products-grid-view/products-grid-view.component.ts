@@ -5,6 +5,8 @@ import { Product } from '../models/Product.model';
 import { Router } from '@angular/router';
 import { Category } from '../models/Category.model';
 import { AuthenticationService } from '../services/authentication.service';
+import { FileUpload } from '../models/FileUpload.model';
+import { FileUploadService } from '../services/file-upload.service';
 
 @Component({
   selector: 'app-products-grid-view',
@@ -20,7 +22,9 @@ export class ProductsGridViewComponent implements OnInit {
   public nbrEltPerPage: number = 5;
   private searchKeyword: string = "";
 
-  constructor(private productService: ProductService, private authService:AuthenticationService, private router: Router) {
+  constructor(private productService: ProductService,
+    private authService: AuthenticationService, private router: Router,
+    private fileUploadService: FileUploadService) {
 
   }
 
@@ -47,7 +51,7 @@ export class ProductsGridViewComponent implements OnInit {
         this.allProducts = response;
         //this.fillProductsWithCategories(this.allProducts);
         //console.log("allProducts");
-       // console.log(this.allProducts);
+        // console.log(this.allProducts);
         this.pagesArray = new Array<number>(this.allProducts.page.totalPages);
       }, err => {
         console.log(err);
@@ -71,6 +75,8 @@ export class ProductsGridViewComponent implements OnInit {
     if (confirmDeletion) {
       this.productService.deleteProduct(URI)
         .subscribe(response => {
+          // supprimer la photo du Firebase Storage
+          this.fileUploadService.deletePhotoFromFireStorage(product.photoName);
           this.getProducts();
         }, err => {
           console.log(err);
@@ -82,16 +88,16 @@ export class ProductsGridViewComponent implements OnInit {
     this.router.navigateByUrl('edit-product/' + btoa(product._links.self.href));
   }
 
-  getCategoryOfProduct(URICategory:string):any{
-     this.productService.getCategoryOfProduct(URICategory)
-     .subscribe(response=>{
-       return response;
-     }, err=>{
-       console.log(err);
-     })
+  getCategoryOfProduct(URICategory: string): any {
+    this.productService.getCategoryOfProduct(URICategory)
+      .subscribe(response => {
+        return response;
+      }, err => {
+        console.log(err);
+      })
   }
 
-  isAdmin(){
+  isAdmin() {
     return this.authService.isAdmin();
   }
 
