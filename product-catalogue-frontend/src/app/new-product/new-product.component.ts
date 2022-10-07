@@ -50,6 +50,7 @@ export class NewProductComponent implements OnInit {
     //definir UUID pr la reference
     let refUUID = uuidv4();
     savingFormFields.reference = refUUID;
+    
     this.productService.saveProduct(GlobalService.HOST + "/products", savingFormFields)
       .subscribe(response => {
         //  console.log("Produit bien enregistré ");

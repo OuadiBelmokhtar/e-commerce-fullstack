@@ -35,7 +35,6 @@ export class AuthenticationService {
         this.parseJwtAuthTokenAndInitUsernameRoles();
         if (this.isAuthenticated()) {
           
-          
           this.router.navigateByUrl('frontoffice-products-grid/1/0');// naviguer vers les products selectionnes
           //let currentUrl=this.router.url;
           //this.router.navigateByUrl('/', {skipLocationChange:true}).then(()=>{this.router.navigate(['frontoffice-products-grid/1/0'])});

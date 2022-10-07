@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/e-com-frontend-demo",
+    "public": "dist/product-catalogue-frontend",
     "ignore": [
       "firebase.json",
       "**/.*",

@@ -46,8 +46,8 @@ export class FrontofficeProductsGridViewComponent implements OnInit {
     this.router.events.subscribe(event => { // subscribe aux events qui se produisent ds le sys de routage
       if (event instanceof NavigationEnd) { // une fois la navigation d'une route à une autre termine, on exec le traitement ci-dessous
         let actualRoute = event.url; // recup l'url courante
-        console.log("actualRoute");
-        console.log(actualRoute);
+        //console.log("actualRoute");
+        //console.log(actualRoute);
         // recup les params, et faire le traitements requis
         let paramShowProductMode = this.activatedRoute.snapshot.params['showProductsMode'];
         let paramIdCategory = this.activatedRoute.snapshot.params['categoryId'];

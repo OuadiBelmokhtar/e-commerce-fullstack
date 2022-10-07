@@ -14,7 +14,7 @@ import { v4 as uuidv4 } from 'uuid';
 export class FileUploadService {
 
   private basePath = '/products-img-uploads';
-  photoDwonloadURLFromFireStorage: any = "";
+  photoDwonloadURLFromFireStorage: any;
 
   constructor(private storage: AngularFireStorage) { }
 
@@ -45,15 +45,15 @@ export class FileUploadService {
   }
 
   public addPhotoToFireStorage(fileToUpload: FileUpload) {
-     // ajoute par par moi, pr renommer la photo via un UUID avant stockage ds Firebase Storage
-    let uuidPhotoName = uuidv4();
-    return this.pushFileToStorage(fileToUpload, uuidPhotoName+".jpeg");
+    // ajoute par par moi, pr renommer la photo via un UUID avant stockage ds Firebase Storage
+    let photoName = uuidv4();
+    return this.pushFileToStorage(fileToUpload, photoName + ".jpeg");
   }
 
   public updatePhotoInFireStorage(fileToUpload: FileUpload, existingPhotoUrl: string) {
     let existingPhotoName: string = this.extractPhotoNameFromPhotoURL(existingPhotoUrl);
     // voir explication ds pushFileToStorage()>>storage.upload()
-    return this.pushFileToStorage(fileToUpload, existingPhotoName+".jpeg");
+    return this.pushFileToStorage(fileToUpload, existingPhotoName + ".jpeg");
   }
 
   //delete file from Firebase Storage
@@ -62,12 +62,14 @@ export class FileUploadService {
     //alert(this.getPhotoNameFromPhotoURL(fileUrl));
     // fileUrl contient l'URL absolut provenant de Firebase Storage
     let photoName: string = this.extractPhotoNameFromPhotoURL(fileUrl);
-    storageRef.child(photoName+".jpeg").delete();
+    if (photoName != "uknown") {
+      storageRef.child(photoName + ".jpeg").delete();
+    }
   }
 
 
 
-// extraire juste le nom de la photo(uuid) sans extension '.jpeg'
+  // extraire juste le nom de la photo(uuid) sans extension '.jpeg'
   private extractPhotoNameFromPhotoURL(fileUrl: string): string {
     // exp d'URL provenant de Firebase Storage
     /*https://firebasestorage.googleapis.com/v0/b/e-com-prod-storage.appspot.com/

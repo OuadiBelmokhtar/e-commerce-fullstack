@@ -4,7 +4,7 @@
         <form #savingForm="ngForm" (ngSubmit)="onAddProduct(savingForm.value)">
             <div class="form-group">
                 <label class="control-label">Désignation: </label>
-                <input class="form-control" type="text" name="designation" ngModel>
+                <input class="form-control" type="text" name="designation" required ngModel>
             </div>
             <div class="form-group">
                 <label class="control-label">Description</label>

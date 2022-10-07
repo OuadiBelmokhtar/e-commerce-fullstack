@@ -10,8 +10,7 @@ L'utilisation de l'application nécessite une authentification en cliquant sur l
 - Accès au front-office(consultation catalogue et commande de produits): username=ouadi & password=1234
 
 # N.B. : 
-Vu que la partie backend est déployée sur la plateforme cloud Heroku, veuillez noter que la première action sur l'application(/login) aura une latence de chargement de la page. En effet, Heroku met en sommeil toute application n'a pas subi une requête pendant les 30 dernières minutes.
-
+La partie backend est déployée sur la plateforme cloud Heroku. En effet, vu que Heroku met en sommeil toute application n'a pas subi une requête pendant les 30 dernières minutes, veuillez noter que la première action sur l'application(/login) aura une latence de chargement de la page(~15 secondes).
 
 
 

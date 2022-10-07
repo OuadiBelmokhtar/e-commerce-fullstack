@@ -27,7 +27,7 @@ import java.util.List;
    - Sinon, renvoyer au client un message et code d'erreur.
  */
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
-    // cette mtd s'exécute a chaque fois l'application reçoit une requete
+    // cette mtd s'exécute a chaque fois que le backend reçoit une requete
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         System.out.println("JwtAuthorizationFilter.doFilterInternal()");
